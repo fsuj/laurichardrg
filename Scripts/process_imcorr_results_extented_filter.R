@@ -17,37 +17,18 @@ maindir=paste(getwd(), "/Data",sep="")
 raw = "raw"
 
 ################################################################################################################################
-### 1.) Make tiffs readable in ImageJ
+### 1.) IMCORR processing in SAGA GIS
 
-# geoTiffForImageJ(sprintf("%s/%s/DEM-L93-05Oct2017-SFMMVS.tif",maindir,raw), sprintf("%s/DEM_L93_051017_SFMMVS_IJ.tif",maindir))
-# geoTiffForImageJ(sprintf("%s/%s/Hillshade-L93-05Oct2017-SFMMVS.tif",maindir,raw), sprintf("%s/Hillshade_L93_051017_SFMMVS_IJ.tif",maindir))
-# geoTiffForImageJ(sprintf("%s/%s/DEM-L93-16Aug2012-LIDAR.tif",maindir,raw), sprintf("%s/DEM_L93_160812_LIDAR_IJ.tif",maindir))
-# geoTiffForImageJ(sprintf("%s/%s/Hillshade-L93-16Aug2012-LIDAR.tif",maindir,raw), sprintf("%s/Hillshade_L93_160812_LIDAR_IJ.tif",maindir))
+# Geoprocessing -> Grid -> Analysis -> IMCORR or: script files from Jason Goetz
+# with different search/reference window sizes and fixed gridding (0.1)
+# 128/64, 256/64, 256/128
+# visual inspection: 256/64 gives the best results
+
+# resulting in line feature shapes, indicating displacement vectors
 
 ################################################################################################################################
-### 2.) Process Data with Fiji/BunwrapJ
-# - Convert tiffs with ArcMap to PNG
-# - Opening order 2012 / 2017
-# - Create Landmark and Save Landmarks (Use Hillshade) - play with different Landmarks (extreme) Test 1
-# - Open resaved tiffs (2012/2017)
-# - Plugins - Registration - BunwrapJ 
-# - Set Source Image (2012) and Target (2017)   - play with differnt Derivates of DEM Test 1
-# - Settings: 
-#     - Registration Mode: Accurate
-#     - Image Subsampling Factor: 0
-#     - Initial Deformation: Fine
-#     - Final Deformation: SuperFine
-#     - Divergence Weight: 0.0
-#     - Curl Weight: 0.0
-#     - Landmark Weight: 1.0          - Settings to play with Test 2
-#     - Image Weight: 1.0             - Settings to play with Test 2
-#     - consistency Weight: 10.0
-#     - Stop Threshold: 0.01
-#     Check Verbose
-#     Check Save Transformation
-# - Open Landmarks                    Different (extreme Values), or use for "expert validation Approach"
-# - Process
-# - convert Transformation (landmarks) to raw
+### 2.) Post-processing for gridding
+# 
 ################################################################################################################################
 
 #### 3.) Load Data
@@ -67,21 +48,32 @@ r_target_stack = raster::stack(tiffFiles[c(1,4)]) # DEM, Hill 2017
 val_df = read.csv(sprintf("%s/Laurichard_2014_L93_extract_velocity.csv",maindir), header = TRUE, sep = ",")
 
 ## 3.3) SAGA preprocessing (convert from sgrd to asc)
-rsaga.sgrd.to.esri(in.sgrds="SAGA/idw-pts-DEM_DISP_VEC_256_64_01.sgrd", out.grids="SAGA/idw-pts-DEM_DISP_VEC_256_64_01.asc", prec=1, out.path=getwd())
-rsaga.sgrd.to.esri(in.sgrds="SAGA/idw-pts_DEM_DISP_VEC_256_128_01.sgrd", out.grids="SAGA/idw-pts-DEM_DISP_VEC_256_128_01.asc", prec=1, out.path=getwd())
-rsaga.sgrd.to.esri(in.sgrds="SAGA/idw-pts_DEM_DISP_VEC_128_64_01.sgrd", out.grids="SAGA/idw-pts-DEM_DISP_VEC_128_64_01.asc", prec=1, out.path=getwd())
-rsaga.sgrd.to.esri(in.sgrds="SAGA/idw-slopeaspectcorr-DEM_DISP_VEC_256_64_01.sgrd", out.grids="SAGA/idw-slopeaspectcorr-DEM_DISP_VEC_256_64_01.asc", prec=1, out.path=getwd())
-rsaga.sgrd.to.esri(in.sgrds="SAGA/idw-slopeaspectcorr_DEM_DISP_VEC_256_128_01.sgrd", out.grids="SAGA/idw-slopeaspectcorr-DEM_DISP_VEC_256_128_01.asc", prec=1, out.path=getwd())
-rsaga.sgrd.to.esri(in.sgrds="SAGA/idw_slopeaspectcorr_DEM_DISP_VEC_128_64_01.sgrd", out.grids="SAGA/idw-slopeaspectcorr-DEM_DISP_VEC_128_64_01.asc", prec=1, out.path=getwd())
+rsaga.sgrd.to.esri(in.sgrds="SAGA/idw-pts-DEM_DISP_VEC_256_64_01.sgrd", out.grids="SAGA/idw_pts_DEM_DISP_VEC_256_64_01.asc", prec=1, out.path=getwd())
+rsaga.sgrd.to.esri(in.sgrds="SAGA/idw-pts_DEM_DISP_VEC_256_128_01.sgrd", out.grids="SAGA/idw_pts_DEM_DISP_VEC_256_128_01.asc", prec=1, out.path=getwd())
+rsaga.sgrd.to.esri(in.sgrds="SAGA/idw-pts_DEM_DISP_VEC_128_64_01.sgrd", out.grids="SAGA/idw_pts_DEM_DISP_VEC_128_64_01.asc", prec=1, out.path=getwd())
+rsaga.sgrd.to.esri(in.sgrds="SAGA/idw-aspectcorr-DEM_DISP_VEC_256_64_01.sgrd", out.grids="SAGA/idw_aspectcorr_DEM_DISP_VEC_256_64_01.asc", prec=1, out.path=getwd())
+rsaga.sgrd.to.esri(in.sgrds="SAGA/idw-aspectcorr-DEM_DISP_VEC_256_128_01.sgrd", out.grids="SAGA/idw_aspectcorr_DEM_DISP_VEC_256_128_01.asc", prec=1, out.path=getwd())
+rsaga.sgrd.to.esri(in.sgrds="SAGA/idw-aspectcorr-DEM_DISP_VEC_128_64_01.sgrd", out.grids="SAGA/idw_aspectcorr_DEM_DISP_VEC_128_64_01.asc", prec=1, out.path=getwd())
+
+rsaga.sgrd.to.esri(in.sgrds="SAGA/xy-idw-DEM_DISP_VEC_256_64_01.sgrd", out.grids="SAGA/xy_idw_DEM_DISP_VEC_256_64_01.asc", prec=1, out.path=getwd())
+rsaga.sgrd.to.esri(in.sgrds="SAGA/xy-idw-DEM_DISP_VEC_256_128_01.sgrd", out.grids="SAGA/xy_idw_DEM_DISP_VEC_256_128_01.asc", prec=1, out.path=getwd())
+rsaga.sgrd.to.esri(in.sgrds="SAGA/xy-idw-DEM_DISP_VEC_128_64_01.sgrd", out.grids="SAGA/xy_idw_DEM_DISP_VEC_128_64_01.asc", prec=1, out.path=getwd())
+rsaga.sgrd.to.esri(in.sgrds="SAGA/xy-idw-aspectcorr-DEM_DISP_VEC_256_64_01.sgrd", out.grids="SAGA/xy_idw_aspectcorr-DEM_DISP_VEC_256_64_01.asc", prec=1, out.path=getwd())
+rsaga.sgrd.to.esri(in.sgrds="SAGA/xy-idw-aspectcorr_DEM_DISP_VEC_256_128_01.sgrd", out.grids="SAGA/xy_idw_aspectcorr-DEM_DISP_VEC_256_128_01.asc", prec=1, out.path=getwd())
+rsaga.sgrd.to.esri(in.sgrds="SAGA/xy-idw_aspectcorr_DEM_DISP_VEC_128_64_01.sgrd", out.grids="SAGA/xy_idw_aspectcorr-DEM_DISP_VEC_128_64_01.asc", prec=1, out.path=getwd())
 
 ## 3.4) Load displacement rasters
+## in the order:
+## 1. XYZ displacements
+## 1.1 uncorrected
+## 1.2 aspect corrected
+## 2. XY displacements
+## 2.1 uncorrected
+## 2.2 corrected
 ascFiles <- list.files(paste(getwd(), "/SAGA",sep="")
   ,pattern="*.asc$"
   , full.names = TRUE)
 r_displacement_stack <- raster::stack(ascFiles)
-
-raw_file <- readGDAL("SAGA/idw-pts-DEM_DISP_VEC_256_64_01.asc")
-raster <- raster(raw_file)
 
 ## 3.5) Load Contour Shapefile (Glazier)
 contour_shp = readOGR(dsn = maindir, layer = "laurichard_rg_contour")
@@ -114,47 +106,53 @@ writeOGR(val_spdf_target,dsn = maindir,layer ="Validation_points_target", driver
 #5.3) Read in d_tx, Calculate Anual Displacement xy and xyz, Write Displacements to Raster, 
 
 
-# Where to Filter?!
-
-for (i in 1:nlayers(r_displacement_stack)){
+# iterate through the three window size combinations:
+for (i in 1:(nlayers(r_displacement_stack)/4)){
   
-  raster <- r_displacement_stack[[i]]
-  
-  # TODO: calculate displacement from grid/raster data. phew...
-  
-  # Read Transformation DataFrame
-  d_tx = readRDS(file = direct_dt_xFiles[i]) 
+  raster_xyz_aspectcorr <- r_displacement_stack[[i]]*1
+  raster_xyz <- r_displacement_stack[[i+3]]*1
+  raster_xy <- r_displacement_stack[[i+6]]
+  raster_xy_aspectcorr <- r_displacement_stack[[i+9]]
  
   #Calculate Anual Displacement in m/year (XY,XYZ)
-  d_tx$xy_disp_annual = d_tx$xy_disp / 6
-  d_tx$xyz_disp_annual = d_tx$xyz_disp / 6
-  head(d_tx)
-  
+  raster_xyz_aspectcorr_annual <- raster_xyz_aspectcorr / 6
+  raster_xyz_annual <- raster_xyz / 6
+  raster_xy_aspectcorr_annual <- raster_xy_aspectcorr / 6
+  raster_xy_annual <- raster_xy / 6
   
   # Set Names for RasterStack and Outputfiles
-  r_name = c(paste(substr(direct_dt_xFiles[i], nchar(maindir)+2,nchar(direct_dt_xFiles[i])-9),"_xyDisp",sep =""),
-             paste(substr(direct_dt_xFiles[i], nchar(maindir)+2,nchar(direct_dt_xFiles[i])-9),"_xyzDisp",sep =""),
-             paste(substr(direct_dt_xFiles[i], nchar(maindir)+2,nchar(direct_dt_xFiles[i])-9),"_xyDispAnual",sep =""),
-             paste(substr(direct_dt_xFiles[i], nchar(maindir)+2,nchar(direct_dt_xFiles[i])-9),"_xyzDispAnual",sep =""),
-             paste(substr(direct_dt_xFiles[i], nchar(maindir)+2,nchar(direct_dt_xFiles[i])-9),"_Aspect",sep =""),
-             paste(substr(direct_dt_xFiles[i], nchar(maindir)+2,nchar(direct_dt_xFiles[i])-9),"_Slope",sep ="")
+  r_name = c(paste(substr(direct_dt_xFiles[i], nchar(maindir)+2,nchar(direct_dt_xFiles[i])-9),"_xyDisp",sep ="")
+            , paste(substr(direct_dt_xFiles[i], nchar(maindir)+2,nchar(direct_dt_xFiles[i])-9),"_xyzDisp",sep ="")
+            , paste(substr(direct_dt_xFiles[i], nchar(maindir)+2,nchar(direct_dt_xFiles[i])-9),"_xyDispAnual",sep ="")
+            , paste(substr(direct_dt_xFiles[i], nchar(maindir)+2,nchar(direct_dt_xFiles[i])-9),"_xyzDispAnual",sep ="")
+            , paste(substr(direct_dt_xFiles[i], nchar(maindir)+2,nchar(direct_dt_xFiles[i])-9),"_Aspect_xy",sep ="")
+            , paste(substr(direct_dt_xFiles[i], nchar(maindir)+2,nchar(direct_dt_xFiles[i])-9),"_Aspect_xyz",sep ="")
+            , paste(substr(direct_dt_xFiles[i], nchar(maindir)+2,nchar(direct_dt_xFiles[i])-9),"_Aspect_xyDispAnnual",sep ="")
+            , paste(substr(direct_dt_xFiles[i], nchar(maindir)+2,nchar(direct_dt_xFiles[i])-9),"_Aspect_xyzDispAnnual",sep ="")
              )
   #Stack Raster
-  r_stack = raster::brick(list(setValues(r_source_stack[[1]], d_tx$xy_disp),setValues(r_source_stack[[1]], d_tx$xyz_disp),
-                               setValues(r_source_stack[[1]], d_tx$xy_disp_annual),setValues(r_source_stack[[1]], d_tx$xyz_disp_annual),
-                               setValues(r_source_stack[[1]], d_tx$aspect),setValues(r_source_stack[[1]], d_tx$slope)))  
+  r_stack <- brick(list(
+    raster_xy
+    ,raster_xyz
+    ,raster_xy_annual
+    ,raster_xyz_annual
+    ,raster_xy_aspectcorr
+    ,raster_xyz_aspectcorr
+    ,raster_xy_annual_aspectcorr
+    ,raster_xyz_annual_aspectcorr
+  ))
+  #r_stack = raster::brick(list(setValues(r_source_stack[[1]], d_tx$xy_disp),setValues(r_source_stack[[1]], d_tx$xyz_disp),
+  #                             setValues(r_source_stack[[1]], d_tx$xy_disp_annual),setValues(r_source_stack[[1]], d_tx$xyz_disp_annual),
+  #                             setValues(r_source_stack[[1]], d_tx$aspect),setValues(r_source_stack[[1]], d_tx$slope)))  
   names(r_stack) = r_name
-  
-  # Filter modelled RasterStack
   
   # Crop with Contour of Glazier
   # contour_shp
   
   r_stack = clip_raster_Stack(r_stack,contour_shp,r_name)
-
-  ## Filter with Aspect
   
-  r_stack = filter_raster_stack(r_stack,60,300)
+  ############################ TODO: calculate statistics from here on and write results to file...
+
   
   ## Create Summary of Images write to csv
   
