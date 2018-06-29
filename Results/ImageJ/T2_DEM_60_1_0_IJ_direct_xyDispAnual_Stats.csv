@@ -1,0 +1,10 @@
+""," X2015_2012_1","T2_DEM_60_1_0_IJ_direct_xyDispAnual","T2_DEM_60_1_0_IJ_direct_xyDispAnualError","T2_DEM_60_1_0_IJ_direct_xyzDispAnual","T2_DEM_60_1_0_IJ_direct_xyzDispAnualError","xy_R_squared","xyz_R_squared"
+"1","Min.   :0.1787  ","Min.   :0.1399  ","Min.   :0.01326  ","Min.   :0.1438  ","Min.   :-0.02541  ","RMSE: 0.5466","RMSE: 0.4824"
+"2","1st Qu.:1.0853  ","1st Qu.:0.5945  ","1st Qu.:0.22793  ","1st Qu.:0.6248  ","1st Qu.: 0.18871  ","Rsquared: 0.5972","Rsquared: 0.6489"
+"3","Median :1.5032  ","Median :0.9303  ","Median :0.39970  ","Median :0.9907  ","Median : 0.34152  ","MAE: 0.4475","MAE: 0.3843"
+"4","Mean   :1.3084  ","Mean   :0.8609  ","Mean   :0.44753  ","Mean   :0.9270  ","Mean   : 0.38144  ",NA,NA
+"5","3rd Qu.:1.6046  ","3rd Qu.:1.1645  ","3rd Qu.:0.55030  ","3rd Qu.:1.2730  ","3rd Qu.: 0.44735  ",NA,NA
+"6","Max.   :2.0302  ","Max.   :1.4065  ","Max.   :1.14086  ","Max.   :1.7121  ","Max.   : 1.11703  ",NA,NA
+"7",NA,NA,NA,NA,NA,NA,NA
+"IQR","IQR_val: 0.5194","IQR_xy: 0.57","IQR_xy_error: 0.3224","IQR_xyz: 0.6482","IQR_xyz_error: 0.2586",NA,NA
+"sd","SD_val: 0.5088","SD_xy: 0.4003","SD_xyz: 0.4476","SD_xy_error: 0.323","SD_xyz_error: 0.3038",NA,NA

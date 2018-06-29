@@ -1,0 +1,11 @@
+"","X2015_2012_1","xyz_idw_aspectcorr_DEM_DISP_VEC_128_64_01_IJ","xyz_idw_aspectcorr_DEM_DISP_VEC_256_128_01_IJ","xyz_idw_aspectcorr_DEM_DISP_VEC_256_64_01_IJ","xyz_idw_aspectcorr_DEM_DISP_VEC_128_64_01_IJError","xyz_idw_aspectcorr_DEM_DISP_VEC_256_128_01_IJError","xyz_idw_aspectcorr_DEM_DISP_VEC_256_64_01_IJError","xyz_idw_aspectcorr_DEM_DISP_VEC_128_64_01_IJ_R_squared","xyz_idw_aspectcorr_DEM_DISP_VEC_256_128_01_IJ_R_squared","xyz_idw_aspectcorr_DEM_DISP_VEC_256_64_01_IJ_R_squared"
+"Min","0.1787","0.158","0.1017","0.1317","0.0207","-0.0225","-0.3666","RMSE: 0.9588","RMSE: 0.5097","RMSE: 0.3479"
+"Qu1.25%","1.0853","0.421","0.6548","0.8513","0.6029","0.2715","0.1835","Rsquared: 0.4184","Rsquared: 0.6321","Rsquared: 0.78"
+"Median","1.5032","0.4685","0.9322","1.1505","0.9607","0.4231","0.333","MAE: 0.8547","MAE: 0.412","MAE: 0.3241"
+"Mean","1.3084","0.4537","0.8472","1.0528","0.8547","0.4092","0.2557",NA,NA,NA
+"Qu3.75%","1.6046","0.5169","1.0884","1.2241","1.1712","0.483","0.4133",NA,NA,NA
+"Max","2.0302","0.5971","1.1885","1.6017","1.5127","1.2903","0.5127",NA,NA,NA
+"IQR","0.5194","0.0958","0.4336","0.3728","0.5683","0.2114","0.2299",NA,NA,NA
+"SD","0.5088","0.1073","0.3328","0.4051","0.4469","0.3139","0.2427",NA,NA,NA
+"N","18","18","18","18","18","18","18",NA,NA,NA
+"Na","0","0","2","0","0","2","0",NA,NA,NA
