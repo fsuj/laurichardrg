@@ -536,33 +536,75 @@ plot_raster_stack_hist = function(filename,r_stack,breaks){
   
 }
 ########################################################################################################
-my_scatterplot_IMCORR = function(file_name,df,colnameX,colnameY,colnameXX,colnameYY,colnameXXX,colnameYYY, ylabel){
+my_scatterplot_IMCORR = function(file_name,df,colnameX,colnameY,colnameXX,colnameYY,colnameXXX,colnameYYY,xlabel, ylabel){
   
   
   pdf(file_name, width = 8.27 ,height = 11.69 , paper = "a4r")
   
   par(mfrow = c(1,3))
   plot(df[[colnameX]],df[[colnameY]],main= colnameX,
-       xlab = "XY Displacement BUnwrap [m/year]", ylab = ylabel,
-       xlim = c(0,10), ylim = c(0,10))
+       xlab = xlabel, ylab = ylabel,
+       xlim = c(0,4), ylim = c(0,4))
   abline(lm(df[[colnameY]] ~ df[[colnameX]]))
   
   par(new=F)
   
   plot(df[[colnameXX]],df[[colnameYY]], main = colnameXX,
-       xlab = "XYZ Displacement BUnwrap [m/year]", ylab = ylabel,
-       xlim = c(0,10), ylim = c(0,10))
+       xlab = xlabel, ylab = ylabel,
+       xlim = c(0,4), ylim = c(0,4))
   abline(lm(df[[colnameYY]] ~ df[[colnameXX]]))
   
   par(new=F)
   
-  plot(df[[colnameXXX]],df[[colnameYYY]], main = colnameXX,
-       xlab = "XYZ Displacement BUnwrap [m/year]", ylab = ylabel,
-       xlim = c(0,10), ylim = c(0,10))
+  plot(df[[colnameXXX]],df[[colnameYYY]], main = colnameXXX,
+       xlab = xlabel, ylab = ylabel,
+       xlim = c(0,4), ylim = c(0,4))
   abline(lm(df[[colnameYYY]] ~ df[[colnameXXX]]))
   
   dev.off()
 }
+
+#####################################################################################################
+my_statistic_calc_imcorr = function(df,colnameX,colnameY,colnameYY,colnameYYY){
+  
+  # RMSE,Rsquared, MAE
+  xy_R_squared = caret::postResample(df[[colnameY]],df[[colnameX]])
+  xyy_R_squared = caret::postResample(df[[colnameYY]],df[[colnameX]])
+  xyyy_R_squared = caret::postResample(df[[colnameYYY]],df[[colnameX]])
+  
+  #Summary (see my_summary())
+  ind <- sapply(df, is.numeric)
+  
+  summary_df = round(sapply(df[, ind], my_summary), digits = 4)  
+  
+  df_2 = as.data.frame(xy_R_squared)
+  df_2 = round(df_2, digits = 4)
+  df_2$xy_R_squared_combine = c(paste0(row.names(df_2),": ",df_2[,1]))
+  df_2[nrow(df_2)+( nrow(summary_df)-nrow(df_2)),] <- NA
+  df_2 = df_2[,2]
+  
+  df_3 = as.data.frame(xyy_R_squared)
+  df_3 = round(df_3, digits = 4)
+  df_3$xyy_R_squared_combine = c(paste0(row.names(df_3),": ",df_3[,1]))
+  df_3[nrow(df_3)+(nrow(summary_df)-nrow(df_3)),] <- NA
+  df_3 = df_3[,2]
+  
+  df_4 = as.data.frame(xyyy_R_squared)
+  df_4 = round(df_4, digits = 4)
+  df_4$xyyy_R_squared_combine = c(paste0(row.names(df_4),": ",df_4[,1]))
+  df_4[nrow(df_4)+(nrow(summary_df)-nrow(df_4)),] <- NA
+  df_4 = df_4[,2]
+  
+  final_stats = as.data.frame(cbind(summary_df,df_2,df_3,df_4))
+  
+  colnames(final_stats) = c(colnames(final_stats)[1:7],
+                            paste(colnames(final_stats)[2],"_R_squared",sep = ""),
+                            paste(colnames(final_stats)[3],"_R_squared",sep = ""),
+                            paste(colnames(final_stats)[4],"_R_squared",sep = ""))
+  
+  return(final_stats)
+}
+
 #####################################################################################################
 calc_IQR_Raster = function(r_stack){
   
@@ -615,4 +657,46 @@ my_summary <- function(x, na.rm=TRUE){
               SD=sd(x,na.rm = na.rm),
               N=length(x),
               Na=sum(length(which(is.na(x)))))
+}
+####################################################################################################
+my_statistic_calc_expert_IMCORR = function(df,colnameX,colnameY,colnameYY,colnameYYY){
+  
+  # RMSE,Rsquared, MAE
+  xy_R_squared = caret::postResample(df[[colnameY]],df[[colnameX]])
+  xyy_R_squared = caret::postResample(df[[colnameYY]],df[[colnameX]])
+  xyyy_R_squared = caret::postResample(df[[colnameYYY]],df[[colnameX]])
+  
+  #Summary (see my_summary())
+  ind <- sapply(df, is.numeric)
+  
+  summary_df = round(sapply(df[, ind], my_summary), digits = 4)  
+  
+  df_2 = as.data.frame(xy_R_squared)
+  df_2 = round(df_2, digits = 4)
+  df_2$xy_R_squared_combine = c(paste0(row.names(df_2),": ",df_2[,1]))
+  df_2[nrow(df_2)+( nrow(summary_df)-nrow(df_2)),] <- NA
+  df_2 = df_2[,2]
+  
+  df_3 = as.data.frame(xyy_R_squared)
+  df_3 = round(df_3, digits = 4)
+  df_3$xyy_R_squared_combine = c(paste0(row.names(df_3),": ",df_3[,1]))
+  df_3[nrow(df_3)+(nrow(summary_df)-nrow(df_3)),] <- NA
+  df_3 = df_3[,2]
+  
+  df_4 = as.data.frame(xyyy_R_squared)
+  df_4 = round(df_4, digits = 4)
+  df_4$xyyy_R_squared_combine = c(paste0(row.names(df_4),": ",df_4[,1]))
+  df_4[nrow(df_4)+(nrow(summary_df)-nrow(df_4)),] <- NA
+  df_4 = df_4[,2]
+  
+  
+  
+  final_stats = as.data.frame(cbind(summary_df,df_2,df_3,df_4))
+  
+  colnames(final_stats) = c(colnames(final_stats)[1:9],
+                            paste(colnames(final_stats)[4],"_R_squared",sep = ""),
+                            paste(colnames(final_stats)[5],"_R_squared",sep = ""),
+                            paste(colnames(final_stats)[6],"_R_squared",sep = ""))
+  
+  return(final_stats)
 }

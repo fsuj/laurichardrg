@@ -92,8 +92,9 @@ val_df = read.csv(sprintf("%s/Laurichard_2014_L93_extract_velocity.csv",maindir)
 
 landmark_60 = sprintf("%s/Landmarks_60.txt",maindir)
 landmark_61 = sprintf("%s/Landmarks_61.txt",maindir)
-landmark_val = sprintf("%s/Landmarks_val.txt",maindir)
-
+landmark_val = sprintf("%s/Landmarks_val_new.txt",maindir)
+#landmark_val = sprintf("%s/Landmarks_val.txt",maindir)
+#landmark_val = sprintf("%s/Landmarks_val_60.txt",maindir)
 ## 3.4) Load raw Transformationfiles
 rawFiles_direct = list.files(maindir,pattern="*_direct_transf_raw.txt$", full.names = TRUE)
 rawFiles_inverse = list.files(maindir,pattern="*_inverse_transf_raw.txt$", full.names = TRUE)
@@ -134,7 +135,7 @@ landmark_df_val["XY_Displacement"] = eucDist(landmark_df_val$x_crs_Source,landma
                                              landmark_df_val$y_crs_Source,landmark_df_val$y_crs_Target)
 landmark_df_val["XY_Displacement_year"] = landmark_df_val["XY_Displacement"] / 6
 landmark_df_val["z_source"] = extract(r_source_stack[[1]],landmarks_60_val_source)
-landmark_df_val["z_target"] = extract(r_source_stack[[1]],landmarks_60_val_target)
+landmark_df_val["z_target"] = extract(r_target_stack[[1]],landmarks_60_val_target)
 landmark_df_val["Z_Displacement"] = landmark_df_val$z_target - landmark_df_val$z_source
 landmark_df_val["XYZ_Displacement"] = sqrt( (landmark_df_val$XY_Displacement)^2 + (landmark_df_val$Z_Displacement)^2 )
 landmark_df_val["XYZ_Displacement_year"] = landmark_df_val["XYZ_Displacement"] / 6
@@ -234,8 +235,8 @@ inverse_dt_xFiles <- list.files(maindir,pattern="*inverse_d_tx.RDS$", full.names
 
 Sys.time()
 # Where to Filter?!
-#for (i in 1:length(direct_dt_xFiles)){
-for (i in 1:2){ 
+for (i in 1:length(direct_dt_xFiles)){
+#for (i in 1:2){ 
   ########################################################### Modell Raster Stack with Transformations ##########################################
   
   # Read Transformation DataFrame
