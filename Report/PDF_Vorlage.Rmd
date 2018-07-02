@@ -1,13 +1,12 @@
 ---
-title: "Geo 411 - Landschaftsmanagement und Fernerkundung " 
+title: Comparison of image matching algorithms for rock glacier displacement mapping. A case study for the Laurichard rock glacier, French alps. 
 author: 
-- Stefan Werner
+- Florian Strohmaier, Stefan Werner
 - Dozentin Prof. Schmullius, Dr. Biskop
 #date: "`r format(Sys.time(), '%d %B %Y')`"
-date: "19 Mai 2018"
-header-includes:
-  - \usepackage[ngerman]{babel}
-  - \usepackage[document]{ragged2e}
+date: "July 11 2018"
+#header-includes:
+#  - \usepackage[ngerman]{babel}
 output:
   pdf_document: 
     #toc: TRUE
@@ -17,11 +16,11 @@ output:
     # ]
   html_document: default
 link-citations: yes
-bibliography: [bib.bib]
-subtitle: Das Potenzial der Sentinel-Daten für die Gewinnung multi-temporaler, multi-skaliger und multi-sensoraler Informationen für ein nachhaltiges und effizientes Landmanagement \newline  \newline \newline Querschnittsthema Katastrophen und Risikomanagement  - Unterstützende Informationen für ein nachhaltiges und effizientes Landmanagements
+bibliography: [bib20180620.bib]
+subtitle: Geo 411 - Landschaftsmanagement und Fernerkundung
 biblio-style: apalike
 fontsize: 11pt
-geometry: "left=4cm, right=3cm, top=2.5cm, bottom=2.5cm, margin = 1.2in"
+geometry: margin = 1.2in
 linestretch:  1.5
 
 # abstract: "Dieser Handzettel soll einen Überblick Über die R Pakete **raster** (@R-raster) und **stars** (@R-stars) geben sowie die aktuellen Entwicklungen zur Rasterprozessierung in R aufzeigen."
@@ -36,7 +35,6 @@ linestretch:  1.5
 # * Aufzählung
 #   + Unterpunkt
 # @Holzworth.2018b
-# \justify  -Blocksatz
 #
 #
 # ```{r echo=FALSE, fig.pos="h",fig.align="center", out.width = "150px", fig.cap= "NetCDF- Datenstruktur Davis(2014)"}
@@ -48,7 +46,7 @@ linestretch:  1.5
 # text_tbl = read.csv(file = "Tables/Sentinel_tab2.csv",header = T,sep = ";")
 # knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Verwendete **`R`**- Pakete und deren Kurzbeschreibung") %>%
 # kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down"))
-
+#```
 # $$\phi$$ Formel
 # $\phi$ inline Formel
 
@@ -58,33 +56,48 @@ linestretch:  1.5
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-\pagenumbering{gobble} 
+
 \centering
 \raggedright
 \newpage
-\pagenumbering{arabic} 
 \tableofcontents
 \newpage
-\justify
 
 
-# Einleitung
+# Introduction
 
-# Untersuchungebiet 
+* Importance of rock glaciers
+* Photogrammetry (besides other remote sensing data: InSAR)
+* Image matching methods: History: General and used methods
+* IMCORR and bUnwrapJ
+* What did we do in short
+* What did we want to achieve?
 
-# Methoden 
+# Study Area
+
+The Laurichard rock glacier is situated in the French Alps, with an approximately 800m long and 100-200m wide tounge flowing from south to north-east. Due to its morphological features it can be considered an active rock glacier [@bodin_multi-annual_2018]. Especially, hillshades generated from available digital elevation models (DEMs) exhibit scarps, oriented perpendicular to the flow direction as well as a steep rising frontal lobe.
+
+Since the beginning of the 1980s, the Laurichard rock glacier has been subject to in-situ and remote sensing photogrammetry research. Refer to @bodin_multi-annual_2018 for the most current research work as well as for an overview over the history of site studies.
+
+# Data and Methods
+
+## Used Data
+
+
 
 ## IMCORR
 
-## ImageJ Bunwrapp
+## ImageJ BUnwrapJ
 
-# Ergebnisse
+# Results
 
-# Zusammenfassung
+# Discussion
 
-# Ausblick / Fazit
+# Conclusion
 
-# Literatur
+# Outlook (or: Conclusion and Outlook?)
+
+# References
 
 
 
