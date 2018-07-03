@@ -16,12 +16,14 @@ output:
     # ]
   html_document: default
 link-citations: yes
-bibliography: [bib20180620.bib]
+bibliography: [bib20180620.bib,Rpackages.bib]
 subtitle: Geo 411 - Landschaftsmanagement und Fernerkundung
-biblio-style: apalike
+#biblio-style: apalike
 fontsize: 11pt
 geometry: margin = 1.2in
 linestretch:  1.5
+
+
 
 # abstract: "Dieser Handzettel soll einen Überblick Über die R Pakete **raster** (@R-raster) und **stars** (@R-stars) geben sowie die aktuellen Entwicklungen zur Rasterprozessierung in R aufzeigen."
 
@@ -66,7 +68,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction
 
-* Importance of rock glaciers
+Rock glaciers are distinctive morphological features of high mountain periglacial environments. Their deformation processes are strongly linked to permafrost degradation [@haeberli_mountain_2010]. Thus, research of deformation velocities of rock glaciers does not only provide insights into periglacial morphology but also in time evolution of permafrost. Several authors have used rock glaciers as proxies for permafrost presence/absence in permafrost distribution models [@boeckli_statistical_2012,@marcer_permafrost_2017].
+
+In recent years, multi-method approaches have been used in this field of research; @buchli_kinematic_2018 combine laser scanning, terrestrial radar and in-situ measurements at the Furggwanghorn rock glacier in Switzerland. Remote sensing data, especially radar interferometry [@barboux_mapping_2015], optical imagery and laser scanning [@arenson_detection_2016] have become more and more common for rock glacier deformation analysis.
+
 * Photogrammetry (besides other remote sensing data: InSAR)
 * Image matching methods: History: General and used methods
 * IMCORR and bUnwrapJ
