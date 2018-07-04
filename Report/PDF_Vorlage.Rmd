@@ -70,13 +70,18 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Rock glaciers are distinctive morphological features of high mountain periglacial environments. Their deformation processes are strongly linked to permafrost degradation [@haeberli_mountain_2010]. Thus, research of deformation velocities of rock glaciers does not only provide insights into periglacial morphology but also in time evolution of permafrost. Several authors have used rock glaciers as proxies for permafrost presence/absence in permafrost distribution models [@boeckli_statistical_2012,@marcer_permafrost_2017].
 
-In recent years, multi-method approaches have been used in this field of research; @buchli_kinematic_2018 combine laser scanning, terrestrial radar and in-situ measurements at the Furggwanghorn rock glacier in Switzerland. Remote sensing data, especially radar interferometry [@barboux_mapping_2015], optical imagery and laser scanning [@arenson_detection_2016] have become more and more common for rock glacier deformation analysis.
+In recent years, multi-method approaches have been used in this field of research; @buchli_kinematic_2018 combine laser scanning, terrestrial radar and in-situ measurements at the Furggwanghorn rock glacier in Switzerland. Remote sensing data, especially radar interferometry (InSAR) [@barboux_mapping_2015], optical imagery and laser scanning [@arenson_detection_2016] have become more and more common for rock glacier deformation analysis. With unmanned aerial vehicles (UAVs), high-resolution consumer grade digital cameras and smartphones being more and more widespread, surveys with high to very high resolution in time and space dimensions [@dallasta_unmanned_2017] become affordable in research and natural hazard mitigation contexts. Structure-from-motion (SfM) [@smith_structure_2016] and other established photogrammetric techniques allow for the generation of genuine 3D point clouds as well as 2.5D digital surface models (DSMs) and derivates, acquired by abovementioned techniques [@eltner_imagebased_2016].
 
-* Photogrammetry (besides other remote sensing data: InSAR)
-* Image matching methods: History: General and used methods
-* IMCORR and bUnwrapJ
-* What did we do in short
-* What did we want to achieve?
+From a series of those surface models at different points in time, displacement velocities of mass movement processes as well as surface changes resulting from erosion and denudation can be quantified. Techniques range from simple DEM differencing to 3-dimensional point-cloud comparison [@james_3d_2017].
+
+Image matching techniques are well established methods for the quantification of surface changes in geomorphology and glaciology [@paul_glaciers_2015]. They have already been developed for glacier velocity analyses in the mid-1980s [@scambos_application_1992] and have been developed further since then. They do not necessarily depend on elevation models, except for the quantification of 3-dimensional (i.e. elevation) differences. All image matching algorithms are based on the comparison of either local image patterns or structures/features, on global image characteristics or a combination thereof. They can be applied to panchromatic or colour images as well as to DEMs and their derivates and image transformations (most commonly used: Fourier transformations, filters and principal component analyses) [@heid_evaluation_2012,@dallasta_unmanned_2017]. Besides scope and input data, image matching algorithms can be structured by their similarity measure: The calculation of a normalized cross-correlation coefficient (NCC) on two image parts is the most widespread mesaure [@scambos_application_1992]. More recently, NCC-based similarity measures have been developed further, being based on image derivatives [@heid_evaluation_2012] or on global energy functions [@argandacarreras_consistent_2006].
+
+Image matching techniques have been applied to rock glacier deformation detection and the calculation of velocity fields. @bodin_multi-annual_2018 present one of the most recent examples for the Laurichard rock glacier in the French Alps. Based on their work, we compared the performance of two image matching algorithms for surface displacement detection between 2012 and 2017: 
+1. The well-established IMCORR algorithm [@nsidc_imcorr_2018], based on @scambos_application_1992; and 
+2. bUnwarpJ, a semi-global algorithm originally developed for image registration in health studies [@argandacarreras_consistent_2006].
+For both algorithms we calculated an annual displacement rate of the Laurichard rock glacier, based on high-resolution DEMs from an aerial laser scanning campaign in 2012 and from a UAV campaign in 2017. We optimized parameter settings of both approaches and estimated the accuracy of the resulting deformation fields with GPS displacement data from @bodin_multi-annual_2018 and manually mapped surface displacements.
+
+TODO: Structure of the paper? 
 
 # Study Area
 
@@ -89,6 +94,7 @@ Since the beginning of the 1980s, the Laurichard rock glacier has been subject t
 ## Used Data
 
 
+Jason Goetz (personal communication). [!]
 
 ## IMCORR
 
