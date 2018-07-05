@@ -215,7 +215,17 @@ text_tbl = read.csv(file = "tables/XYZ_IMCORR_Bodin_manuell_stats.csv",header = 
 
 ## Final Results
 
+* BunwrappJ: DEM_60_1_1
+* IMCORR: DEM_256_64_01 (because differnece in expert the expert approach to 256_128_01 is maginal)
+* MAP of IMCORR / BUNWRAPP
+* Scatterplot
+* Raster Stats ( maybe in appendix, and delate other table there)
+
 # Discussion
+
+* Convertion to 8 bit Bunwrapp input, loss of data (especially DEM)
+* 
+
 
 # Conclusion
 
