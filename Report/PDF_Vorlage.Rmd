@@ -43,12 +43,18 @@ linestretch:  1.5
 # knitr::include_graphics("netcdf-file-structure.png")
 # ```
 # 
-# ```{r packages-tab2,echo=FALSE, warning=FALSE, message=FALSE}
-# library(dplyr)
-# text_tbl = read.csv(file = "Tables/Sentinel_tab2.csv",header = T,sep = ";")
-# knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Verwendete **`R`**- Pakete und deren Kurzbeschreibung") %>%
-# kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down"))
+#```{r packages-tab2,echo=FALSE, warning=FALSE, message=FALSE}
+#library(dplyr)
+#library(knitr)
+#library(kableExtra)
+#text_tbl = read.csv(file = "tables/SDG_Goals_final.csv",header = T,sep = ";")
+# knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "17 SDG's (UN.2015b)") %>% 
+#    kableExtra::kable_styling(full_width = F, font_size = 11 , latex_options = c("striped","hold_position","scale_down"))%>%
+#   column_spec(1, bold = TRUE) %>%  #color = "blue"
+#   column_spec(2, width = "14.5cm") %>%
+#   row_spec(0, bold = TRUE)
 #```
+#
 # $$\phi$$ Formel
 # $\phi$ inline Formel
 
@@ -91,6 +97,10 @@ Since the beginning of the 1980s, the Laurichard rock glacier has been subject t
 
 # Data and Methods
 
+## Study Site
+
+Insert Map Study Site, different Validation Points and Landmarks, Hillshade, background map
+
 ## Used Data
 
 
@@ -100,13 +110,211 @@ Jason Goetz (personal communication). [!]
 
 ## ImageJ BUnwrapJ
 
+## Test Setup
+
+* Decision to to test with ImageJ (time)
+* Test setup
+  + Test I: Testing the differce of Landmarks (60/61), landmark on falling rock (yes/no), see map for study site, decision which Landmarks we gonna use
+  + Test II: Testing Different Input Data (DEM,HILL,ASPECT,SLOPE;PCA1) for Transformation BunwrappJ, all applied to DEM, decision which input data  we gonna use for Transformation
+  + Test III: Testing different Setting, Name LMW/IMW (Landmarkweight/imageweight), link to formula BunwrappJ, decision final processing settings
+  + Test IV: three different Settings for IMCORR, to much time, future research sample TestSetup like bunwrappJ (with out Landmarks)
+
 # Results
+
+## Test I
+
+Testing the influnce of extreme Values (falling Rocks) towards the image machings technics
+
+```{r packages-tab2,echo=FALSE, warning=FALSE, message=FALSE}
+library(dplyr)
+library(knitr)
+library(kableExtra)
+text_tbl = read.csv(file = "tables/T1_DEM_60_61_xyz_Bodin_manuell.csv",header = T,sep = ";")
+ knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Resulting Statistics Test I") %>% 
+    kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down"))%>%
+   column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue"
+   column_spec(2, width = "2.5cm") %>%
+   column_spec(3:6, width = "3cm") %>%
+   row_spec(0, bold = TRUE) %>%
+   row_spec(1, bold = TRUE) %>%
+   row_spec(12:13, bold = TRUE) %>%
+   row_spec(16, bold = TRUE) %>%
+   row_spec(27:28, bold = TRUE)
+   
+```
+
+## Test II 
+
+Testing different input Data for Transformation Creation
+
+
+```{r packages-tab3,echo=FALSE, warning=FALSE, message=FALSE}
+library(dplyr)
+library(knitr)
+library(kableExtra)
+text_tbl = read.csv(file = "tables/T2_diff_input_60_XYZ_bodin_manuell.csv",header = T,sep = ";")
+ knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Resulting Statistics Test II") %>% 
+    kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down"))%>%
+   column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue"
+   column_spec(2, width = "2.5cm") %>%
+   column_spec(3:12, width = "3cm") %>%
+   row_spec(0, bold = TRUE) %>%
+   row_spec(1, bold = TRUE) %>%
+   row_spec(12:13, bold = TRUE) %>%
+   row_spec(16, bold = TRUE) %>%
+   row_spec(27:28, bold = TRUE) %>%
+   kableExtra::landscape()
+   
+```
+
+## Test III
+
+Testing different Settings of ImageJ
+
+
+```{r packages-tab4,echo=FALSE, warning=FALSE, message=FALSE}
+library(dplyr)
+library(knitr)
+library(kableExtra)
+text_tbl = read.csv(file = "tables/T3_Settings_XYZ_Bodin_manuell.csv",header = T,sep = ";")
+ knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Resulting Statistics Test III") %>% 
+    kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down"))%>%
+   column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue"
+   column_spec(2, width = "2.5cm") %>%
+   column_spec(3:18, width = "3cm") %>%
+   row_spec(0, bold = TRUE) %>%
+   row_spec(1, bold = TRUE) %>%
+   row_spec(12:13, bold = TRUE) %>%
+   row_spec(16, bold = TRUE) %>%
+   row_spec(27:28, bold = TRUE) %>%
+   kableExtra::landscape()
+   
+```
+
+## Test IV
+
+
+```{r packages-tab5,echo=FALSE, warning=FALSE, message=FALSE}
+library(dplyr)
+library(knitr)
+library(kableExtra)
+text_tbl = read.csv(file = "tables/XYZ_IMCORR_Bodin_manuell_stats.csv",header = T,sep = ";")
+ knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Resulting Statistics Test IV") %>% 
+    kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down"))%>%
+   column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue"
+   column_spec(2, width = "2.5cm") %>%
+   column_spec(3:18, width = "3cm") %>%
+   row_spec(0, bold = TRUE) %>%
+   row_spec(1, bold = TRUE) %>%
+   row_spec(12:13, bold = TRUE) %>%
+   row_spec(16, bold = TRUE) %>%
+   row_spec(27:28, bold = TRUE) %>%
+   kableExtra::landscape()
+   
+```
+
+## Final Results
 
 # Discussion
 
 # Conclusion
 
 # Outlook (or: Conclusion and Outlook?)
+
+# Appendix
+
+
+```{r packages-tab6,echo=FALSE, warning=FALSE, message=FALSE}
+library(dplyr)
+library(knitr)
+library(kableExtra)
+text_tbl = read.csv(file = "tables/T1_DEM_60_61_xyz_Raster_Stats.csv",header = T,sep = ";")
+ knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Raster Statistics Test I") %>% 
+    kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down")) %>%
+   column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue"
+   row_spec(0, bold = TRUE) %>%
+   # row_spec(1, bold = TRUE) %>%
+   # row_spec(12:13, bold = TRUE) %>%
+   # row_spec(16, bold = TRUE) %>%
+   # row_spec(27:28, bold = TRUE) %>%
+   kableExtra::landscape()
+   
+```
+
+
+```{r packages-tab7,echo=FALSE, warning=FALSE, message=FALSE}
+library(dplyr)
+library(knitr)
+library(kableExtra)
+text_tbl = read.csv(file = "tables/T2_diff_input_60_raster_stats.csv",header = T,sep = ";")
+ knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Raster Statistics Test I") %>% 
+    kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down")) %>%
+   column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue"
+   row_spec(0, bold = TRUE) %>%
+   # row_spec(1, bold = TRUE) %>%
+   # row_spec(12:13, bold = TRUE) %>%
+   # row_spec(16, bold = TRUE) %>%
+   # row_spec(27:28, bold = TRUE) %>%
+   kableExtra::landscape()
+   
+```
+
+
+```{r packages-tab8,echo=FALSE, warning=FALSE, message=FALSE}
+library(dplyr)
+library(knitr)
+library(kableExtra)
+text_tbl = read.csv(file = "tables/T3_Settings_raster_stats.csv",header = T,sep = ";")
+ knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Raster Statistics Test II") %>% 
+    kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down")) %>%
+   column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue"
+   row_spec(0, bold = TRUE) %>%
+   # row_spec(1, bold = TRUE) %>%
+   # row_spec(12:13, bold = TRUE) %>%
+   # row_spec(16, bold = TRUE) %>%
+   # row_spec(27:28, bold = TRUE) %>%
+   kableExtra::landscape()
+   
+```
+
+
+```{r packages-tab9,echo=FALSE, warning=FALSE, message=FALSE}
+library(dplyr)
+library(knitr)
+library(kableExtra)
+text_tbl = read.csv(file = "tables/T3_Settings_raster_stats.csv",header = T,sep = ";")
+ knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Raster Statistics Test III") %>% 
+    kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down")) %>%
+   column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue"
+   row_spec(0, bold = TRUE) %>%
+   # row_spec(1, bold = TRUE) %>%
+   # row_spec(12:13, bold = TRUE) %>%
+   # row_spec(16, bold = TRUE) %>%
+   # row_spec(27:28, bold = TRUE) %>%
+   kableExtra::landscape()
+   
+```
+
+
+
+
+```{r packages-tab10,echo=FALSE, warning=FALSE, message=FALSE}
+library(dplyr)
+library(knitr)
+library(kableExtra)
+text_tbl = read.csv(file = "tables/XYZ_IMCORR_raster_stats.csv",header = T,sep = ";")
+ knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Raster Statistics Test IV") %>% 
+    kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down")) %>%
+   column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue"
+   row_spec(0, bold = TRUE) %>%
+   # row_spec(1, bold = TRUE) %>%
+   # row_spec(12:13, bold = TRUE) %>%
+   # row_spec(16, bold = TRUE) %>%
+   # row_spec(27:28, bold = TRUE) %>%
+   kableExtra::landscape()
+   
+```
+
 
 # References
 
