@@ -95,28 +95,62 @@ The Laurichard rock glacier is situated in the French Alps, with an approximatel
 
 Since the beginning of the 1980s, the Laurichard rock glacier has been subject to in-situ and remote sensing photogrammetry research. Refer to @bodin_multi-annual_2018 for the most current research work as well as for an overview over the history of site studies.
 
+```{r echo=FALSE, fig.pos="h",fig.align="center", out.width = "300px", fig.cap= "Study Site: Laurichard rock glacier is situated in the French Alps"}
+knitr::include_graphics("images/Map_1.png")
+```
+
 # Data and Methods
 
-## Study Site
 
-Insert Map Study Site, different Validation Points and Landmarks, Hillshade, background map
 
 ## Used Data
+
+* Two DEM's with different Generation methods
+  + 2017 SFMMVS (Structure from Motion)
+  + 2012 LIDAR
+  + both Resolution of 0.1 m
+  + co-registered
+* Different Derivates (Hillshade, Aspect, Slope, PC1 (PCA of DEM, Hillshade, Aspect and Slope))
+* Validation Data (XYZ Displacement 2012-2015) Bodin et al. 2017
+* Expert Based Validation Dataset (Points from ImageJ (Source, Target), Calculate euclidian Distanz -> Calculate XYZ Displacment (Extract Height from Source Image at Source Point, Target Image at Target Point, Make difference (TargetHeight- SourceHeight, Calcilate XYZ with sqrt((XY_Displacement)^2 +(Z_Displacement)^2))) )
+* ContourShapefile
+* Software
+  + Fiji ImageJ 1.52d , Plugin BunwarpJ 2.6 
+  + R version 3.4.4 and R Studio Version 1.1.453 
+  + IMCORR XYXYXYXYXYXYXYXYX
+
+
 
 
 Jason Goetz (personal communication). [!]
 
 ## IMCORR
 
-## ImageJ BUnwrapJ
+## ImageJ BUnwarpJ
+
+* performs "2D image registstration based on elastic deformation" represented by B-splines
+* performs a simultaneous registration of two Images
+* Algortihm 
+  + based on the minimazation of an enegry functional, that includes the dissimilarity between the Source and the Target image (in both directions, $E_{img}$ )
+  + an optional landmark constraint $E_\mu$
+  + a regularization term ($E_{div} + E_{rot}$)
+  + a energy term ($E_{cons}$) (accounts for the geometricaly consistancy for the elastic deformation in both directions)
+  + $\omega$ alias weight is set by the user
+  + the optimizatuon process is a Levenberg-Marquardt minimization, enhanced by a Broyden-Fletcher-Goldfarb-Shanno (BFGS) estimate of the local Hessian of the goal Function
+  + both images and deformations are represented by cubic B-splines
+  + https://imagej.net/BUnwarpJ
+  + https://af13436f-a-62cb3a1a-s-sites.googlegroups.com/site/iargandacarreras/bUnwarpJ_ImageJ_Conf_2008_presentation.pdf?attachauth=ANoY7cpXgp6aXFHcp0y-7ye8MZR1eldVpbnrG-K5zSjqzO-E_8FDSPbrmNLvdyTOIBUhOb3NXzKtQ4gAAYkqT1TCt6psT3QnugWziKk7EyhA-2iiqUpIS0W5R8KIvyFHwqzb6Y4WEe7xOe5qDW1IUhTu1dDNWKSzLQfzaplbeJe4UFFQwqyPceD64SLslK9JQSsKK5pJ-LTKy5nMjFP8F8mtI4UJgf3BAdZy9aZgrvm_HvSZPjnYlADN1SHAL2mymvTW5x5frOHO&attredirects=0
+ 
+ $$E=\omega_{i\ }E_{img}\ +\ \omega_{\mu}\ E_{\mu}\ +\left(\omega_{d\ }E_{div}\ +\omega_{r\ }E_{rot}\right)\ +\omega_{c\ }E_{cons}$$
 
 ## Test Setup
 
 * Decision to to test with ImageJ (time)
+* Masking Aspect und Mask
 * Test setup
   + Test I: Testing the differce of Landmarks (60/61), landmark on falling rock (yes/no), see map for study site, decision which Landmarks we gonna use
-  + Test II: Testing Different Input Data (DEM,HILL,ASPECT,SLOPE;PCA1) for Transformation BunwrappJ, all applied to DEM, decision which input data  we gonna use for Transformation
-  + Test III: Testing different Setting, Name LMW/IMW (Landmarkweight/imageweight), link to formula BunwrappJ, decision final processing settings
+  + Test II: Testing Different Input Data (DEM,HILL,ASPECT,SLOPE;PCA1) for Transformation BunwarpJ, all applied to DEM, decision which input data  we gonna use for Transformation
+  + Test III: Testing different Setting, Name LMW/IMW (Landmarkweight/imageweight), decision final processing settings
   + Test IV: three different Settings for IMCORR, to much time, future research sample TestSetup like bunwrappJ (with out Landmarks)
 
 # Results
@@ -130,7 +164,7 @@ library(dplyr)
 library(knitr)
 library(kableExtra)
 text_tbl = read.csv(file = "tables/T1_DEM_60_61_xyz_Bodin_manuell.csv",header = T,sep = ";")
- knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Resulting Statistics Test I") %>% 
+ knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Result Statistics Test I") %>% 
     kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down"))%>%
    column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue"
    column_spec(2, width = "2.5cm") %>%
@@ -141,6 +175,12 @@ text_tbl = read.csv(file = "tables/T1_DEM_60_61_xyz_Bodin_manuell.csv",header = 
    row_spec(16, bold = TRUE) %>%
    row_spec(27:28, bold = TRUE)
    
+```
+
+
+
+```{r echo=FALSE, fig.pos="h",fig.align="center", out.width = "500px", fig.cap= "Influence of extreme Landmarks"}
+knitr::include_graphics("images/Map_2.png")
 ```
 
 ## Test II 
@@ -220,6 +260,13 @@ text_tbl = read.csv(file = "tables/XYZ_IMCORR_Bodin_manuell_stats.csv",header = 
 * MAP of IMCORR / BUNWRAPP
 * Scatterplot
 * Raster Stats ( maybe in appendix, and delate other table there)
+
+
+
+```{r echo=FALSE, fig.pos="h",fig.align="center", out.width = "500px", fig.cap= "Comparison of BunwrapJ und IMCORR, final Results"}
+knitr::include_graphics("images/Map_3.png")
+```
+
 
 # Discussion
 
