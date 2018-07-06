@@ -276,6 +276,23 @@ text_tbl = read.csv(file = "tables/T3_Settings_XYZ_Bodin_manuell.csv",header = T
 
 ## Test IV
 
+Testing different Windowsizes, 128_64, 256_128, 256_64
+
+* The Results show
+  + The lowest correlation and RMSE we are achieving with 128_64
+  + For 256_128 and 256_64 we are getting significant better R² and RMSE's
+  + Compariosn 256_128 vs. 256_64
+    + Bodin et al.
+      + 256_128 (R² = 0.6321, RMSE = 0.5097) and 256_64 (R² = 0.78, RMSE = 0.3479), in this Case 256_64 showing significant better Results
+    + Expert based
+      + 256_128 (R² = 0.8748, RMSE = 0.1722) ans 265_64 (R² = 0.865, RSME = 0.2053), in this Case 256_128 showing slitly better Results, but not significant
+    + Bodin vs. Expert based
+      + Expert based is showing significant better Results (R², RMSE)
+    + conclusion
+      + Using 256_64, best for Bodin and "best" for Expert based (no sigfnificant difference)
+* I thing here we dont have to pay attention to the min max and so on, i think we shoot look on that at the final results
+* Explenation and drawing conclusion see diskussion
+
 
 ```{r packages-tab5,echo=FALSE, warning=FALSE, message=FALSE}
 library(dplyr)
@@ -304,12 +321,60 @@ text_tbl = read.csv(file = "tables/XYZ_IMCORR_Bodin_manuell_stats.csv",header = 
 * Scatterplot
 * Raster Stats ( maybe in appendix, and delate other table there)
 
-
+* Map
+  + Not possible of importing Arrows for flow direction (missing aspect of IMCORR, and i was not able to get the Arrows in a good Size for display)
+  + BunwarpJ
+    + Two main Areas of displacement
+    + The Displacement Zone at the Top of the tounge is a bit Stronger than the other one
+  + IMCORR
+    + Displacement on the hole tonge
+    + At the front of the Tonge the highest Displacement
+    + Error Displacement in the right lower corner - > not masked out like in the BunwarpJ
+    + At leat we can identify also two displacement zones, at the top and complete in the Front
 
 ```{r echo=FALSE, fig.pos="h",fig.align="center", out.width = "500px", fig.cap= "Comparison of BunwrapJ und IMCORR, final Results"}
 knitr::include_graphics("images/Map_3.png")
 ```
 
+\newpage 
+
+* scatterplot
+  + Hmmm
+  + What can we write here?!
+
+```{r echo=FALSE, fig.pos="h",fig.align="center", out.width = "300px", fig.cap= "Comparison of BunwrapJ und IMCORR, final Results"}
+knitr::include_graphics("images/Scatterplot.PNG")
+```
+
+\newpage 
+* Raster Statistics
+  + BunwarpJ
+    + Min of 0.0006, Median of 0.6403, Max of 1.7188, IQR 0.5804
+  + IMCORR
+    + Min pf 0.0007, Median of 0.8661, Max of 2.3810, IQR 0.9019
+  + BunwarpJ have always lower displacement rates than IMCORR
+
+
+```{r packages-tab12,echo=FALSE, warning=FALSE, message=FALSE}
+library(dplyr)
+library(knitr)
+library(kableExtra)
+text_tbl = read.csv(file = "tables/final_raster_stats.csv",header = T,sep = ";")
+ knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Final Raster Statistics") %>% 
+    kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down")) %>%
+   column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue"
+   # column_spec(2, width = "2.5cm") %>%
+   # column_spec(3:18, width = "3cm") %>%
+   row_spec(0, bold = TRUE) #%>%
+   # row_spec(1, bold = TRUE) %>%
+   # row_spec(12:13, bold = TRUE) %>%
+   # row_spec(16, bold = TRUE) %>%
+   # row_spec(27:28, bold = TRUE) %>%
+   # kableExtra::landscape()
+   
+```
+
+\newpage 
 
 # Discussion
 
@@ -347,11 +412,39 @@ knitr::include_graphics("images/Map_3.png")
     + a bad Algorithem to for image comaprison (IMCOOR is showing better Results with just Image Comparing Test IV)
     + Convertion of Inputdata to 8 bit for ImageJ/Bunwarp -> loss of Data (especilly DEM originally 32 bit), is shout work with 32-bit data, but it didn't (BUG?!)
 
-* Convertion to 8 bit Bunwrapp input, loss of data (especially DEM)
-* 
+* Test IV
+  + Best Result 256_64
+    + Explenation ?! Smaller window size in Window?! Getting better the differeces?!
 
+* Final Results
+  + Discussion of Flow direction (?!)
+  + Plausibility of Results
+    + relativelly stable areas in BunwarpJ at the Front of the Tounge (real?!)
+    + unstable areas in Imcorr at the same possition (more real?!)
+    + Different Displacement zones (how does a rock glazier move-> wich one is more realistic?)
+  + Scatterplot?!
+    + What we can dicuss here?!
+  + Image Statistics
+    + Influenced image Statistic of IMCORR (lower right corner)
+    + IMCORR interpolation of Lines to Points to Image
+  + Visual comparison to Bodin et al. 2017 ?! -> recognize that bodin is 2m Resolution
 
 # Conclusion
+
+* Handling of Algorithms
+  + IMCORR
+    + High Processing Time with IMCORR, Interpolation (global, focal), no smooth Results (Bodin et al. Upsamling 2m)
+    + Good Results (values), Visual not nice looking
+  + BunwrapJ
+    + "Resampling" to 8-bit as input image for ImageJ -> loss of information
+    + ca. 20 min Transformation calculation (each test)
+    + Use of R Script -> Process of Transformation (5-10 min each)
+    + all in all high processing speed, good Results (Values as well as Image visuell)
+* Both Algorithms suitable
+* Future Research
+  + Test Derivates with IMCORR
+  + Test everything with COSI-Corr
+    
 
 # Outlook (or: Conclusion and Outlook?)
 
