@@ -146,9 +146,9 @@ Jason Goetz (personal communication). [!]
 ## Test Setup
 
 * Decision to to test with ImageJ (time)
-* Masking Aspect und Mask
+* Masking Aspect und Mask, causes the loss of Validation points (NA)
 * Test setup
-  + Test I: Testing the differce of Landmarks (60/61), landmark on falling rock (yes/no), see map for study site, decision which Landmarks we gonna use
+  + Test I: Testing the difference of Landmarks (60/61), landmark on falling rock (yes/no), see map for study site, decision which Landmarks we gonna use
   + Test II: Testing Different Input Data (DEM,HILL,ASPECT,SLOPE;PCA1) for Transformation BunwarpJ, all applied to DEM, decision which input data  we gonna use for Transformation
   + Test III: Testing different Setting, Name LMW/IMW (Landmarkweight/imageweight), decision final processing settings
   + Test IV: three different Settings for IMCORR, to much time, future research sample TestSetup like bunwrappJ (with out Landmarks)
@@ -157,7 +157,19 @@ Jason Goetz (personal communication). [!]
 
 ## Test I
 
-Testing the influnce of extreme Values (falling Rocks) towards the image machings technics
+Testing the influnce of extreme Values (falling Rocks) towards the image machings technics, Landmarks for Transformation and the correlation to the validiaton data set
+
+* The Test Results are showing
+  + Validiation with Bodin
+    + 60 LM XYZ Correlation and RMSE (R² = 0.7115, RMSE = 0.57)
+    + 61 LM XYZ Correlation and RMSE (R² = 0.0499, RMSE = 0.847)
+  + Validation with expert based Valdidation Points
+    + 60 LM XYZ Correlation and RMSE (R² = 0.7063, RMSE = 0.2414)
+    + 61 LM XYZ Correlation and RMSE ( R² = 0.5892, RMSE = 0.291)
+* I thing here we dont have to pay attention to the min max and so on, i think we shoot look on that at the final results
+* Explenation and drawing conclusion see diskussion
+
+\newpage
 
 ```{r packages-tab2,echo=FALSE, warning=FALSE, message=FALSE}
 library(dplyr)
@@ -177,15 +189,29 @@ text_tbl = read.csv(file = "tables/T1_DEM_60_61_xyz_Bodin_manuell.csv",header = 
    
 ```
 
-
+\newpage
 
 ```{r echo=FALSE, fig.pos="h",fig.align="center", out.width = "500px", fig.cap= "Influence of extreme Landmarks"}
 knitr::include_graphics("images/Map_2.png")
 ```
 
+\newpage
+
 ## Test II 
 
-Testing different input Data for Transformation Creation
+Testing different input Data for Transformation Creation with 60 Landmark, Result from Test 1, not sure if we really need the "Error" in all the tables
+
+* The Results are showing
+  + Valdidation Bodin
+    + Aspect ( R² = 0.4926, RMSE = 0.6555) and Slope ( R² = 0.5379, RMSE = 0.5881) are not really suitable to Create the Transformation ( make sense)
+    + Hillshade ( R² = 0.6802, RMSE = 0.5656) and PC1 ( R² = 0.6322, RMSE = 0.5211) are showing nearly identical Results, can be used
+    + DEM (R² 0.7115, RMSE = 0.57) is the best option (but not significant)
+  + Exepert Based
+    + Aspect (R² = 0.5637, RMSE = 0.3162) and Slope ( R² = 0.5594, RMSE = 0.32) are not really suitable to Create the Transformation ( make sense)
+    + Hillshade (R² = 0.6099, RMSE = 0.3056), less accourate than bodin
+    + DEM (R² = 0.7063, RMSE = 0.2414) and PC1(R²0.681, RMSE = 0.2585) are showing nearly identical Results, both can ne used
+* I thing here we dont have to pay attention to the min max and so on, i think we shoot look on that at the final results
+* Explenation and drawing conclusion see diskussion
 
 
 ```{r packages-tab3,echo=FALSE, warning=FALSE, message=FALSE}
@@ -209,8 +235,25 @@ text_tbl = read.csv(file = "tables/T2_diff_input_60_XYZ_bodin_manuell.csv",heade
 
 ## Test III
 
-Testing different Settings of ImageJ
+Testing different Settings of ImageJ, the Seetings are part of the Name -> Bsp. T3_DEM_60_[4_1]xyzDispAnual, the 4 is the Landmarkweight and the 1 The image weight
 
+* The Results show
+  + tested combinations, 4_1,2_1,1_1,1_0,0_0,0_1,0_2,0_4, in gernerall
+    + combination 0_0 = useless
+    + combination 0_1 = also useless (Standart Setting of Bunwarp)
+    + combination 1_[2:4] = more or less useless
+    + combinaiton [2:4]_1 = showing good results
+    + combination 1_1 = showing best results, nealy as good as [2:4]_1
+  + Trends:
+    + better results for 1_2 or 2_1 Settings in comparison to 1_4 and 4_1
+    + Landmarkweight (4_1,2_1) showing significant better results than Imageweight
+    + Trade of beetween LMW and IMW (1_1), is showing the best result
+  + conclusion:
+    + Use 1_1 (or high landmarkweight is also ok)
+  + RMSE of Expert based Validition is lower than Bodin ( Test 1,2 confirmed)
+  
+* I thing here we dont have to pay attention to the min max and so on, i think we shoot look on that at the final results
+* Explenation and drawing conclusion see diskussion
 
 ```{r packages-tab4,echo=FALSE, warning=FALSE, message=FALSE}
 library(dplyr)
@@ -269,6 +312,40 @@ knitr::include_graphics("images/Map_3.png")
 
 
 # Discussion
+
+* Test I
+  + In both cases 60 Landmarks are showing the better values - >
+  + Explenation for R² of 0.0499
+    + Valdidation points ( 3 to 4) of bodin are located in the Area of extreme Displacement (see fig. 1) -> our statistic colappses
+    + better R² for expert based Validaiton points, no point is located in the Area of extreme Displacement, but this is also showing a low R²
+  + Explenation for different RMSE
+    + Different number of samling Points
+    + Relativelly high RMSE for Bodin 60 Points ( in comparison to expert based)
+  + Conlusion
+    + 18 Sampling points are increasing the RMSE, Use at least a min. of 30 (or more?!)
+    + R² is not directly influenced by the numer of samling points
+    + Take care while collection Sampling Points ( valdidation)
+      + do not collect Sampling points on extremely moving (falling) rocks
+    + 61 Sampling points shows a high sensitivity to processes at the top (falling rocks)
+    
+    
+* Test II
+  + In both cases the DEM as Transformation input is the right choice, but at leat i thing it doesn't matter if we use DEM, Hill or PC1
+    + Aspect and Slope (can change easielly, at least there is not usefull information)
+    + DEM, Hillshade, PC1 within a 10% span, is it really significant?!
+  + Looking at the RMSE confirms the guess of Test I
+  + Conclusion
+    + Use the DEM as Input for the Transformation, with 60 LM (see test I)
+    + RMSE still higher for less Validation Points
+    + One Option could be to Calulate a PCA with the DEM and Hillshade ( both are showing strong correlation -> maybe we can get a higher R² and lower RMSE if we extract the Main Information from both Images)
+    
+* Test III
+  + The best result is achieved with 1_1
+  + Explenation for weighting 2 is better than 4
+    + with the Weighting Factor of 4 the weight is overweighted?!
+  + Explenation that LMW showing better Results than IMW
+    + a bad Algorithem to for image comaprison (IMCOOR is showing better Results with just Image Comparing Test IV)
+    + Convertion of Inputdata to 8 bit for ImageJ/Bunwarp -> loss of Data (especilly DEM originally 32 bit), is shout work with 32-bit data, but it didn't (BUG?!)
 
 * Convertion to 8 bit Bunwrapp input, loss of data (especially DEM)
 * 
