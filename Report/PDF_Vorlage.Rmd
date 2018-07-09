@@ -74,12 +74,12 @@ In recent years, multi-method approaches have been used in this field of researc
 
 From a series of those surface models at different points in time, displacement velocities of mass movement processes as well as surface changes resulting from erosion and denudation can be quantified. Techniques range from simple DEM differencing to 3-dimensional point-cloud comparison [@james_3d_2017].
 
-Image matching techniques are well established methods for the quantification of surface changes in geomorphology and glaciology [@paul_glaciers_2015]. They have already been developed for glacier velocity analyses in the mid-1980s [@scambos_application_1992] and have been developed further since then. They do not necessarily depend on elevation models, except for the quantification of 3-dimensional (i.e. elevation) differences. All image matching algorithms are based on the comparison of either local image patterns or structures/features, on global image characteristics or a combination thereof. They can be applied to panchromatic or colour images as well as to DEMs and their derivates and image transformations (most commonly used: Fourier transformations, filters and principal component analyses) [@heid_evaluation_2012,@dallasta_unmanned_2017]. Besides scope and input data, image matching algorithms can be structured by their similarity measure: The calculation of a normalized cross-correlation coefficient (NCC) on two image parts is the most widespread mesaure [@scambos_application_1992]. More recently, NCC-based similarity measures have been developed further, being based on image derivatives [@heid_evaluation_2012] or on global energy functions [@argandacarreras_consistent_2006].
+Image matching techniques are well established methods for the quantification of surface changes in geomorphology and glaciology [@paul_glaciers_2015]. They have already been developed for glacier velocity analyses in the mid-1980s [@scambos_application_1992] and have been developed further since then. They do not necessarily depend on elevation models, except for the quantification of 3-dimensional (i.e. elevation) differences. All image matching algorithms are based on the comparison of either local image patterns or structures/features, on global image characteristics or a combination thereof. They can be applied to panchromatic or colour images as well as to DEMs and their derivates and image transformations (most commonly used: Fourier transformations, filters and principal component analyses) [@heid_evaluation_2012,@dallasta_unmanned_2017]. Besides scope and input data, image matching algorithms can be structured by their similarity measure: The calculation of a normalized cross-correlation coefficient (NCC) on two image parts is the most widespread measure [@scambos_application_1992]. More recently, NCC-based similarity measures have been developed further, being based on image derivatives [@heid_evaluation_2012] or on global energy functions [@argandacarreras_consistent_2006].
 
 Image matching techniques have been applied to rock glacier deformation detection and the calculation of velocity fields. @bodin_multi-annual_2018 present one of the most recent examples for the Laurichard rock glacier in the French Alps. Based on their work, we compared the performance of two image matching algorithms for surface displacement detection between 2012 and 2017: 
 1. The well-established IMCORR algorithm [@nsidc_imcorr_2018], based on @scambos_application_1992; and 
 2. bUnwarpJ, a semi-global algorithm originally developed for image registration in health studies [@argandacarreras_consistent_2006].
-For both algorithms we calculated an annual displacement rate of the Laurichard rock glacier, based on high-resolution DEMs from an aerial laser scanning campaign in 2012 and from a UAV campaign in 2017. We optimized parameter settings of both approaches and estimated the accuracy of the resulting deformation fields with GPS displacement data from @bodin_multi-annual_2018 and manually mapped surface displacements.
+For both algorithms we calculated an annual displacement rate of the Laurichard rock glacier, based on high-resolution DEMs from an aerial laser scanning (ALS) campaign in 2012 and from a UAV campaign in 2017. We optimized parameter settings of both approaches and estimated the accuracy of the resulting deformation fields with GPS displacement data from @bodin_multi-annual_2018 and manually mapped surface displacements.
 
 TODO: Structure of the paper? 
 
@@ -87,22 +87,37 @@ TODO: Structure of the paper?
 
 The Laurichard rock glacier is situated in the French Alps, with an approximately 800m long and 100-200m wide tounge flowing from south to north-east. Due to its morphological features it can be considered an active rock glacier [@bodin_multi-annual_2018]. Especially, hillshades generated from available digital elevation models (DEMs) exhibit scarps, oriented perpendicular to the flow direction as well as a steep rising frontal lobe.
 
+TODO: Image of study area
+
 Since the beginning of the 1980s, the Laurichard rock glacier has been subject to in-situ and remote sensing photogrammetry research. Refer to @bodin_multi-annual_2018 for the most current research work as well as for an overview over the history of site studies.
 
 # Data and Methods
 
-## Used Data
+## Used Data and Preprocessing
 
+To compare the rock glacier's annual displacement rates we used one DEM, acquired by an ALS survey on 16./17. August 2012 with a vertical accuracy of 2cm and co-registered to a TLS-based DEM from 2005 [@bodin_multi-annual_2018]. The second DEM is derived from a UAV survey in 2017 and processed by Structure-from-Motion techniques (Jason Goetz, personal communication). Both models have been georeferenced and resampled to a 10cm resolution, but have not been co-registered (JG, personal communication). A first inspection with simple DEM differencing (DoD) showed good accordance between the two data sets in supposedly stable areas around the Laurichard rock glacier. Therefore, we decided to omit a co-registration procedure.
 
-Jason Goetz (personal communication). [!]
+From the DEMs we derived common derivats: Slope, Aspect and Hillshade with GIS standard settings as well as a principle component analysis in order to compare algorithm performance based on different input data.
+
+As validation data we used 
+
+* total station and DGPS measurements of marked blocks (p.6) since 1992, we used TODO: number of used points?
+* TODO: n own mapped points over the whole area
 
 ## IMCORR
 
 ## ImageJ BUnwrapJ
 
+## Comparison
+
 # Results
 
 # Discussion
+
+* assumptions and prerequisites
+
+* discuss validation data and data sets
+* interpolated areal data vs. point datad (COSP!)
 
 # Conclusion
 
