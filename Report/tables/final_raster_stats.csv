@@ -1,0 +1,9 @@
+Statistic;T2_DEM_60_1_1 xyzDispAnual;xyz_idw_aspcor 256_64_01_Anual
+Min.;6e-04;7e-04
+1st Qu.;0.3752;0.2824
+Median;0.6403;0.8661
+3rd Qu.;0.9556;1.1843
+Max.;1.7188;2.381
+NA's;2860922;2132464
+IQR;0.5804;0.9019
+SD;0.3711;0.5173
