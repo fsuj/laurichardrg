@@ -1,0 +1,15 @@
+TODOs im Endbericht:
+
+n marked blocks --- how many input data has been really used?!
+n identifiable features from the 2012 and 2017 hillshades --- *expert*-based mapping?
+cite RStudio, how?! and: which R packages were really relevant for the analysis?
+
+discuss: how detailed do the algorithm descriptions really have to be?!
+
+
+Methods part 3
+Results
+References to Images/Graphs in Results & descriptions!
+Discussion (less results than now)
+Conclusion really, really short
+

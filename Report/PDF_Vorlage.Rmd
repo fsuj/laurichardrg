@@ -87,13 +87,10 @@ Image matching techniques have been applied to rock glacier deformation detectio
 2. bUnwarpJ, a semi-global algorithm originally developed for image registration in health studies [@argandacarreras_consistent_2006].
 For both algorithms we calculated an annual displacement rate of the Laurichard rock glacier, based on high-resolution DEMs from an aerial laser scanning (ALS) campaign in 2012 and from a UAV campaign in 2017. We optimized parameter settings of both approaches and estimated the accuracy of the resulting deformation fields with GPS displacement data from @bodin_multi-annual_2018 and manually mapped surface displacements.
 
-TODO: Structure of the paper? 
 
 # Study Area
 
 The Laurichard rock glacier is situated in the French Alps, with an approximately 800m long and 100-200m wide tounge flowing from south to north-east. Due to its morphological features it can be considered an active rock glacier [@bodin_multi-annual_2018]. Especially, hillshades generated from available digital elevation models (DEMs) exhibit scarps, oriented perpendicular to the flow direction as well as a steep rising frontal lobe.
-
-TODO: Image of study area
 
 Since the beginning of the 1980s, the Laurichard rock glacier has been subject to in-situ and remote sensing photogrammetry research. Refer to @bodin_multi-annual_2018 for the most current research work as well as for an overview over the history of site studies.
 
@@ -105,63 +102,71 @@ knitr::include_graphics("images/Map_1.png")
 
 ## Used Data and Preprocessing
 
-To compare the rock glacier's annual displacement rates we used one DEM, acquired by an ALS survey on 16./17. August 2012 with a vertical accuracy of 2cm and co-registered to a TLS-based DEM from 2005 [@bodin_multi-annual_2018]. The second DEM is derived from a UAV survey in 2017 and processed by Structure-from-Motion techniques (Jason Goetz, personal communication). Both models have been georeferenced and resampled to a 10cm resolution, but have not been co-registered (JG, personal communication). A first inspection with simple DEM differencing (DoD) showed good accordance between the two data sets in supposedly stable areas around the Laurichard rock glacier. Therefore, we decided to omit a co-registration procedure.
+To compare the rock glacier's annual displacement rates we used one DEM, acquired by an ALS survey on 16./17. August 2012 with a vertical accuracy of 0.02m and co-registered to a TLS-based DEM from 2005 [@bodin_multi-annual_2018]. The second DEM is derived from a UAV survey in 2017 and processed by Structure-from-Motion techniques (Jason Goetz, personal communication). Both models have been georeferenced and resampled to a 0.1m resolution, but have not been co-registered (JG, personal communication). A first inspection with simple DEM differencing (DoD) showed good accordance between the two data sets in supposedly stable areas around the Laurichard rock glacier. Therefore, we decided to omit a co-registration procedure.
 
-From the DEMs we derived common derivats: Slope, Aspect and Hillshade with GIS standard settings as well as a principle component analysis in order to compare algorithm performance based on different input data.
+From the DEMs we derived common derivatse: Slope, Aspect and Hillshade with GIS standard settings as well as a principle component analysis of DEM, Hillshade, Aspect and Slope in order to compare algorithm performance based on different input data. We created a rock glacier contour to mask the Laurichard rock glacier from surrounding stable areas.
 
-As validation data we used 
+As validation data we used 3-dimensional annual displacement rates from 2012-2015, derived from a long-term survey (since 1992) of total station and DGPS measurements of TODO: n (18) marked blocks [@bodin_multi-annual_2018]. Additionally, we manually mapped TODO: n identifiable features from the 2012 and 2017 hillshades of the research area, from (TODO: stimmt das? eigentlich: alles maskiert, oder?) supposedly stable areas as well as from the rock glacier itself, with the landmark function of the BUnwarpJ plugin in ImageJ/Fiji (see the following section).
 
-## Used Data
+<!-- TODO: brauchen wir das echt?? Expert Based Validation Dataset (Points from ImageJ (Source, Target), Calculate euclidian Distanz -> Calculate XYZ Displacment (Extract Height from Source Image at Source Point, Target Image at Target Point, Make difference (TargetHeight- SourceHeight, Calcilate XYZ with sqrt((XY_Displacement)^2 +(Z_Displacement)^2))) ) -->
 
-* Two DEM's with different Generation methods
-  + 2017 SFMMVS (Structure from Motion)
-  + 2012 LIDAR
-  + both Resolution of 0.1 m
-  + co-registered
-* Different Derivates (Hillshade, Aspect, Slope, PC1 (PCA of DEM, Hillshade, Aspect and Slope))
-* Validation Data (XYZ Displacement 2012-2015) Bodin et al. 2017
-* Expert Based Validation Dataset (Points from ImageJ (Source, Target), Calculate euclidian Distanz -> Calculate XYZ Displacment (Extract Height from Source Image at Source Point, Target Image at Target Point, Make difference (TargetHeight- SourceHeight, Calcilate XYZ with sqrt((XY_Displacement)^2 +(Z_Displacement)^2))) )
-* ContourShapefile
-* Software
-  + Fiji ImageJ 1.52d , Plugin BunwarpJ 2.6 
-  + R version 3.4.4 and R Studio Version 1.1.453 
-  + IMCORR XYXYXYXYXYXYXYXYX
+## BUnwarpJ plugin for ImageJ
 
-* total station and DGPS measurements of marked blocks (p.6) since 1992, we used TODO: number of used points?
-* TODO: n own mapped points over the whole area
+ImageJ [@rueden_imagej2_2017] and its package bundle Fiji [@schindelin_fiji_2012] have been developed for biological and medical image analysis. The plugin BUnwarpJ [@argandacarreras_consistent_2006] performs "2D image registration based on elastic deformation" [@argandacarreras_bunwarpj_2017] between two images. The image registration algorithm calculates a deformation matrix represented by cubic B-splines from an optimization of global (energy functions describing the dissimilarity of two images) and local (user-identified feature tracking) image characteristics. Terms in the optimization equation system are weighted; thus, the importance of global and local image characteristics can be weighted by the user [@argandacarreras_consistent_2006].
 
+In the intended use of BUnwarpJ, the resulting deformation field is used for co-registering images with one reference image. While this application can also be employed in remote sensing applications, we considered the resulting B-spline deformation field as the displacement velocity information. To the authors' knowledge, BUnwrapJ in ImageJ distributions has hardly been used yet in geomorphological applications (JG, personal communication).
+
+We manually set 61 landmarks in the compared images in order to identify features of local deformations on the rock glacier surface as well as in stable areas. In order to analyse the sensitivity of the BUnwarpJ optimization algorithm, we varied
+1. the weights of global and local (landmarks) image characteristics, ranging in a scale from 4:0 to 0:4; 
+2. the landmark input set by excluding one one boulder with an extraordinarily high movement rate at the rock glacier front lobe (61 vs. 61 landmarks as input data) and landmarks indicating rock fall from a wall; and
+3. input images (DEMs and derivates).
+
+The areal transformation output resulting from varying input data and BUnwarpJ settings could be used for the calculation of 3-dimensional displacement, based on the 2012 DEM.
+
+We used the versions Fiji ImageJ 1.52d and BUnwarpJ 2.6 as well as R version 3.4.4 [@base] and R Studio Version 1.1.453 TODO: cite! for our analysis.
+
+<!-- * performs a simultaneous registration of two Images -->
+<!-- * Algortihm  -->
+<!--   + based on the minimazation of an enegry functional, that includes the dissimilarity between the Source and the Target image (in both directions, $E_{img}$ ) -->
+<!--   + an optional landmark constraint $E_\mu$ -->
+<!--   + a regularization term ($E_{div} + E_{rot}$) -->
+<!--   + a energy term ($E_{cons}$) (accounts for the geometricaly consistancy for the elastic deformation in both directions) -->
+<!--   + $\omega$ alias weight is set by the user -->
+<!--   + the optimizatuon process is a Levenberg-Marquardt minimization, enhanced by a Broyden-Fletcher-Goldfarb-Shanno (BFGS) estimate of the local Hessian of the goal Function -->
+<!--   + both images and deformations are represented by cubic B-splines -->
+
+
+<!--  $$E=\omega_{i\ }E_{img}\ +\ \omega_{\mu}\ E_{\mu}\ +\left(\omega_{d\ }E_{div}\ +\omega_{r\ }E_{rot}\right)\ +\omega_{c\ }E_{cons}$$ -->
+ 
 ## IMCORR
 
-## ImageJ BUnwarpJ
+Image correlation algorithms are well-established methods in image matching and feature tracking, originally developed for glacier velocity analyses [@scambos_application_1992]. In general, algorithms compute a normalized correlation coefficient (NCC) as a similarity metric of two bounded image areas: For a reference window (also called chip) of image 1 the NCC between image 1 and image 2 is calculated within a search window (chip) of image 2. The maximum CC within this search window is considered the tracked feature; the distance between the center of the reference window in image 1 and the center of the highest correlation results in a deformation vector [@debella-gilo_sub-pixel_2011]. Correlation metrics as well as input data have been developed further in recent years: Energy functions and derivatives of images in the spatial domain, enhancing transistions between features, as well as Fourier transformations in the frequency domain are used in common implementations of correlation algorithms; in the frequency domain, phase correlation coefficients are commonly used as approximations of normalized correlation coefficients [@heid_evaluation_2012].
 
-* performs "2D image registstration based on elastic deformation" represented by B-splines
-* performs a simultaneous registration of two Images
-* Algortihm 
-  + based on the minimazation of an enegry functional, that includes the dissimilarity between the Source and the Target image (in both directions, $E_{img}$ )
-  + an optional landmark constraint $E_\mu$
-  + a regularization term ($E_{div} + E_{rot}$)
-  + a energy term ($E_{cons}$) (accounts for the geometricaly consistancy for the elastic deformation in both directions)
-  + $\omega$ alias weight is set by the user
-  + the optimizatuon process is a Levenberg-Marquardt minimization, enhanced by a Broyden-Fletcher-Goldfarb-Shanno (BFGS) estimate of the local Hessian of the goal Function
-  + both images and deformations are represented by cubic B-splines
-  + https://imagej.net/BUnwarpJ
-  + https://af13436f-a-62cb3a1a-s-sites.googlegroups.com/site/iargandacarreras/bUnwarpJ_ImageJ_Conf_2008_presentation.pdf?attachauth=ANoY7cpXgp6aXFHcp0y-7ye8MZR1eldVpbnrG-K5zSjqzO-E_8FDSPbrmNLvdyTOIBUhOb3NXzKtQ4gAAYkqT1TCt6psT3QnugWziKk7EyhA-2iiqUpIS0W5R8KIvyFHwqzb6Y4WEe7xOe5qDW1IUhTu1dDNWKSzLQfzaplbeJe4UFFQwqyPceD64SLslK9JQSsKK5pJ-LTKy5nMjFP8F8mtI4UJgf3BAdZy9aZgrvm_HvSZPjnYlADN1SHAL2mymvTW5x5frOHO&attredirects=0
- 
- $$E=\omega_{i\ }E_{img}\ +\ \omega_{\mu}\ E_{\mu}\ +\left(\omega_{d\ }E_{div}\ +\omega_{r\ }E_{rot}\right)\ +\omega_{c\ }E_{cons}$$
+We used an algorithm performing a matching on Fourier transformed input images on user-selected reference and search window sizes (16 to 128 and 16 to 256 pixels, respectively) [@nsidc_imcorr_2018]. From @bodin_multi-annual_2018 we assumed an average displacement of around 2m per year; by reasoning, we compared only search window sizes of 12.8 (reference window size 6.4m) and 25.6m (reference window size of 6.4m and 12.8m) for 3-dimensional displacements with the DEMs as input images and according height information. Due to computational reasons, we omitted a comparison of different input data sets.
+
+We extracted the start points of the resulting displacement vector field and interpolated the point data to areal data (inverse distance weighting with a local search distance of 10m and Gaussian weighting with 10m bandwidth) according to @bodin_multi-annual_2018.
+
+We used the IMCORR -- Feature Tracking and Inverse Distance Weighted tools implemented in SAGA GIS version 2.3.1 [@conrad_system_2015] for our analysis.
 
 ## Algorithm Comparison
 
-* Decision to to test with ImageJ (time)
-* Masking Aspect und Mask, causes the loss of Validation points (NA)
-* Test setup
-  + Test I: Testing the difference of Landmarks (60/61), landmark on falling rock (yes/no), see map for study site, decision which Landmarks we gonna use
-  + Test II: Testing Different Input Data (DEM,HILL,ASPECT,SLOPE;PCA1) for Transformation BunwarpJ, all applied to DEM, decision which input data  we gonna use for Transformation
-  + Test III: Testing different Setting, Name LMW/IMW (Landmarkweight/imageweight), decision final processing settings
-  + Test IV: three different Settings for IMCORR, to much time, future research sample TestSetup like bunwrappJ (with out Landmarks)
+We masked the resulting (data)interpolated) deformation velocity fields as well the two validation data sets, excluding stable areas, a steep rock wall and obviously striped data in the 2012 DEM from the validation procedure. We compared our resulting deformation fields to the validation 
+
+We analyzed the influence of extreme deformation/velocity values on BUnwarpJ by comparing two landmark sets with the validation data sets. We used the better performing landmark 
+
+<!-- * Decision to to test with ImageJ (time) -->
+<!-- * TODO: Masking Aspect und Mask, causes the loss of Validation points (NA) -->
+<!-- * Test setup -->
+<!--   + Test I: Testing the difference of Landmarks (60/61), landmark on falling rock (yes/no), see map for study site, decision which Landmarks we gonna use -->
+<!--   + Test II: Testing Different Input Data (DEM,HILL,ASPECT,SLOPE;PCA1) for Transformation BunwarpJ, all applied to DEM, decision which input data  we gonna use for Transformation -->
+<!--   + Test III: Testing different Setting, Name LMW/IMW (Landmarkweight/imageweight), decision final processing settings -->
+<!--   + Test IV: three different Settings for IMCORR, to much time, future research sample TestSetup like bunwrappJ (with out Landmarks) -->
+  
+We used R version 3.4.4 [@base] and R Studio Version 1.1.453 TODO: cite!.
 
 # Results
 
-## Test I
+## BUnwarpJ settings
 
 Testing the influnce of extreme Values (falling Rocks) towards the image machings technics, Landmarks for Transformation and the correlation to the validiaton data set
 
@@ -203,7 +208,7 @@ knitr::include_graphics("images/Map_2.png")
 
 \newpage
 
-## Test II 
+<!-- ## Test II  -->
 
 Testing different input Data for Transformation Creation with 60 Landmark, Result from Test 1, not sure if we really need the "Error" in all the tables
 
@@ -239,7 +244,7 @@ text_tbl = read.csv(file = "tables/T2_diff_input_60_XYZ_bodin_manuell.csv",heade
    
 ```
 
-## Test III
+<!-- ## Test III -->
 
 Testing different Settings of ImageJ, the Seetings are part of the Name -> Bsp. T3_DEM_60_[4_1]xyzDispAnual, the 4 is the Landmarkweight and the 1 The image weight
 
@@ -280,7 +285,7 @@ text_tbl = read.csv(file = "tables/T3_Settings_XYZ_Bodin_manuell.csv",header = T
    
 ```
 
-## Test IV
+## IMCORR settings
 
 Testing different Windowsizes, 128_64, 256_128, 256_64
 
@@ -319,7 +324,7 @@ text_tbl = read.csv(file = "tables/XYZ_IMCORR_Bodin_manuell_stats.csv",header = 
    
 ```
 
-## Final Results
+## Algorithm comparison
 
 * BunwrappJ: DEM_60_1_1
 * IMCORR: DEM_256_64_01 (because differnece in expert the expert approach to 256_128_01 is maginal)
