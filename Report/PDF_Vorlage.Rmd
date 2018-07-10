@@ -119,7 +119,7 @@ In the intended use of BUnwarpJ, the resulting deformation field is used for co-
 We manually set 61 landmarks in the compared images in order to identify features of local deformations on the rock glacier surface as well as in stable areas. In order to analyse the sensitivity of the BUnwarpJ optimization algorithm, we varied
 1. the weights of global and local (landmarks) image characteristics, ranging in a scale from 4:0 to 0:4; 
 2. the landmark input set by excluding one one boulder with an extraordinarily high movement rate at the rock glacier front lobe (61 vs. 61 landmarks as input data) and landmarks indicating rock fall from a wall; and
-3. input images (DEMs and derivates).
+3. input images (DEM, HILL, ASPECT, SLOPE, PCA1).
 
 The areal transformation output resulting from varying input data and BUnwarpJ settings could be used for the calculation of 3-dimensional displacement, based on the 2012 DEM.
 
@@ -150,9 +150,11 @@ We used the IMCORR -- Feature Tracking and Inverse Distance Weighted tools imple
 
 ## Algorithm Comparison
 
-We masked the resulting (data)interpolated) deformation velocity fields as well the two validation data sets, excluding stable areas, a steep rock wall and obviously striped data in the 2012 DEM from the validation procedure. We compared our resulting deformation fields to the validation 
+We masked the resulting (data)interpolated) deformation velocity fields as well the two validation data sets, excluding stable areas, a steep rock wall and obviously striped data in the 2012 DEM from the validation procedure. We compared the resulting deformation fields to the deformations measured by @bodin_multi-annual_2018 on 18 marked blocks with GPS measurements and to the manually mapped deformations between identifiable features of the 2012 and 2017 hillshades. We used R² as measure of TODO Übereinstimmung and RMSE as error measure; both are dependent on the mean as 1st moment and therefore prone to outliers. Because the validation data sets comprised only limited numbers of points, we also analyzed performance metrics based on the median (quartile ranges).
 
-We analyzed the influence of extreme deformation/velocity values on BUnwarpJ by comparing two landmark sets with the validation data sets. We used the better performing landmark 
+We analyzed the influence of extreme deformation/velocity values on BUnwarpJ by comparing two landmark sets (61 vs. 60, excluding one block at the front lobe) with the validation data sets. We used only the better performing landmark for the comparison of different image data and a shift in weights from local to global optimization algorithm terms. For IMCORR, we analyzed the importance of  search and reference chip sizes and therefore of assumptions prior to the algorithm application.
+
+We chose only the best performing resulting deformation fields of each algorithm for a comparison of BUnwarpJ and IMCORR. We analyzed performance metrics as well as th visual outcome and accordance with the results of @bodin_multi-annual_2018.
 
 <!-- * Decision to to test with ImageJ (time) -->
 <!-- * TODO: Masking Aspect und Mask, causes the loss of Validation points (NA) -->
