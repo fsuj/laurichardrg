@@ -136,7 +136,7 @@ Image correlation algorithms are well-established methods in image matching and 
 ## Algorithm Comparison
 \vspace{-0.5cm}
 
-For BUwarpJ, we manually set 61 landmarks in the compared images in order to identify features of local deformations on the rock glacier surface as well as in stable areas. In order to analyse the sensitivity of the BUnwarpJ optimization algorithm, we varied
+For BUnwarpJ, we manually set 61 landmarks in the compared images in order to identify features of local deformations on the rock glacier surface as well as in stable areas. Due to software limitations, we resampled input data to a radiomentric resolution of 8bit. In order to analyse the sensitivity of the BUnwarpJ optimization algorithm, we varied
 1. the landmark input set by excluding one one boulder with an extraordinarily high movement rate at the rock glacier front lobe (61 vs. 60 landmarks as input data) and landmarks indicating rock fall from a wall in order to analyze the influence of extreme deformation/velocity values, i.e. surface deformation caused by rockfall;
 2. input images (DEM, HILL, ASPECT, SLOPE, PCA1); and
 3. the weights of global and local (landmarks) image characteristics, ranging in a scale from 4:0 to 0:4.
