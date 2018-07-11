@@ -247,9 +247,9 @@ for a comparison of algorithm performance.
 
 With the BUnwarpJ results, we could identify two relatively isolated main areas of displacement, located on the rock glacier tongue. BUnwarpJ identified hardly any displacement at the steep front lobe. IMCORR results in similar displacement velocities along the whole tongue with a peak of displacement at the front lobe. We consider the displacements at the tongue resulting from both algorithms to be in good accordance with results from previous work [@bodin_multi-annual_2018]. However, BUnwarpJ displacement areas are rather isolated while IMCORR exhibits large displacement at the rock glacier front and potential errors in areas of rockfall (figure \ref{fig:compare}).
 
+BUnwarpJ results in an overall mean annual displacement of 0.68m (sigma of 0.37m) and a median annual displacement of 0.64m (interquartile range IQR of 0.58m). IMCORR results in higher mean annual displacement rates of TODO m (sigma of 0.51m) and a higher median of 0.87m (IQR of 0.9m). We find the results to differ accordingly in maximum annual displacements of 1.72m and TODO m, respectively (table \ref{tab:compare_stats}).
 
-
-The IMCORR results with an R² of 0.78 (RMSE 0.3479) seem to be more in accordance with the reference data of @bodin_multi-annual_2018, compared to BUnwarpJ results with R² of 0.7115 (RMSE 0.57). A validation with manually mapped displacements results in an R² of 0.865 (RSME 0.2053) for IMCORR and an R² of 0.7063 (RMSE 0.2414) for BUnwarpJ. 
+IMCORR results with an R² of 0.78 (RMSE 0.3479) seem to be more in accordance with the reference data of @bodin_multi-annual_2018, compared to BUnwarpJ results with R² of 0.7115 (RMSE 0.57). A validation with manually mapped displacements results in an R² of 0.865 (RSME 0.2053) for IMCORR and an R² of 0.7063 (RMSE 0.2414) for BUnwarpJ. BUnwarpJ slightly underestimates the reference values of both validation data sets, while single displacement values of IMCORR overestimate the reference data (figure \ref{compare_scatter})
 
 <!-- * BunwrappJ: DEM_60_1_1 -->
 <!-- * IMCORR: DEM_256_64_01 (because differnece in expert the expert approach to 256_128_01 is maginal) -->
@@ -268,6 +268,13 @@ The IMCORR results with an R² of 0.78 (RMSE 0.3479) seem to be more in accordan
 <!--     + Error Displacement in the right lower corner - > not masked out like in the BunwarpJ -->
 <!--     + At leat we can identify also two displacement zones, at the top and complete in the Front -->
 
+<!-- * Raster Statistics -->
+<!--   + BunwarpJ -->
+<!--     + Min of 0.0006, Median of 0.6403, Max of 1.7188, IQR 0.5804 -->
+<!--   + IMCORR -->
+<!--     + Min pf 0.0007, Median of 0.8661, Max of 2.3810, IQR 0.9019 -->
+<!--   + BunwarpJ have always lower displacement rates than IMCORR -->
+
 ```{r compare, echo=FALSE, fig.pos="h",fig.align="center", out.width = "500px", fig.cap= "Comparison of BUnwarpJ und IMCORR, final Results"}
 knitr::include_graphics("images/Map_3.png")
 ```
@@ -277,16 +284,8 @@ knitr::include_graphics("images/Map_3.png")
 knitr::include_graphics("images/Scatterplot.PNG")
 ```
 
-\newpage 
-* Raster Statistics
-  + BunwarpJ
-    + Min of 0.0006, Median of 0.6403, Max of 1.7188, IQR 0.5804
-  + IMCORR
-    + Min pf 0.0007, Median of 0.8661, Max of 2.3810, IQR 0.9019
-  + BunwarpJ have always lower displacement rates than IMCORR
 
-
-```{r packages-tab12,echo=FALSE, warning=FALSE, message=FALSE}
+```{r compare_stats,echo=FALSE, warning=FALSE, message=FALSE}
 library(dplyr)
 library(knitr)
 library(kableExtra)
@@ -305,7 +304,6 @@ text_tbl = read.csv(file = "tables/final_raster_stats.csv",header = T,sep = ";")
    
 ```
 
-\newpage 
 
 # Discussion
 \vspace{-0.5cm}
@@ -428,19 +426,21 @@ text_tbl = read.csv(file = "tables/T2_diff_input_60_XYZ_bodin_manuell.csv",heade
 library(dplyr)
 library(knitr)
 library(kableExtra)
-text_tbl = read.csv(file = "tables/T3_Settings_XYZ_Bodin_manuell.csv",header = T,sep = ";")
+text_tbl = read.csv(file = "tables/T3_Settings_XYZ_Bodin_manuell_untereinander.csv",header = T,sep = ";")
  knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Resulting Statistics Test III") %>% 
-    kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down"))%>%
+    kableExtra::kable_styling(full_width = F, font_size = 12 , latex_options = c("striped","hold_position","scale_down"))%>%
    column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue"
    column_spec(2, width = "2.5cm") %>%
-   column_spec(3:18, width = "3cm") %>%
+   column_spec(3:10, width = "3cm") %>%
    row_spec(0, bold = TRUE) %>%
    row_spec(1, bold = TRUE) %>%
    row_spec(12:13, bold = TRUE) %>%
    row_spec(16, bold = TRUE) %>%
-   row_spec(27:28, bold = TRUE) %>%
-   kableExtra::landscape()
-   
+   row_spec(28:29, bold = TRUE) %>%
+   row_spec(32, bold = TRUE) %>%
+   row_spec(43:44, bold = TRUE) %>%
+   row_spec(47, bold = TRUE) %>%
+   row_spec(58:59, bold = TRUE)
 ```
 
 
@@ -463,27 +463,6 @@ text_tbl = read.csv(file = "tables/XYZ_IMCORR_Bodin_manuell_stats.csv",header = 
    
 ```
 
-
-```{r packages-tab4_1,echo=FALSE, warning=FALSE, message=FALSE}
-library(dplyr)
-library(knitr)
-library(kableExtra)
-text_tbl = read.csv(file = "tables/T3_Settings_XYZ_Bodin_manuell_untereinander.csv",header = T,sep = ";")
- knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Resulting Statistics Test III") %>% 
-    kableExtra::kable_styling(full_width = F, font_size = 12 , latex_options = c("striped","hold_position","scale_down"))%>%
-   column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue"
-   column_spec(2, width = "2.5cm") %>%
-   column_spec(3:10, width = "3cm") %>%
-   row_spec(0, bold = TRUE) %>%
-   row_spec(1, bold = TRUE) %>%
-   row_spec(12:13, bold = TRUE) %>%
-   row_spec(16, bold = TRUE) %>%
-   row_spec(28:29, bold = TRUE) %>%
-   row_spec(32, bold = TRUE) %>%
-   row_spec(43:44, bold = TRUE) %>%
-   row_spec(47, bold = TRUE) %>%
-   row_spec(58:59, bold = TRUE)
-```
 
 
 <!-- ```{r packages-tab6,echo=FALSE, warning=FALSE, message=FALSE} -->
