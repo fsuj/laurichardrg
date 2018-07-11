@@ -101,15 +101,15 @@ Image matching techniques have been applied to rock glacier deformation detectio
 2. bUnwarpJ, a semi-global algorithm originally developed for image registration in health studies [@argandacarreras_consistent_2006].
 For both algorithms we calculated an annual displacement rate of the Laurichard rock glacier, based on high-resolution DEMs from an aerial laser scanning (ALS) campaign in 2012 and from a UAV campaign in 2017. We optimized parameter settings of both approaches and estimated the accuracy of the resulting deformation fields with GPS displacement data from @bodin_multi-annual_2018 and manually mapped surface displacements.
 
+```{r area, echo=FALSE, fig.align="center", out.width = "300px", fig.cap= "Overview of the study site: The Laurichard rock glacier. Input data for algorithms and validation data sets are indicated as points."}
+knitr::include_graphics("images/Map_1.png")
+```
+
 # Study Area
 \vspace{-0.5cm}
 The Laurichard rock glacier is situated in the French Alps, with an approximately 800m long and 100-200m wide tounge flowing from south to north-east. Due to its morphological features it can be considered an active rock glacier [@bodin_multi-annual_2018]. Especially, hillshades generated from available digital elevation models (DEMs) exhibit scarps, oriented perpendicular to the flow direction as well as a steep rising frontal lobe (figure \ref{fig:area}).
 
 <!-- Since the beginning of the 1980s, the Laurichard rock glacier has been subject to in-situ and remote sensing photogrammetry research. Refer to @bodin_multi-annual_2018 for the most current research work as well as for an overview over the history of site studies. -->
-
-```{r area, echo=FALSE, fig.align="center", out.width = "300px", fig.cap= "Overview of the study site: The Laurichard rock glacier. Input data for algorithms and validation data sets are indicated as points."}
-knitr::include_graphics("images/Map_1.png")
-```
 
 # Data and Methods
 \vspace{-0.5cm}
@@ -284,7 +284,7 @@ knitr::include_graphics("images/Map_3.png")
 ```
 
 
-```{r compare_scatter, echo=FALSE, fig.pos="h",fig.align="center", out.width = "300px", fig.cap= "Scatterplots "}
+```{r compare_scatter, echo=FALSE, fig.pos="h",fig.align="center", out.width = "300px", fig.cap= "Scatterplots of algorithm results at validation data points vs. validation data. Upper: BUnwarpJ; Lower: IMCORR algorithm. Left: GPS measured boulders; Right: Manually mapped"}
 knitr::include_graphics("images/Scatterplot.PNG")
 ```
 
