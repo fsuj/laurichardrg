@@ -249,7 +249,7 @@ With the BUnwarpJ results, we could identify two relatively isolated main areas 
 
 BUnwarpJ results in an overall mean annual displacement of 0.68m (sigma of 0.37m/a) and a median annual displacement of 0.64m (interquartile range IQR of 0.58m/a). IMCORR results in higher mean annual displacement rates of 0.79m (sigma of 0.51m/a) and a higher median of 0.87m/a (IQR of 0.9m/a). We find the results to differ accordingly in maximum annual displacements of 1.72m and 2.38m, respectively (table \ref{tab:compare_stats}).
 
-IMCORR results with an R² of 0.78 (RMSE 0.3479) seem to be more in accordance with the reference data of @bodin_multi-annual_2018, compared to BUnwarpJ results with R² of 0.7115 (RMSE 0.57). A validation with manually mapped displacements results in an R² of 0.865 (RSME 0.2053) for IMCORR and an R² of 0.7063 (RMSE 0.2414) for BUnwarpJ. BUnwarpJ slightly underestimates the reference values of both validation data sets, while single displacement values of IMCORR overestimate the reference data (figure \ref{compare_scatter})
+IMCORR results with an R² of 0.78 (RMSE 0.3479) seem to be more in accordance with the reference data of @bodin_multi-annual_2018, compared to BUnwarpJ results with R² of 0.7115 (RMSE 0.57). A validation with manually mapped displacements results in an R² of 0.865 (RSME 0.2053) for IMCORR and an R² of 0.7063 (RMSE 0.2414) for BUnwarpJ. BUnwarpJ slightly underestimates the reference values of both validation data sets, while single displacement values of IMCORR overestimate the reference data (figure \ref{fig:compare_scatter})
 
 <!-- * BunwrappJ: DEM_60_1_1 -->
 <!-- * IMCORR: DEM_256_64_01 (because differnece in expert the expert approach to 256_128_01 is maginal) -->
@@ -320,25 +320,22 @@ text_tbl = read.csv(file = "tables/final_raster_stats.csv",header = T,sep = ";")
 <!--     + IMCORR interpolation of Lines to Points to Image -->
 <!--   + Visual comparison to Bodin et al. 2017 ?! -> recognize that bodin is 2m Resolution -->
   
-Both algorithm results exhibit similar areas of maximum displacement at the rock glacier tongue when compared to previous work. However, BUnwarpJ results in relatively isolated areas of displacement, which we consider unrealistic. IMCORR, in comparison, results in smoother deformation velocities on the rock glacier tounge. However, the algorithm detects high displacement rates in areas of rockfall while BUnwarpJ automatically and correctly ignores those areas. The high displacement velocities at the steep front lobe of IMCORR seem to be more in accordance with real movements of falling boulders; BUnwarpJ detects hardly any displacement at the front lobe, instead.
+Both algorithm results exhibit similar areas of maximum displacement at the rock glacier tongue when compared to previous work. However, BUnwarpJ results in relatively isolated areas of displacement, which we consider unrealistic. IMCORR, in comparison, results in smoother deformation velocities on the rock glacier tounge. However, the algorithm detects high displacement rates in areas of rockfall while BUnwarpJ automatically and correctly ignores those areas. The high displacement velocities at the steep front lobe of IMCORR seem to be more in accordance with real movements of falling boulders; BUnwarpJ detects hardly any displacement at the front lobe, instead. With respect to the entire study area, we consider IMCORR results with a median displacement of 0.87m/a to be more in accordance with the validation data at hand as well with result maps in @bodin_multi-annual_2018, while BUnwarpJ slightly underestimates displacement velocities (median of 0.64m/a).
 
-With respect to the entire study area, we consider IMCORR results with a median displacement of 0.87m/a to be more in accordance with the validation data at hand as well with result maps in @bodin_multi-annual_2018, while BUnwarpJ slightly underestimates displacement velocities (median of 0.64m/a).
+Relatively high RMS errors for both algorithms could be due to the spatial resolution of 0.1m of the resulting displacement velocity maps, although IMCORR results have been interpolated beforehand. In addition, we compared areal interpolated data to point data with sample sizes of 18 and 31, respectively. Thus, quality-of-fit measures should be interpreted with caution. Nevertheless, differences in R² and RMSE between the algorithms reflect differences from a visual comparison.
 
-* validation data:
+While choosing DEMs, Hillshades or principal components of DEM derivates has hardly any influence on BUnwarpJ results, the algorithm seems to be highly dependent on user input on weighting of local displacement landmarks and global image properties. Putting heavier weights on global charactersitics lowers quality-of-fit measures within the scope of this study. We assume that the necessary conversion of input images to 8bit radiometric resolution, a software constraint, lessens the ability of the algorithm to compare images without user input from landmarks.
 
-Although 
+IMCORR is highly dependent on the choice of search and reference window sizes. With maximum displacements of around 2m/a from previous studies [@bodin_multi-annual_2018], setting a minimum search window size for the period between 2012 and 2017 of 10m is straightforward. Considering border effects, we can explain the weak performance of IMCORR with a 12.8m search window size compared to 25.6m.
 
-* assumptions and prerequisites of both algorithms
-* -> sensitivity of BUnwarpJ and to a lesser degree of IMCORR on algorithm parameters
-* BUnwarpJ not so dependent on input data sets (DEM, Hillshade or PCA) PCA from only Hillshade and DEM? Influence of image filtering?!
-* Test III
+Thus, we can conclude that both algorithms are highly sensitive on prior assumptions and user input. We highlight especially the dependence of BUnwarpJ on the choice of landmarks as local deformation characteristics.
 
-* discuss validation data and data sets: small samples
-* interpolated areal data vs. point data (COSP!)
+Computational performance of BUnwarpJ is orders of magnitude faster than IMCORR, while the latter is straightforward to apply. BUnwarpJ requires user input before the application of the algorithm as well as post-processing in order to obtain a deformation velocity field. IMCORR results in a matrix of deformation vectors, requiring interpolation to areal data.
 
-* speed (BUnwarpJ) muchmuch faster
-* BUnwarpJ rescaling to 8 bit input data necessary: loss of information -> this could also explain results in weighting factors! and: not so intuitive.
-
+<!-- * assumptions and prerequisites of both algorithms -->
+<!-- * -> sensitivity of BUnwarpJ and to a lesser degree of IMCORR on algorithm parameters -->
+<!-- * BUnwarpJ not so dependent on input data sets (DEM, Hillshade or PCA) PCA from only Hillshade and DEM? Influence of image filtering?! -->
+<!-- * Test III -->
 
 <!-- * Test I -->
 <!--   + In both cases 60 Landmarks are showing the better values - > -->
@@ -365,21 +362,6 @@ Although
 <!--     + Use the DEM as Input for the Transformation, with 60 LM (see test I) -->
 <!--     + RMSE still higher for less Validation Points -->
 <!--     + One Option could be to Calulate a PCA with the DEM and Hillshade ( both are showing strong correlation -> maybe we can get a higher R² and lower RMSE if we extract the Main Information from both Images) -->
-    
-* Test III
-  + The best result is achieved with 1_1
-  + Explenation for weighting 2 is better than 4
-    + with the Weighting Factor of 4 the weight is overweighted?!
-  + Explenation that LMW showing better Results than IMW
-    + a bad Algorithem to for image comaprison (IMCOOR is showing better Results with just Image Comparing Test IV)
-    + Convertion of Inputdata to 8 bit for ImageJ/Bunwarp -> loss of Data (especilly DEM originally 32 bit), is shout work with 32-bit data, but it didn't (BUG?!)
-
-* Test IV
-  + Best Result 256_64
-    + Explenation ?! Smaller window size in Window?! Getting better the differeces?!
-    
-
-
 
 # Conclusion
 \vspace{-0.5cm}
