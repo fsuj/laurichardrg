@@ -143,7 +143,7 @@ Image correlation algorithms are well-established methods in image matching and 
 For BUnwarpJ, we manually set 61 landmarks in the compared images in order to identify features of local deformations on the rock glacier surface as well as in stable areas. Due to software limitations, we resampled input data to a radiomentric resolution of 8bit. In order to analyse the sensitivity of the BUnwarpJ optimization algorithm, we varied
 1. the landmark input set by excluding one one boulder with an extraordinarily high movement rate at the rock glacier front lobe (61 vs. 60 landmarks as input data) and landmarks indicating rock fall from a wall in order to analyze the influence of extreme deformation/velocity values, i.e. surface deformation caused by rockfall;
 2. input images (DEM, HILL, ASPECT, SLOPE, PCA1); and
-3. the weights of global and local (landmarks) image characteristics, ranging in a scale from 4:0 to 0:4.
+3. the weights of global and local (landmarks) image characteristics, ranging in a scale from 4:0 to 0:4 (landmark weight : image weight).
 
 We used only the better performing landmark for the comparison of different image data and a shift in weights from local to global optimization algorithm terms. The areal transformation output resulting from varying input data and BUnwarpJ settings could be used for the calculation of 3-dimensional displacement, based on the 2012 DEM.
 
@@ -251,7 +251,7 @@ for a comparison of algorithm performance.
 
 With the BUnwarpJ results, we could identify two relatively isolated main areas of displacement, located on the rock glacier tongue. BUnwarpJ identified hardly any displacement at the steep front lobe. IMCORR results in similar displacement velocities along the whole tongue with a peak of displacement at the front lobe. We consider the displacements at the tongue resulting from both algorithms to be in good accordance with results from previous work [@bodin_multi-annual_2018]. However, BUnwarpJ displacement areas are rather isolated while IMCORR exhibits large displacement at the rock glacier front and potential errors in areas of rockfall (figure \ref{fig:compare}).
 
-BUnwarpJ results in an overall mean annual displacement of 0.68m (sigma of 0.37m/a) and a median annual displacement of 0.64m (interquartile range IQR of 0.58m/a). IMCORR results in higher mean annual displacement rates of 0.79m (sigma of 0.51m/a) and a higher median of 0.87m/a (IQR of 0.9m/a). We find the results to differ accordingly in maximum annual displacements of 1.72m and 2.38m, respectively (table \ref{tab:compare_stats}).
+BUnwarpJ results in an overall mean annual displacement of 0.68m (standard deviation of 0.37m/a) and a median annual displacement of 0.64m (interquartile range IQR of 0.58m/a). IMCORR results in higher mean annual displacement rates of 0.79m (sd of 0.51m/a) and a higher median of 0.87m/a (IQR of 0.9m/a). We find the results to differ accordingly in maximum annual displacements of 1.72m and 2.38m, respectively (table \ref{tab:compare_stats}).
 
 IMCORR results with an R² of 0.78 (RMSE 0.3479) seem to be more in accordance with the reference data of @bodin_multi-annual_2018, compared to BUnwarpJ results with R² of 0.7115 (RMSE 0.57). A validation with manually mapped displacements results in an R² of 0.865 (RSME 0.2053) for IMCORR and an R² of 0.7063 (RMSE 0.2414) for BUnwarpJ. BUnwarpJ slightly underestimates the reference values of both validation data sets, while single displacement values of IMCORR overestimate the reference data (figure \ref{fig:compare_scatter})
 
@@ -284,7 +284,7 @@ knitr::include_graphics("images/Map_3.png")
 ```
 
 
-```{r compare_scatter, echo=FALSE, fig.pos="h",fig.align="center", out.width = "300px", fig.cap= "Scatterplots of algorithm results at validation data points vs. validation data. Upper: BUnwarpJ; Lower: IMCORR algorithm. Left: GPS measured boulders; Right: Manually mapped"}
+```{r compare_scatter, echo=FALSE, fig.pos="h",fig.align="center", out.width = "370px", fig.cap= "Scatterplots of algorithm results at validation data points vs. validation data. Upper: BUnwarpJ; Lower: IMCORR algorithm. Left: GPS-measured boulders; Right: Manually mapped validation data, respectively."}
 knitr::include_graphics("images/Scatterplot.PNG")
 ```
 
@@ -294,7 +294,7 @@ library(dplyr)
 library(knitr)
 library(kableExtra)
 text_tbl = read.csv(file = "tables/final_raster_stats.csv",header = T,sep = ";")
- knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Final Raster Statistics") %>% 
+ knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Statistics of best performing parameter settings. Left: BUnwarpJ. Right: IMCORR.") %>% 
     kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down")) %>%
    column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue"
    # column_spec(2, width = "2.5cm") %>%
@@ -388,7 +388,7 @@ library(dplyr)
 library(knitr)
 library(kableExtra)
 text_tbl = read.csv(file = "tables/T1_DEM_60_61_xyz_Bodin_manuell.csv",header = T,sep = ";")
- knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Result Statistics Test I") %>%
+ knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Result Statistics Test I: Influence of user-defined landmarks on DEM-based BUnwrapJ results for 60 landmarks excluding a high influence landmark and 61 landmarks including it. Upper: Comparison with GPS-measured boulders; lower: manually mapped validation data with respective errors.") %>%
     kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down"))%>%
    column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue"
    column_spec(2, width = "2.5cm") %>%
@@ -406,7 +406,7 @@ library(dplyr)
 library(knitr)
 library(kableExtra)
 text_tbl = read.csv(file = "tables/T2_diff_input_60_XYZ_bodin_manuell.csv",header = T,sep = ";")
- knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Resulting Statistics Test II") %>% 
+ knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Resulting Statistics Test II: Influence of input data on BUnwrapJ results for 60 landmarks: DEM, Hillshade, Aspect, Slope and first principal component of a PCA including DEM, Hillshade, Aspect and Slope. Upper: Comparison with GPS-measured boulders; lower: manually mapped validation data with respective errors.") %>% 
     kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down"))%>%
    column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue"
    column_spec(2, width = "2.5cm") %>%
@@ -425,7 +425,7 @@ library(dplyr)
 library(knitr)
 library(kableExtra)
 text_tbl = read.csv(file = "tables/T3_Settings_XYZ_Bodin_manuell_untereinander.csv",header = T,sep = ";")
- knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Resulting Statistics Test III") %>% 
+ knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Resulting Statistics Test III: Influence of user-defined weights on DEM-based BUnwrapJ results for 60 landmarks, ranging from 4:0 to 0:4 in landmark weight : image weight. Upper two rows: Comparison with GPS-measured boulders; lower two rows: manually mapped validation data with respective errors.") %>% 
     kableExtra::kable_styling(full_width = F, font_size = 12 , latex_options = c("striped","hold_position","scale_down"))%>%
    column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue"
    column_spec(2, width = "2.5cm") %>%
@@ -447,7 +447,7 @@ library(dplyr)
 library(knitr)
 library(kableExtra)
 text_tbl = read.csv(file = "tables/XYZ_IMCORR_Bodin_manuell_stats.csv",header = T,sep = ";")
- knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Resulting Statistics Test IV") %>% 
+ knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Resulting Statistics Test IV: Influence of search and reference chip sizes on the accuracy of DEM-based IMCORR results with search chip size, reference chip size and 0.1m grid resolution. Upper: Comparison with GPS-measured boulders; lower: manually mapped validation data with respective errors.") %>% 
     kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down"))%>%
    column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue"
    column_spec(2, width = "2.5cm") %>%
