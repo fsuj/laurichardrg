@@ -174,7 +174,7 @@ knitr::include_graphics("images/Map_2.png")
 
 <!-- ## Test II  -->
 
-Test II: Testing different input data shows that Aspect (R² 0.4926, RMSE 0.6555) and Slope (R² 0.5379, RMSE 0.5881) are less suitable than the usage of an Hillshade (R² 0.6802, RMSE 0.5656) or a DEM (R² 0.7115, RMSE 0.57) when validating with GPS-measured boulders at the rock glacier surface. The results using a PCA result in an R² of 0.6322 but a lesser RMSE of 0.5211. Validation with expert-based, manually mapped deformations shows similar results: Aspect and Slope are less suitable, but DEM (R² 0.7063, RMSE 0.2414) and the PCA data set (R² 0.681, RMSE 0.2585) seem to be more accurate than a Hillshade input data set (R² 0.6099, RMSE 0.3056).
+Test II: Testing different input data shows that Aspect (R² 0.4926, RMSE 0.6555) and Slope (R² 0.5379, RMSE 0.5881) are less suitable than the usage of an Hillshade (R² 0.6802, RMSE 0.5656) or a DEM (R² 0.7115, RMSE 0.57) when validating with GPS-measured boulders at the rock glacier surface. The results using a PCA result in an R² of 0.6322 but a lesser RMSE of 0.5211. Validation with expert-based, manually mapped deformations shows similar results: Aspect and Slope are less suitable, but DEM (R² 0.7063, RMSE 0.2414) and the PCA data set (R² 0.681, RMSE 0.2585) seem to be more accurate than a Hillshade input data set (R² 0.6099, RMSE 0.3056) (Table \ref{tab:bunwarp_data} in Appendix).
 
 <!-- Testing different input Data for Transformation Creation with 60 Landmark, Result from Test 1, not sure if we really need the "Error" in all the tables -->
 
@@ -192,78 +192,88 @@ Test II: Testing different input data shows that Aspect (R² 0.4926, RMSE 0.6555
 
 <!-- ## Test III -->
 
-Test III: The test of weighting combinations clearly shows that weights for local image characteristics ()
+Test III: The test of weighting combinations clearly shows that local image characteristics are of greater importance than global image characteristics. While a weighting of 1:1 gives best results for R² (0.7115 and 0.7063), weightings of 1:0 and 2:1 to 4:1 significantly outperform weightings of 1:2 to 1:4 in terms of R² and RMSE (Table \ref{tab:bunwarp_weights} in Appendix). In general, RMSE for the expert based validation is significantly lower than RMSE values for reference data of [@bodin_multi-annual_2018].
 
-Testing different Settings of ImageJ, the Seetings are part of the Name -> Bsp. T3_DEM_60_[4_1]xyzDispAnual, the 4 is the Landmarkweight and the 1 The image weight
+<!-- Testing different Settings of ImageJ, the Seetings are part of the Name -> Bsp. T3_DEM_60_[4_1]xyzDispAnual, the 4 is the Landmarkweight and the 1 The image weight -->
 
-* The Results show
-  + tested combinations, 4_1,2_1,1_1,1_0,0_0,0_1,0_2,0_4, in gernerall
-    + combination 0_0 = useless
-    + combination 0_1 = also useless (Standart Setting of Bunwarp)
-    + combination 1_[2:4] = more or less useless
-    + combinaiton [2:4]_1 = showing good results
-    + combination 1_1 = showing best results, nealy as good as [2:4]_1
-  + Trends:
-    + better results for 1_2 or 2_1 Settings in comparison to 1_4 and 4_1
-    + Landmarkweight (4_1,2_1) showing significant better results than Imageweight
-    + Trade of beetween LMW and IMW (1_1), is showing the best result
-  + conclusion:
-    + Use 1_1 (or high landmarkweight is also ok)
-  + RMSE of Expert based Validition is lower than Bodin ( Test 1,2 confirmed)
-  
-* I thing here we dont have to pay attention to the min max and so on, i think we shoot look on that at the final results
-* Explenation and drawing conclusion see diskussion
+<!-- * The Results show -->
+<!--   + tested combinations, 4_1,2_1,1_1,1_0,0_0,0_1,0_2,0_4, in gernerall -->
+<!--     + combination 0_0 = useless -->
+<!--     + combination 0_1 = also useless (Standart Setting of Bunwarp) -->
+<!--     + combination 1_[2:4] = more or less useless -->
+<!--     + combinaiton [2:4]_1 = showing good results -->
+<!--     + combination 1_1 = showing best results, about as good as [2:4]_1 -->
+<!--   + Trends: -->
+<!--     + better results for 1_2 or 2_1 Settings in comparison to 1_4 and 4_1 -->
+<!--     + Landmarkweight (4_1,2_1) showing significant better results than Imageweight -->
+<!--     + Trade of beetween LMW and IMW (1_1), is showing the best result -->
+<!--   + conclusion: -->
+<!--     + Use 1_1 (or high landmarkweight is also ok) -->
+<!--   + RMSE of Expert based Validition is lower than Bodin ( Test 1,2 confirmed) -->
+
+<!-- * I thing here we dont have to pay attention to the min max and so on, i think we shoot look on that at the final results -->
+<!-- * Explenation and drawing conclusion see diskussion -->
 
 ## IMCORR settings
 \vspace{-0.5cm}
-Testing different Windowsizes, 128_64, 256_128, 256_64
 
-* The Results show
-  + The lowest correlation and RMSE we are achieving with 128_64
-  + For 256_128 and 256_64 we are getting significant better R² and RMSE's
-  + Compariosn 256_128 vs. 256_64
-    + Bodin et al.
-      + 256_128 (R² = 0.6321, RMSE = 0.5097) and 256_64 (R² = 0.78, RMSE = 0.3479), in this Case 256_64 showing significant better Results
-    + Expert based
-      + 256_128 (R² = 0.8748, RMSE = 0.1722) ans 265_64 (R² = 0.865, RSME = 0.2053), in this Case 256_128 showing slitly better Results, but not significant
-    + Bodin vs. Expert based
-      + Expert based is showing significant better Results (R², RMSE)
-    + conclusion
-      + Using 256_64, best for Bodin and "best" for Expert based (no sigfnificant difference)
-* I thing here we dont have to pay attention to the min max and so on, i think we shoot look on that at the final results
-* Explenation and drawing conclusion see diskussion
+Test IV: Testing search/reference chip sizes of 128/64, 256/64 and 256/128 in IMCORR, parameter combinations with a search chip size of 256 pixels (25.6m) significantly outperform the 128/64 combination. While the validation with GPS-referenced blocks results in R² of 0.78 for 256/64 (RMSE 0.3479) compared to an R² of 0.6321 for 256/128 (RMSE 0.5097), both combinations perform similarly when validated with the expert-based data set (R² 0.8748, RMSE 0.1722 for 256/128 and R² 0.865, RSME 0.2053 for 256/64, respectively). Because of the small difference in the latter case, we chose the 256/64 for comparison with the BUnwarpJ algorithm (Table \ref{tab:imcorr} in Appendix).
+
+<!-- Testing different Windowsizes, 128_64, 256_128, 256_64 -->
+
+<!-- * The Results show -->
+<!--   + The lowest correlation and RMSE we are achieving with 128_64 -->
+<!--   + For 256_128 and 256_64 we are getting significant better R² and RMSE's -->
+<!--   + Compariosn 256_128 vs. 256_64 -->
+<!--     + Bodin et al. -->
+<!--       + 256_128 (R² = 0.6321, RMSE = 0.5097) and 256_64 (R² = 0.78, RMSE = 0.3479), in this Case 256_64 showing significant better Results -->
+<!--     + Expert based -->
+<!--       + 256_128 (R² = 0.8748, RMSE = 0.1722) ans 265_64 (R² = 0.865, RSME = 0.2053), in this Case 256_128 showing slitly better Results, but not significant -->
+<!--     + Bodin vs. Expert based -->
+<!--       + Expert based is showing significant better Results (R², RMSE) -->
+<!--     + conclusion -->
+<!--       + Using 256_64, best for Bodin and "best" for Expert based (no sigfnificant difference) -->
+<!-- * I thing here we dont have to pay attention to the min max and so on, i think we shoot look on that at the final results -->
+<!-- * Explenation and drawing conclusion see diskussion -->
 
 
 ## Algorithm comparison
 \vspace{-0.5cm}
-* BunwrappJ: DEM_60_1_1
-* IMCORR: DEM_256_64_01 (because differnece in expert the expert approach to 256_128_01 is maginal)
-* MAP of IMCORR / BUNWRAPP
-* Scatterplot
-* Raster Stats ( maybe in appendix, and delate other table there)
 
-* Map
-  + Not possible of importing Arrows for flow direction (missing aspect of IMCORR, and i was not able to get the Arrows in a good Size for display)
-  + BunwarpJ
-    + Two main Areas of displacement
-    + The Displacement Zone at the Top of the tounge is a bit Stronger than the other one
-  + IMCORR
-    + Displacement on the hole tonge
-    + At the front of the Tonge the highest Displacement
-    + Error Displacement in the right lower corner - > not masked out like in the BunwarpJ
-    + At leat we can identify also two displacement zones, at the top and complete in the Front
+From those results, we chose
+1. DEM as input data with 60 landmarks and a weighting of landmarks and global image characteristics of 1:1 for BUnwarpJ; and
+2. DEM as input data with a 256/64 search/reference chip size for IMCORR
+for a comparison of algorithm performance.
 
-```{r echo=FALSE, fig.pos="h",fig.align="center", out.width = "500px", fig.cap= "Comparison of BUnwarpJ und IMCORR, final Results"}
+With the BUnwarpJ results, we could identify two relatively isolated main areas of displacement, located on the rock glacier tongue. BUnwarpJ identified hardly any displacement at the steep front lobe. IMCORR results in similar displacement velocities along the whole tongue with a peak of displacement at the front lobe. We consider the displacements at the tongue resulting from both algorithms to be in good accordance with results from previous work [@bodin_multi-annual_2018]. However, BUnwarpJ displacement areas are rather isolated while IMCORR exhibits large displacement at the rock glacier front and potential errors in areas of rockfall (figure \ref{fig:compare}).
+
+
+
+The IMCORR results with an R² of 0.78 (RMSE 0.3479) seem to be more in accordance with the reference data of @bodin_multi-annual_2018, compared to BUnwarpJ results with R² of 0.7115 (RMSE 0.57). A validation with manually mapped displacements results in an R² of 0.865 (RSME 0.2053) for IMCORR and an R² of 0.7063 (RMSE 0.2414) for BUnwarpJ. 
+
+<!-- * BunwrappJ: DEM_60_1_1 -->
+<!-- * IMCORR: DEM_256_64_01 (because differnece in expert the expert approach to 256_128_01 is maginal) -->
+<!-- * MAP of IMCORR / BUNWRAPP -->
+<!-- * Scatterplot -->
+<!-- * Raster Stats ( maybe in appendix, and delate other table there) -->
+
+<!-- * Map -->
+<!--   + Not possible of importing Arrows for flow direction (missing aspect of IMCORR, and i was not able to get the Arrows in a good Size for display) -->
+<!--   + BunwarpJ -->
+<!--     + Two main Areas of displacement -->
+<!--     + The Displacement Zone at the Top of the tounge is a bit Stronger than the other one -->
+<!--   + IMCORR -->
+<!--     + Displacement on the hole tonge -->
+<!--     + At the front of the Tonge the highest Displacement -->
+<!--     + Error Displacement in the right lower corner - > not masked out like in the BunwarpJ -->
+<!--     + At leat we can identify also two displacement zones, at the top and complete in the Front -->
+
+```{r compare, echo=FALSE, fig.pos="h",fig.align="center", out.width = "500px", fig.cap= "Comparison of BUnwarpJ und IMCORR, final Results"}
 knitr::include_graphics("images/Map_3.png")
 ```
 
-\newpage 
 
-* scatterplot
-  + Hmmm
-  + What can we write here?!
-
-```{r echo=FALSE, fig.pos="h",fig.align="center", out.width = "300px", fig.cap= "Comparison of BUnwarpJ und IMCORR, final Results"}
+```{r compare_scatter, echo=FALSE, fig.pos="h",fig.align="center", out.width = "300px", fig.cap= "Comparison of BUnwarpJ und IMCORR, final Results"}
 knitr::include_graphics("images/Scatterplot.PNG")
 ```
 
@@ -395,7 +405,7 @@ text_tbl = read.csv(file = "tables/T1_DEM_60_61_xyz_Bodin_manuell.csv",header = 
 
 ```
 
-```{r packages-tab3,echo=FALSE, warning=FALSE, message=FALSE}
+```{r bunwarp_data,echo=FALSE, warning=FALSE, message=FALSE}
 library(dplyr)
 library(knitr)
 library(kableExtra)
@@ -414,7 +424,7 @@ text_tbl = read.csv(file = "tables/T2_diff_input_60_XYZ_bodin_manuell.csv",heade
    
 ```
 
-```{r packages-tab4,echo=FALSE, warning=FALSE, message=FALSE}
+```{r bunwarp_weights,echo=FALSE, warning=FALSE, message=FALSE}
 library(dplyr)
 library(knitr)
 library(kableExtra)
@@ -434,7 +444,7 @@ text_tbl = read.csv(file = "tables/T3_Settings_XYZ_Bodin_manuell.csv",header = T
 ```
 
 
-```{r packages-tab5,echo=FALSE, warning=FALSE, message=FALSE}
+```{r imcorr,echo=FALSE, warning=FALSE, message=FALSE}
 library(dplyr)
 library(knitr)
 library(kableExtra)
