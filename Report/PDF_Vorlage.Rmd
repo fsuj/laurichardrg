@@ -5,8 +5,9 @@ author:
 - Dozentin Prof. Schmullius, Dr. Biskop
 #date: "`r format(Sys.time(), '%d %B %Y')`"
 date: "July 11 2018"
-#header-includes:
-#  - \usepackage[ngerman]{babel}
+header-includes:
+  - \usepackage[ngerman]{babel}
+  - \usepackage[document]{ragged2e}
 output:
   pdf_document: 
     #toc: TRUE
@@ -20,7 +21,7 @@ bibliography: [bib20180620.bib,Rpackages.bib]
 subtitle: Geo 411 - Landschaftsmanagement und Fernerkundung
 #biblio-style: apalike
 fontsize: 11pt
-geometry: margin = 0.8in
+geometry: "left=4cm, right=3cm, top=2.5cm, bottom=2.5cm" #, margin = 1.2in" 
 linestretch:  1.5
 
 
@@ -65,15 +66,18 @@ linestretch:  1.5
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+\pagenumbering{gobble} 
 \centering
 \raggedright
 \newpage
 \tableofcontents
 \newpage
+\justify
+\pagenumbering{arabic} 
 
 
 # Introduction
-
+\vspace{-0.5cm}
 Rock glaciers are distinctive morphological features of high mountain periglacial environments. Their deformation processes are strongly linked to permafrost degradation [@haeberli_mountain_2010]. Thus, research of deformation velocities of rock glaciers does not only provide insights into periglacial morphology but also in time evolution of permafrost. Several authors have used rock glaciers as proxies for permafrost presence/absence in permafrost distribution models [@boeckli_statistical_2012,@marcer_permafrost_2017].
 
 In recent years, multi-method approaches have been used in this field of research; @buchli_kinematic_2018 combine laser scanning, terrestrial radar and in-situ measurements at the Furggwanghorn rock glacier in Switzerland. Remote sensing data, especially radar interferometry (InSAR) [@barboux_mapping_2015], optical imagery and laser scanning [@arenson_detection_2016] have become more and more common for rock glacier deformation analysis. With unmanned aerial vehicles (UAVs), high-resolution consumer grade digital cameras and smartphones being more and more widespread, surveys with high to very high resolution in time and space dimensions [@dallasta_unmanned_2017] become affordable in research and natural hazard mitigation contexts. Structure-from-motion (SfM) [@smith_structure_2016] and other established photogrammetric techniques allow for the generation of genuine 3D point clouds as well as 2.5D digital surface models (DSMs) and derivates, acquired by abovementioned techniques [@eltner_imagebased_2016].
@@ -91,7 +95,7 @@ For both algorithms we calculated an annual displacement rate of the Laurichard 
 
 
 # Study Area
-
+\vspace{-0.5cm}
 The Laurichard rock glacier is situated in the French Alps, with an approximately 800m long and 100-200m wide tounge flowing from south to north-east. Due to its morphological features it can be considered an active rock glacier [@bodin_multi-annual_2018]. Especially, hillshades generated from available digital elevation models (DEMs) exhibit scarps, oriented perpendicular to the flow direction as well as a steep rising frontal lobe.
 
 <!-- Since the beginning of the 1980s, the Laurichard rock glacier has been subject to in-situ and remote sensing photogrammetry research. Refer to @bodin_multi-annual_2018 for the most current research work as well as for an overview over the history of site studies. -->
@@ -101,9 +105,10 @@ knitr::include_graphics("images/Map_1.png")
 ```
 
 # Data and Methods
-
+\vspace{-0.5cm}
 ## Used Data and Preprocessing
 
+\vspace{-0.5cm}
 To compare the rock glacier's annual displacement rates we used one DEM, acquired by an ALS survey on 16./17. August 2012 with a vertical accuracy of 0.02m  [@bodin_multi-annual_2018]. The second DEM is derived from a UAV survey in 2017 and processed by Structure-from-Motion techniques (Jason Goetz, personal communication). Both models have been georeferenced and resampled to a 0.1m resolution, but have not been co-registered (JG, personal communication). A first inspection with simple DEM differencing (DoD) showed good accordance between the two data sets in supposedly stable areas around the Laurichard rock glacier. Therefore, we decided to omit a co-registration procedure.
 
 From the DEMs we derived Slope, Aspect and Hillshade with GIS standard settings as well as a principle component analysis (PCA) of DEM, Hillshade, Aspect and Slope in order to compare algorithm performance based on different input data. We created a rock glacier contour to mask the Laurichard rock glacier from surrounding stable areas.
@@ -113,7 +118,7 @@ As validation data we used 3-dimensional annual displacement rates from 2012-201
 <!-- TODO: brauchen wir das echt?? Expert Based Validation Dataset (Points from ImageJ (Source, Target), Calculate euclidian Distanz -> Calculate XYZ Displacment (Extract Height from Source Image at Source Point, Target Image at Target Point, Make difference (TargetHeight- SourceHeight, Calcilate XYZ with sqrt((XY_Displacement)^2 +(Z_Displacement)^2))) ) -->
 
 ## BUnwarpJ plugin for ImageJ
-
+\vspace{-0.5cm}
 ImageJ [@rueden_imagej2_2017] and its package bundle Fiji [@schindelin_fiji_2012] have been developed for biological and medical image analysis. The plugin BUnwarpJ [@argandacarreras_consistent_2006] performs "2D image registration based on elastic deformation" [@argandacarreras_bunwarpj_2017] between two images. The image registration algorithm calculates a deformation matrix represented by cubic B-splines from an optimization of global (energy functions describing the dissimilarity of two images) and local (user-identified feature tracking) image characteristics. Terms in the optimization equation system are weighted; thus, the importance of global and local image characteristics can be weighted by the user [@argandacarreras_consistent_2006].
 
 <!-- In the intended use of BUnwarpJ, the resulting deformation field is used for co-registering images with one reference image. While this application can also be employed in remote sensing applications, we considered the resulting B-spline deformation field as the displacement velocity information. To the authors' knowledge, BUnwrapJ in ImageJ distributions has hardly been used yet in geomorphological applications (JG, personal communication). -->
@@ -141,6 +146,7 @@ We used the versions Fiji ImageJ 1.52d and BUnwarpJ 2.6 as well as R version 3.4
 <!--  $$E=\omega_{i\ }E_{img}\ +\ \omega_{\mu}\ E_{\mu}\ +\left(\omega_{d\ }E_{div}\ +\omega_{r\ }E_{rot}\right)\ +\omega_{c\ }E_{cons}$$ -->
  
 ## IMCORR
+\vspace{-0.5cm}
 
 Image correlation algorithms are well-established methods in image matching and feature tracking, originally developed for glacier velocity analyses [@scambos_application_1992]. In general, algorithms compute a normalized correlation coefficient (NCC) as a similarity metric of two bounded image areas: For a reference window (chip) of image 1 the NCC between image 1 and image 2 is calculated within a search chip of image 2. The distance between the center of the reference window in image 1 and the center of the maximum NCC results in a deformation vector [@debella-gilo_sub-pixel_2011]. Correlation metrics as well as input data have been developed further in recent years [@heid_evaluation_2012].
 
@@ -151,6 +157,7 @@ We extracted the start points of the resulting displacement vector field and int
 We used the IMCORR -- Feature Tracking and Inverse Distance Weighted tools implemented in SAGA GIS version 2.3.1 [@conrad_system_2015] for our analysis.
 
 ## Algorithm Comparison
+\vspace{-0.5cm}
 
 We masked the resulting interpolated deformation velocity fields as well as the two validation data sets, excluding stable areas, a steep rock wall and obviously striped data in the 2012 DEM from the validation procedure. We compared the resulting deformation fields to the deformations measured by @bodin_multi-annual_2018 on 18 marked blocks with GPS measurements and to the manually mapped deformations between identifiable features of the 2012 and 2017 hillshades. We used R² as measure of agreement and RMSE as error measure.
 
@@ -171,8 +178,9 @@ We chose only the best performing resulting deformation fields of each algorithm
 We used R version 3.4.4 [@base] and R Studio Version 1.1.453 TODO: cite!.
 
 # Results
-
+\vspace{-0.5cm}
 ## BUnwarpJ settings
+\vspace{-0.5cm}
 
 A visual comparison of different sets of landmarks clearly showed that single landmarks can highly influence the resulting deformation field (figure TODO). Test results are in accordance with this finding. Using 60 landmarks excluding one higly influential boulder, outperformed the 61-landmark data set in comparison with both validation data sets, resulting in an R² of 0.7115 and 0.7063 compared to an R² of 0.0499 and 0.5892, respectively. The RMSE was also lower for the 60 data set (RMSE 0.57/0.2414) than including a far travelling boulder (RMSE 0.847/0.291).
 
@@ -223,7 +231,7 @@ Testing different Settings of ImageJ, the Seetings are part of the Name -> Bsp. 
 * Explenation and drawing conclusion see diskussion
 
 ## IMCORR settings
-
+\vspace{-0.5cm}
 Testing different Windowsizes, 128_64, 256_128, 256_64
 
 * The Results show
@@ -243,7 +251,7 @@ Testing different Windowsizes, 128_64, 256_128, 256_64
 
 
 ## Algorithm comparison
-
+\vspace{-0.5cm}
 * BunwrappJ: DEM_60_1_1
 * IMCORR: DEM_256_64_01 (because differnece in expert the expert approach to 256_128_01 is maginal)
 * MAP of IMCORR / BUNWRAPP
@@ -306,7 +314,7 @@ text_tbl = read.csv(file = "tables/final_raster_stats.csv",header = T,sep = ";")
 \newpage 
 
 # Discussion
-
+\vspace{-0.5cm}
 
 * assumptions and prerequisites
 
@@ -365,7 +373,7 @@ text_tbl = read.csv(file = "tables/final_raster_stats.csv",header = T,sep = ";")
   + Visual comparison to Bodin et al. 2017 ?! -> recognize that bodin is 2m Resolution
 
 # Conclusion
-
+\vspace{-0.5cm}
 * Handling of Algorithms
   + IMCORR
     + High Processing Time with IMCORR, Interpolation (global, focal), no smooth Results (Bodin et al. Upsamling 2m)
@@ -383,6 +391,7 @@ text_tbl = read.csv(file = "tables/final_raster_stats.csv",header = T,sep = ";")
 \newpage
 
 # Appendix
+\vspace{-0.5cm}
 
 ```{r packages-tab2,echo=FALSE, warning=FALSE, message=FALSE}
 library(dplyr)
@@ -554,6 +563,6 @@ text_tbl = read.csv(file = "tables/XYZ_IMCORR_Bodin_manuell_stats.csv",header = 
 \newpage
 
 # References
-
+\vspace{-0.5cm}
 
 
