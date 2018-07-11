@@ -103,7 +103,7 @@ The Laurichard rock glacier is situated in the French Alps, with an approximatel
 
 <!-- Since the beginning of the 1980s, the Laurichard rock glacier has been subject to in-situ and remote sensing photogrammetry research. Refer to @bodin_multi-annual_2018 for the most current research work as well as for an overview over the history of site studies. -->
 
-```{r area, echo=FALSE, fig.pos="h",fig.align="center", out.width = "300px", fig.cap= "Study Site: Laurichard rock glacier is situated in the French Alps"}
+```{r area, echo=FALSE, fig.pos="h",fig.align="center", out.width = "300px", fig.cap= "Overview of the study site: The Laurichard rock glacier. Input data for algorithms and validation data sets are indicated as points."}
 knitr::include_graphics("images/Map_1.png")
 ```
 
@@ -116,7 +116,7 @@ To compare the rock glacier's annual displacement rates we used one DEM, acquire
 
 From the DEMs we derived Slope, Aspect and Hillshade with GIS standard settings as well as a principle component analysis (PCA) of DEM, Hillshade, Aspect and Slope in order to compare algorithm performance based on different input data. We created a rock glacier contour to mask the Laurichard rock glacier from surrounding stable areas.
 
-As validation data we used 3-dimensional annual displacement rates from 2012-2015, derived from a long-term survey (since 1992) of total station and DGPS measurements of 18 marked blocks [@bodin_multi-annual_2018]. Additionally, we manually mapped 31 identifiable features from the 2012 and 2017 hillshades on the rock glacier itself, by using the landmark function of the BUnwarpJ plugin in ImageJ/Fiji (see the following section).
+As validation data we used 3-dimensional annual displacement rates from 2012-2015, derived from a long-term survey (since 1992) of total station and DGPS measurements of 18 marked blocks [@bodin_multi-annual_2018]. Additionally, we manually mapped 31 identifiable features from the 2012 and 2017 hillshades on the rock glacier itself, by using the landmark function of the BUnwarpJ plugin in ImageJ/Fiji (figure \ref{fig:area}).
 
 <!-- TODO: brauchen wir das echt?? Expert Based Validation Dataset (Points from ImageJ (Source, Target), Calculate euclidian Distanz -> Calculate XYZ Displacment (Extract Height from Source Image at Source Point, Target Image at Target Point, Make difference (TargetHeight- SourceHeight, Calcilate XYZ with sqrt((XY_Displacement)^2 +(Z_Displacement)^2))) ) -->
 
@@ -168,7 +168,7 @@ We used the versions Fiji ImageJ 1.52d and BUnwarpJ 2.6, the IMCORR -- Feature T
 
 Test I: A visual comparison of different sets of landmarks clearly showed that single landmarks can highly influence the resulting deformation field (figure \ref{fig:landmarks}). Test results are in accordance with this finding. Using 60 landmarks excluding one higly influential boulder, outperformed the 61-landmark data set in comparison with both validation data sets, resulting in an R² of 0.7115 and 0.7063 compared to an R² of 0.0499 and 0.5892, respectively. The RMSE was also lower for the 60 data set (RMSE 0.57/0.2414) than including a far travelling boulder (RMSE 0.847/0.291) (Table \ref{tab:bunwarp_landmarks} in Appendix).
 
-```{r landmarks,echo=FALSE, fig.pos="h",fig.align="center", out.width = "500px", fig.cap= "Influence of extreme Landmarks"}
+```{r landmarks,echo=FALSE, fig.pos="t!",fig.align="center", out.width = "420px", fig.cap= "Influence of extreme Landmarks on BUnwarpJ performance with DEM as input data. Left: 3D annual displacement values excluding one higly influential boulder. Right: 3D annual displacement values with high displacement at the rock glacier front lobe."}
 knitr::include_graphics("images/Map_2.png")
 ```
 
@@ -275,12 +275,12 @@ IMCORR results with an R² of 0.78 (RMSE 0.3479) seem to be more in accordance w
 <!--     + Min pf 0.0007, Median of 0.8661, Max of 2.3810, IQR 0.9019 -->
 <!--   + BunwarpJ have always lower displacement rates than IMCORR -->
 
-```{r compare, echo=FALSE, fig.pos="h",fig.align="center", out.width = "500px", fig.cap= "Comparison of BUnwarpJ und IMCORR, final Results"}
+```{r compare, echo=FALSE, fig.pos="t!",fig.align="center", out.width = "420px", fig.cap= "Comparison of annual displacement velocity results. Left: BUnwarpJ with DEM as input data, 60 user-set landmarks and a landmark-global weighting of 1:1. Right: Interpolated IMCORR results with 25.6m search chip size and 6.4m reference chip size. Isolated areas of high displacement in BUnwarpJ (left) and high displacement velocities at the front lobe and in rockfall areas from IMCORR (right) are recognizable."}
 knitr::include_graphics("images/Map_3.png")
 ```
 
 
-```{r compare_scatter, echo=FALSE, fig.pos="h",fig.align="center", out.width = "300px", fig.cap= "Comparison of BUnwarpJ und IMCORR, final Results"}
+```{r compare_scatter, echo=FALSE, fig.pos="h",fig.align="center", out.width = "300px", fig.cap= "Scatterplots "}
 knitr::include_graphics("images/Scatterplot.PNG")
 ```
 
