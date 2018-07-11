@@ -20,7 +20,7 @@ bibliography: [bib20180620.bib,Rpackages.bib]
 subtitle: Geo 411 - Landschaftsmanagement und Fernerkundung
 #biblio-style: apalike
 fontsize: 11pt
-geometry: margin = 1.2in
+geometry: margin = 0.8in
 linestretch:  1.5
 
 
@@ -78,9 +78,11 @@ Rock glaciers are distinctive morphological features of high mountain periglacia
 
 In recent years, multi-method approaches have been used in this field of research; @buchli_kinematic_2018 combine laser scanning, terrestrial radar and in-situ measurements at the Furggwanghorn rock glacier in Switzerland. Remote sensing data, especially radar interferometry (InSAR) [@barboux_mapping_2015], optical imagery and laser scanning [@arenson_detection_2016] have become more and more common for rock glacier deformation analysis. With unmanned aerial vehicles (UAVs), high-resolution consumer grade digital cameras and smartphones being more and more widespread, surveys with high to very high resolution in time and space dimensions [@dallasta_unmanned_2017] become affordable in research and natural hazard mitigation contexts. Structure-from-motion (SfM) [@smith_structure_2016] and other established photogrammetric techniques allow for the generation of genuine 3D point clouds as well as 2.5D digital surface models (DSMs) and derivates, acquired by abovementioned techniques [@eltner_imagebased_2016].
 
-From a series of those surface models at different points in time, displacement velocities of mass movement processes as well as surface changes resulting from erosion and denudation can be quantified. Techniques range from simple DEM differencing to 3-dimensional point-cloud comparison [@james_3d_2017].
+<!-- From a series of those surface models at different points in time, displacement velocities of mass movement processes as well as surface changes resulting from erosion and denudation can be quantified. Techniques range from simple DEM differencing to 3-dimensional point-cloud comparison [@james_3d_2017]. -->
 
-Image matching techniques are well established methods for the quantification of surface changes in geomorphology and glaciology [@paul_glaciers_2015]. They have already been developed for glacier velocity analyses in the mid-1980s [@scambos_application_1992] and have been developed further since then. They do not necessarily depend on elevation models, except for the quantification of 3-dimensional (i.e. elevation) differences. All image matching algorithms are based on the comparison of either local image patterns or structures/features, on global image characteristics or a combination thereof. They can be applied to panchromatic or colour images as well as to DEMs and their derivates and image transformations (most commonly used: Fourier transformations, filters and principal component analyses) [@heid_evaluation_2012,@dallasta_unmanned_2017]. Besides scope and input data, image matching algorithms can be structured by their similarity measure: The calculation of a normalized cross-correlation coefficient (NCC) on two image parts is the most widespread measure [@scambos_application_1992]. More recently, NCC-based similarity measures have been developed further, being based on image derivatives [@heid_evaluation_2012] or on global energy functions [@argandacarreras_consistent_2006].
+Image matching techniques are well established methods for the quantification of surface changes in geomorphology and glaciology [@paul_glaciers_2015]. All image matching algorithms are based on the comparison of either local image patterns or structures/features, on global image characteristics or a combination thereof. They can be applied to panchromatic or colour images as well as to DEMs and their derivates and image transformations (most commonly used: Fourier transformations, filters and principal component analyses) [@heid_evaluation_2012,@dallasta_unmanned_2017]. Besides scope and input data, image matching algorithms can be structured by their similarity measure: The calculation of a normalized cross-correlation coefficient (NCC) on two image parts is the most widespread measure [@scambos_application_1992]. More recently, NCC-based similarity measures have been developed further, being based on image derivatives [@heid_evaluation_2012] or on global energy functions [@argandacarreras_consistent_2006].
+
+<!-- They have already been developed for glacier velocity analyses in the mid-1980s [@scambos_application_1992] and have been developed further since then. They do not necessarily depend on elevation models, except for the quantification of 3-dimensional (i.e. elevation) differences. -->
 
 Image matching techniques have been applied to rock glacier deformation detection and the calculation of velocity fields. @bodin_multi-annual_2018 present one of the most recent examples for the Laurichard rock glacier in the French Alps. Based on their work, we compared the performance of two image matching algorithms for surface displacement detection between 2012 and 2017: 
 1. The well-established IMCORR algorithm [@nsidc_imcorr_2018], based on @scambos_application_1992; and 
@@ -92,7 +94,7 @@ For both algorithms we calculated an annual displacement rate of the Laurichard 
 
 The Laurichard rock glacier is situated in the French Alps, with an approximately 800m long and 100-200m wide tounge flowing from south to north-east. Due to its morphological features it can be considered an active rock glacier [@bodin_multi-annual_2018]. Especially, hillshades generated from available digital elevation models (DEMs) exhibit scarps, oriented perpendicular to the flow direction as well as a steep rising frontal lobe.
 
-Since the beginning of the 1980s, the Laurichard rock glacier has been subject to in-situ and remote sensing photogrammetry research. Refer to @bodin_multi-annual_2018 for the most current research work as well as for an overview over the history of site studies.
+<!-- Since the beginning of the 1980s, the Laurichard rock glacier has been subject to in-situ and remote sensing photogrammetry research. Refer to @bodin_multi-annual_2018 for the most current research work as well as for an overview over the history of site studies. -->
 
 ```{r echo=FALSE, fig.pos="h",fig.align="center", out.width = "300px", fig.cap= "Study Site: Laurichard rock glacier is situated in the French Alps"}
 knitr::include_graphics("images/Map_1.png")
@@ -102,9 +104,9 @@ knitr::include_graphics("images/Map_1.png")
 
 ## Used Data and Preprocessing
 
-To compare the rock glacier's annual displacement rates we used one DEM, acquired by an ALS survey on 16./17. August 2012 with a vertical accuracy of 0.02m and co-registered to a TLS-based DEM from 2005 [@bodin_multi-annual_2018]. The second DEM is derived from a UAV survey in 2017 and processed by Structure-from-Motion techniques (Jason Goetz, personal communication). Both models have been georeferenced and resampled to a 0.1m resolution, but have not been co-registered (JG, personal communication). A first inspection with simple DEM differencing (DoD) showed good accordance between the two data sets in supposedly stable areas around the Laurichard rock glacier. Therefore, we decided to omit a co-registration procedure.
+To compare the rock glacier's annual displacement rates we used one DEM, acquired by an ALS survey on 16./17. August 2012 with a vertical accuracy of 0.02m  [@bodin_multi-annual_2018]. The second DEM is derived from a UAV survey in 2017 and processed by Structure-from-Motion techniques (Jason Goetz, personal communication). Both models have been georeferenced and resampled to a 0.1m resolution, but have not been co-registered (JG, personal communication). A first inspection with simple DEM differencing (DoD) showed good accordance between the two data sets in supposedly stable areas around the Laurichard rock glacier. Therefore, we decided to omit a co-registration procedure.
 
-From the DEMs we derived common derivatse: Slope, Aspect and Hillshade with GIS standard settings as well as a principle component analysis of DEM, Hillshade, Aspect and Slope in order to compare algorithm performance based on different input data. We created a rock glacier contour to mask the Laurichard rock glacier from surrounding stable areas.
+From the DEMs we derived Slope, Aspect and Hillshade with GIS standard settings as well as a principle component analysis (PCA) of DEM, Hillshade, Aspect and Slope in order to compare algorithm performance based on different input data. We created a rock glacier contour to mask the Laurichard rock glacier from surrounding stable areas.
 
 As validation data we used 3-dimensional annual displacement rates from 2012-2015, derived from a long-term survey (since 1992) of total station and DGPS measurements of TODO: n (18) marked blocks [@bodin_multi-annual_2018]. Additionally, we manually mapped TODO: n identifiable features from the 2012 and 2017 hillshades of the research area, from (TODO: stimmt das? eigentlich: alles maskiert, oder?) supposedly stable areas as well as from the rock glacier itself, with the landmark function of the BUnwarpJ plugin in ImageJ/Fiji (see the following section).
 
@@ -114,7 +116,7 @@ As validation data we used 3-dimensional annual displacement rates from 2012-201
 
 ImageJ [@rueden_imagej2_2017] and its package bundle Fiji [@schindelin_fiji_2012] have been developed for biological and medical image analysis. The plugin BUnwarpJ [@argandacarreras_consistent_2006] performs "2D image registration based on elastic deformation" [@argandacarreras_bunwarpj_2017] between two images. The image registration algorithm calculates a deformation matrix represented by cubic B-splines from an optimization of global (energy functions describing the dissimilarity of two images) and local (user-identified feature tracking) image characteristics. Terms in the optimization equation system are weighted; thus, the importance of global and local image characteristics can be weighted by the user [@argandacarreras_consistent_2006].
 
-In the intended use of BUnwarpJ, the resulting deformation field is used for co-registering images with one reference image. While this application can also be employed in remote sensing applications, we considered the resulting B-spline deformation field as the displacement velocity information. To the authors' knowledge, BUnwrapJ in ImageJ distributions has hardly been used yet in geomorphological applications (JG, personal communication).
+<!-- In the intended use of BUnwarpJ, the resulting deformation field is used for co-registering images with one reference image. While this application can also be employed in remote sensing applications, we considered the resulting B-spline deformation field as the displacement velocity information. To the authors' knowledge, BUnwrapJ in ImageJ distributions has hardly been used yet in geomorphological applications (JG, personal communication). -->
 
 We manually set 61 landmarks in the compared images in order to identify features of local deformations on the rock glacier surface as well as in stable areas. In order to analyse the sensitivity of the BUnwarpJ optimization algorithm, we varied
 1. the weights of global and local (landmarks) image characteristics, ranging in a scale from 4:0 to 0:4; 
@@ -140,9 +142,9 @@ We used the versions Fiji ImageJ 1.52d and BUnwarpJ 2.6 as well as R version 3.4
  
 ## IMCORR
 
-Image correlation algorithms are well-established methods in image matching and feature tracking, originally developed for glacier velocity analyses [@scambos_application_1992]. In general, algorithms compute a normalized correlation coefficient (NCC) as a similarity metric of two bounded image areas: For a reference window (also called chip) of image 1 the NCC between image 1 and image 2 is calculated within a search window (chip) of image 2. The maximum CC within this search window is considered the tracked feature; the distance between the center of the reference window in image 1 and the center of the highest correlation results in a deformation vector [@debella-gilo_sub-pixel_2011]. Correlation metrics as well as input data have been developed further in recent years: Energy functions and derivatives of images in the spatial domain, enhancing transistions between features, as well as Fourier transformations in the frequency domain are used in common implementations of correlation algorithms; in the frequency domain, phase correlation coefficients are commonly used as approximations of normalized correlation coefficients [@heid_evaluation_2012].
+Image correlation algorithms are well-established methods in image matching and feature tracking, originally developed for glacier velocity analyses [@scambos_application_1992]. In general, algorithms compute a normalized correlation coefficient (NCC) as a similarity metric of two bounded image areas: For a reference window (chip) of image 1 the NCC between image 1 and image 2 is calculated within a search chip of image 2. The distance between the center of the reference window in image 1 and the center of the maximum NCC results in a deformation vector [@debella-gilo_sub-pixel_2011]. Correlation metrics as well as input data have been developed further in recent years [@heid_evaluation_2012].
 
-We used an algorithm performing a matching on Fourier transformed input images on user-selected reference and search window sizes (16 to 128 and 16 to 256 pixels, respectively) [@nsidc_imcorr_2018]. From @bodin_multi-annual_2018 we assumed an average displacement of around 2m per year; by reasoning, we compared only search window sizes of 12.8 (reference window size 6.4m) and 25.6m (reference window size of 6.4m and 12.8m) for 3-dimensional displacements with the DEMs as input images and according height information. Due to computational reasons, we omitted a comparison of different input data sets.
+We used an algorithm performing a matching on Fourier transformed input images on user-selected reference and search window sizes (16 to 128 and 16 to 256 pixels, respectively) [@nsidc_imcorr_2018]. From @bodin_multi-annual_2018 we assumed an average displacement of around 2m per year; by reasoning, we compared only search window sizes of 12.8m (reference chip size 6.4m) and 25.6m (reference chip size of 6.4m and 12.8m) for 3-dimensional displacements. Due to computational reasons, we omitted a comparison of different input data sets.
 
 We extracted the start points of the resulting displacement vector field and interpolated the point data to areal data (inverse distance weighting with a local search distance of 10m and Gaussian weighting with 10m bandwidth) according to @bodin_multi-annual_2018.
 
@@ -150,11 +152,13 @@ We used the IMCORR -- Feature Tracking and Inverse Distance Weighted tools imple
 
 ## Algorithm Comparison
 
-We masked the resulting (data)interpolated) deformation velocity fields as well the two validation data sets, excluding stable areas, a steep rock wall and obviously striped data in the 2012 DEM from the validation procedure. We compared the resulting deformation fields to the deformations measured by @bodin_multi-annual_2018 on 18 marked blocks with GPS measurements and to the manually mapped deformations between identifiable features of the 2012 and 2017 hillshades. We used R² as measure of TODO Übereinstimmung and RMSE as error measure; both are dependent on the mean as 1st moment and therefore prone to outliers. Because the validation data sets comprised only limited numbers of points, we also analyzed performance metrics based on the median (quartile ranges).
+We masked the resulting interpolated deformation velocity fields as well as the two validation data sets, excluding stable areas, a steep rock wall and obviously striped data in the 2012 DEM from the validation procedure. We compared the resulting deformation fields to the deformations measured by @bodin_multi-annual_2018 on 18 marked blocks with GPS measurements and to the manually mapped deformations between identifiable features of the 2012 and 2017 hillshades. We used R² as measure of agreement and RMSE as error measure.
 
-We analyzed the influence of extreme deformation/velocity values on BUnwarpJ by comparing two landmark sets (61 vs. 60, excluding one block at the front lobe) with the validation data sets. We used only the better performing landmark for the comparison of different image data and a shift in weights from local to global optimization algorithm terms. For IMCORR, we analyzed the importance of  search and reference chip sizes and therefore of assumptions prior to the algorithm application.
+<!-- ; both are dependent on the mean as 1st moment and therefore prone to outliers. Because the validation data sets comprised only limited numbers of points, we also analyzed performance metrics based on the median (quartile ranges). -->
 
-We chose only the best performing resulting deformation fields of each algorithm for a comparison of BUnwarpJ and IMCORR. We analyzed performance metrics as well as th visual outcome and accordance with the results of @bodin_multi-annual_2018.
+We analyzed the influence of extreme deformation/velocity values, i.e. surface deformation caused by rockfall, on BUnwarpJ by comparing two landmark sets (61 vs. 60, excluding one block at the front lobe) with the validation data sets. We used only the better performing landmark for the comparison of different image data and a shift in weights from local to global optimization algorithm terms. For IMCORR, we analyzed the importance of search and reference chip sizes and therefore of assumptions prior to the algorithm application.
+
+We chose only the best performing resulting deformation fields of each algorithm for a comparison of BUnwarpJ and IMCORR. We analyzed performance metrics as well as the visual accordance with the results of @bodin_multi-annual_2018.
 
 <!-- * Decision to to test with ImageJ (time) -->
 <!-- * TODO: Masking Aspect und Mask, causes the loss of Validation points (NA) -->
@@ -170,83 +174,33 @@ We used R version 3.4.4 [@base] and R Studio Version 1.1.453 TODO: cite!.
 
 ## BUnwarpJ settings
 
-Testing the influnce of extreme Values (falling Rocks) towards the image machings technics, Landmarks for Transformation and the correlation to the validiaton data set
-
-* The Test Results are showing
-  + Validiation with Bodin
-    + 60 LM XYZ Correlation and RMSE (R² = 0.7115, RMSE = 0.57)
-    + 61 LM XYZ Correlation and RMSE (R² = 0.0499, RMSE = 0.847)
-  + Validation with expert based Valdidation Points
-    + 60 LM XYZ Correlation and RMSE (R² = 0.7063, RMSE = 0.2414)
-    + 61 LM XYZ Correlation and RMSE ( R² = 0.5892, RMSE = 0.291)
-* I thing here we dont have to pay attention to the min max and so on, i think we shoot look on that at the final results
-* Explenation and drawing conclusion see diskussion
-
-\newpage
-
-```{r packages-tab2,echo=FALSE, warning=FALSE, message=FALSE}
-library(dplyr)
-library(knitr)
-library(kableExtra)
-text_tbl = read.csv(file = "tables/T1_DEM_60_61_xyz_Bodin_manuell.csv",header = T,sep = ";")
- knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Result Statistics Test I") %>% 
-    kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down"))%>%
-   column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue"
-   column_spec(2, width = "2.5cm") %>%
-   column_spec(3:6, width = "3cm") %>%
-   row_spec(0, bold = TRUE) %>%
-   row_spec(1, bold = TRUE) %>%
-   row_spec(12:13, bold = TRUE) %>%
-   row_spec(16, bold = TRUE) %>%
-   row_spec(27:28, bold = TRUE)
-   
-```
-
-\newpage
+A visual comparison of different sets of landmarks clearly showed that single landmarks can highly influence the resulting deformation field (figure TODO). Test results are in accordance with this finding. Using 60 landmarks excluding one higly influential boulder, outperformed the 61-landmark data set in comparison with both validation data sets, resulting in an R² of 0.7115 and 0.7063 compared to an R² of 0.0499 and 0.5892, respectively. The RMSE was also lower for the 60 data set (RMSE 0.57/0.2414) than including a far travelling boulder (RMSE 0.847/0.291).
 
 ```{r echo=FALSE, fig.pos="h",fig.align="center", out.width = "500px", fig.cap= "Influence of extreme Landmarks"}
 knitr::include_graphics("images/Map_2.png")
 ```
 
-\newpage
-
 <!-- ## Test II  -->
 
-Testing different input Data for Transformation Creation with 60 Landmark, Result from Test 1, not sure if we really need the "Error" in all the tables
+Testing different input data shows that Aspect (R² 0.4926, RMSE 0.6555) and Slope (R² 0.5379, RMSE 0.5881) are less suitable than the usage of an Hillshade (R² 0.6802, RMSE 0.5656) or a DEM (R² 0.7115, RMSE 0.57) when validating with GPS-measured boulders at the rock glacier surface. The results using a PCA result in an R² of 0.6322 but a lesser RMSE of 0.5211. Validation with expert-based, manually mapped deformations shows similar results: Aspect and Slope are less suitable, but DEM (R² 0.7063, RMSE 0.2414) and the PCA data set (R² 0.681, RMSE 0.2585) seem to be more accurate than a Hillshade input data set (R² 0.6099, RMSE 0.3056).
 
-* The Results are showing
-  + Valdidation Bodin
-    + Aspect ( R² = 0.4926, RMSE = 0.6555) and Slope ( R² = 0.5379, RMSE = 0.5881) are not really suitable to Create the Transformation ( make sense)
-    + Hillshade ( R² = 0.6802, RMSE = 0.5656) and PC1 ( R² = 0.6322, RMSE = 0.5211) are showing nearly identical Results, can be used
-    + DEM (R² 0.7115, RMSE = 0.57) is the best option (but not significant)
-  + Exepert Based
-    + Aspect (R² = 0.5637, RMSE = 0.3162) and Slope ( R² = 0.5594, RMSE = 0.32) are not really suitable to Create the Transformation ( make sense)
-    + Hillshade (R² = 0.6099, RMSE = 0.3056), less accourate than bodin
-    + DEM (R² = 0.7063, RMSE = 0.2414) and PC1(R²0.681, RMSE = 0.2585) are showing nearly identical Results, both can ne used
-* I thing here we dont have to pay attention to the min max and so on, i think we shoot look on that at the final results
-* Explenation and drawing conclusion see diskussion
+<!-- Testing different input Data for Transformation Creation with 60 Landmark, Result from Test 1, not sure if we really need the "Error" in all the tables -->
 
-
-```{r packages-tab3,echo=FALSE, warning=FALSE, message=FALSE}
-library(dplyr)
-library(knitr)
-library(kableExtra)
-text_tbl = read.csv(file = "tables/T2_diff_input_60_XYZ_bodin_manuell.csv",header = T,sep = ";")
- knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Resulting Statistics Test II") %>% 
-    kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down"))%>%
-   column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue"
-   column_spec(2, width = "2.5cm") %>%
-   column_spec(3:12, width = "3cm") %>%
-   row_spec(0, bold = TRUE) %>%
-   row_spec(1, bold = TRUE) %>%
-   row_spec(12:13, bold = TRUE) %>%
-   row_spec(16, bold = TRUE) %>%
-   row_spec(27:28, bold = TRUE) %>%
-   kableExtra::landscape()
-   
-```
+<!-- * The Results are showing -->
+<!--   + Valdidation Bodin -->
+<!--     + Aspect ( R² = 0.4926, RMSE = 0.6555) and Slope ( R² = 0.5379, RMSE = 0.5881) are not really suitable to Create the Transformation ( make sense) -->
+<!--     + Hillshade ( R² = 0.6802, RMSE = 0.5656) and PC1 ( R² = 0.6322, RMSE = 0.5211) are showing nearly identical Results, can be used -->
+<!--     + DEM (R² 0.7115, RMSE = 0.57) is the best option (but not significant) -->
+<!--   + Exepert Based -->
+<!--     + Aspect (R² = 0.5637, RMSE = 0.3162) and Slope ( R² = 0.5594, RMSE = 0.32) are not really suitable to Create the Transformation ( make sense) -->
+<!--     + Hillshade (R² = 0.6099, RMSE = 0.3056), less accourate than bodin -->
+<!--     + DEM (R² = 0.7063, RMSE = 0.2414) and PC1(R²0.681, RMSE = 0.2585) are showing nearly identical Results, both can ne used -->
+<!-- * I thing here we dont have to pay attention to the min max and so on, i think we shoot look on that at the final results -->
+<!-- * Explenation and drawing conclusion see diskussion -->
 
 <!-- ## Test III -->
+
+The test of weighting combinations clearly shows that weights for local image characteristics ()
 
 Testing different Settings of ImageJ, the Seetings are part of the Name -> Bsp. T3_DEM_60_[4_1]xyzDispAnual, the 4 is the Landmarkweight and the 1 The image weight
 
@@ -268,25 +222,6 @@ Testing different Settings of ImageJ, the Seetings are part of the Name -> Bsp. 
 * I thing here we dont have to pay attention to the min max and so on, i think we shoot look on that at the final results
 * Explenation and drawing conclusion see diskussion
 
-```{r packages-tab4,echo=FALSE, warning=FALSE, message=FALSE}
-library(dplyr)
-library(knitr)
-library(kableExtra)
-text_tbl = read.csv(file = "tables/T3_Settings_XYZ_Bodin_manuell.csv",header = T,sep = ";")
- knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Resulting Statistics Test III") %>% 
-    kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down"))%>%
-   column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue"
-   column_spec(2, width = "2.5cm") %>%
-   column_spec(3:18, width = "3cm") %>%
-   row_spec(0, bold = TRUE) %>%
-   row_spec(1, bold = TRUE) %>%
-   row_spec(12:13, bold = TRUE) %>%
-   row_spec(16, bold = TRUE) %>%
-   row_spec(27:28, bold = TRUE) %>%
-   kableExtra::landscape()
-   
-```
-
 ## IMCORR settings
 
 Testing different Windowsizes, 128_64, 256_128, 256_64
@@ -306,25 +241,6 @@ Testing different Windowsizes, 128_64, 256_128, 256_64
 * I thing here we dont have to pay attention to the min max and so on, i think we shoot look on that at the final results
 * Explenation and drawing conclusion see diskussion
 
-
-```{r packages-tab5,echo=FALSE, warning=FALSE, message=FALSE}
-library(dplyr)
-library(knitr)
-library(kableExtra)
-text_tbl = read.csv(file = "tables/XYZ_IMCORR_Bodin_manuell_stats.csv",header = T,sep = ";")
- knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Resulting Statistics Test IV") %>% 
-    kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down"))%>%
-   column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue"
-   column_spec(2, width = "2.5cm") %>%
-   column_spec(3:18, width = "3cm") %>%
-   row_spec(0, bold = TRUE) %>%
-   row_spec(1, bold = TRUE) %>%
-   row_spec(12:13, bold = TRUE) %>%
-   row_spec(16, bold = TRUE) %>%
-   row_spec(27:28, bold = TRUE) %>%
-   kableExtra::landscape()
-   
-```
 
 ## Algorithm comparison
 
@@ -463,101 +379,179 @@ text_tbl = read.csv(file = "tables/final_raster_stats.csv",header = T,sep = ";")
 * Future Research
   + Test Derivates with IMCORR
   + Test everything with COSI-Corr
+  
+\newpage
 
 # Appendix
 
-
-```{r packages-tab6,echo=FALSE, warning=FALSE, message=FALSE}
+```{r packages-tab2,echo=FALSE, warning=FALSE, message=FALSE}
 library(dplyr)
 library(knitr)
 library(kableExtra)
-text_tbl = read.csv(file = "tables/T1_DEM_60_61_xyz_Raster_Stats.csv",header = T,sep = ";")
- knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Raster Statistics Test I") %>% 
-    kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down")) %>%
+text_tbl = read.csv(file = "tables/T1_DEM_60_61_xyz_Bodin_manuell.csv",header = T,sep = ";")
+ knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Result Statistics Test I") %>%
+    kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down"))%>%
    column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue"
+   column_spec(2, width = "2.5cm") %>%
+   column_spec(3:6, width = "3cm") %>%
    row_spec(0, bold = TRUE) %>%
-   # row_spec(1, bold = TRUE) %>%
-   # row_spec(12:13, bold = TRUE) %>%
-   # row_spec(16, bold = TRUE) %>%
-   # row_spec(27:28, bold = TRUE) %>%
+   row_spec(1, bold = TRUE) %>%
+   row_spec(12:13, bold = TRUE) %>%
+   row_spec(16, bold = TRUE) %>%
+   row_spec(27:28, bold = TRUE)
+
+```
+
+```{r packages-tab3,echo=FALSE, warning=FALSE, message=FALSE}
+library(dplyr)
+library(knitr)
+library(kableExtra)
+text_tbl = read.csv(file = "tables/T2_diff_input_60_XYZ_bodin_manuell.csv",header = T,sep = ";")
+ knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Resulting Statistics Test II") %>% 
+    kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down"))%>%
+   column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue"
+   column_spec(2, width = "2.5cm") %>%
+   column_spec(3:12, width = "3cm") %>%
+   row_spec(0, bold = TRUE) %>%
+   row_spec(1, bold = TRUE) %>%
+   row_spec(12:13, bold = TRUE) %>%
+   row_spec(16, bold = TRUE) %>%
+   row_spec(27:28, bold = TRUE) %>%
+   kableExtra::landscape()
+   
+```
+
+```{r packages-tab4,echo=FALSE, warning=FALSE, message=FALSE}
+library(dplyr)
+library(knitr)
+library(kableExtra)
+text_tbl = read.csv(file = "tables/T3_Settings_XYZ_Bodin_manuell.csv",header = T,sep = ";")
+ knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Resulting Statistics Test III") %>% 
+    kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down"))%>%
+   column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue"
+   column_spec(2, width = "2.5cm") %>%
+   column_spec(3:18, width = "3cm") %>%
+   row_spec(0, bold = TRUE) %>%
+   row_spec(1, bold = TRUE) %>%
+   row_spec(12:13, bold = TRUE) %>%
+   row_spec(16, bold = TRUE) %>%
+   row_spec(27:28, bold = TRUE) %>%
    kableExtra::landscape()
    
 ```
 
 
-```{r packages-tab7,echo=FALSE, warning=FALSE, message=FALSE}
+```{r packages-tab5,echo=FALSE, warning=FALSE, message=FALSE}
 library(dplyr)
 library(knitr)
 library(kableExtra)
-text_tbl = read.csv(file = "tables/T2_diff_input_60_raster_stats.csv",header = T,sep = ";")
- knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Raster Statistics Test I") %>% 
-    kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down")) %>%
+text_tbl = read.csv(file = "tables/XYZ_IMCORR_Bodin_manuell_stats.csv",header = T,sep = ";")
+ knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Resulting Statistics Test IV") %>% 
+    kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down"))%>%
    column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue"
+   column_spec(2, width = "2.5cm") %>%
+   column_spec(3:18, width = "3cm") %>%
    row_spec(0, bold = TRUE) %>%
-   # row_spec(1, bold = TRUE) %>%
-   # row_spec(12:13, bold = TRUE) %>%
-   # row_spec(16, bold = TRUE) %>%
-   # row_spec(27:28, bold = TRUE) %>%
+   row_spec(1, bold = TRUE) %>%
+   row_spec(12:13, bold = TRUE) %>%
+   row_spec(16, bold = TRUE) %>%
+   row_spec(27:28, bold = TRUE) %>%
    kableExtra::landscape()
    
 ```
 
+<!-- ```{r packages-tab6,echo=FALSE, warning=FALSE, message=FALSE} -->
+<!-- library(dplyr) -->
+<!-- library(knitr) -->
+<!-- library(kableExtra) -->
+<!-- text_tbl = read.csv(file = "tables/T1_DEM_60_61_xyz_Raster_Stats.csv",header = T,sep = ";") -->
+<!--  knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Raster Statistics Test I") %>%  -->
+<!--     kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down")) %>% -->
+<!--    column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue" -->
+<!--    row_spec(0, bold = TRUE) %>% -->
+<!--    # row_spec(1, bold = TRUE) %>% -->
+<!--    # row_spec(12:13, bold = TRUE) %>% -->
+<!--    # row_spec(16, bold = TRUE) %>% -->
+<!--    # row_spec(27:28, bold = TRUE) %>% -->
+<!--    kableExtra::landscape() -->
 
-```{r packages-tab8,echo=FALSE, warning=FALSE, message=FALSE}
-library(dplyr)
-library(knitr)
-library(kableExtra)
-text_tbl = read.csv(file = "tables/T3_Settings_raster_stats.csv",header = T,sep = ";")
- knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Raster Statistics Test II") %>% 
-    kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down")) %>%
-   column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue"
-   row_spec(0, bold = TRUE) %>%
-   # row_spec(1, bold = TRUE) %>%
-   # row_spec(12:13, bold = TRUE) %>%
-   # row_spec(16, bold = TRUE) %>%
-   # row_spec(27:28, bold = TRUE) %>%
-   kableExtra::landscape()
-   
-```
-
-
-```{r packages-tab9,echo=FALSE, warning=FALSE, message=FALSE}
-library(dplyr)
-library(knitr)
-library(kableExtra)
-text_tbl = read.csv(file = "tables/T3_Settings_raster_stats.csv",header = T,sep = ";")
- knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Raster Statistics Test III") %>% 
-    kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down")) %>%
-   column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue"
-   row_spec(0, bold = TRUE) %>%
-   # row_spec(1, bold = TRUE) %>%
-   # row_spec(12:13, bold = TRUE) %>%
-   # row_spec(16, bold = TRUE) %>%
-   # row_spec(27:28, bold = TRUE) %>%
-   kableExtra::landscape()
-   
-```
+<!-- ``` -->
 
 
+<!-- ```{r packages-tab7,echo=FALSE, warning=FALSE, message=FALSE} -->
+<!-- library(dplyr) -->
+<!-- library(knitr) -->
+<!-- library(kableExtra) -->
+<!-- text_tbl = read.csv(file = "tables/T2_diff_input_60_raster_stats.csv",header = T,sep = ";") -->
+<!--  knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Raster Statistics Test I") %>%  -->
+<!--     kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down")) %>% -->
+<!--    column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue" -->
+<!--    row_spec(0, bold = TRUE) %>% -->
+<!--    # row_spec(1, bold = TRUE) %>% -->
+<!--    # row_spec(12:13, bold = TRUE) %>% -->
+<!--    # row_spec(16, bold = TRUE) %>% -->
+<!--    # row_spec(27:28, bold = TRUE) %>% -->
+<!--    kableExtra::landscape() -->
+
+<!-- ``` -->
 
 
-```{r packages-tab10,echo=FALSE, warning=FALSE, message=FALSE}
-library(dplyr)
-library(knitr)
-library(kableExtra)
-text_tbl = read.csv(file = "tables/XYZ_IMCORR_raster_stats.csv",header = T,sep = ";")
- knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Raster Statistics Test IV") %>% 
-    kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down")) %>%
-   column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue"
-   row_spec(0, bold = TRUE) %>%
-   # row_spec(1, bold = TRUE) %>%
-   # row_spec(12:13, bold = TRUE) %>%
-   # row_spec(16, bold = TRUE) %>%
-   # row_spec(27:28, bold = TRUE) %>%
-   kableExtra::landscape()
-   
-```
+<!-- ```{r packages-tab8,echo=FALSE, warning=FALSE, message=FALSE} -->
+<!-- library(dplyr) -->
+<!-- library(knitr) -->
+<!-- library(kableExtra) -->
+<!-- text_tbl = read.csv(file = "tables/T3_Settings_raster_stats.csv",header = T,sep = ";") -->
+<!--  knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Raster Statistics Test II") %>%  -->
+<!--     kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down")) %>% -->
+<!--    column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue" -->
+<!--    row_spec(0, bold = TRUE) %>% -->
+<!--    # row_spec(1, bold = TRUE) %>% -->
+<!--    # row_spec(12:13, bold = TRUE) %>% -->
+<!--    # row_spec(16, bold = TRUE) %>% -->
+<!--    # row_spec(27:28, bold = TRUE) %>% -->
+<!--    kableExtra::landscape() -->
 
+<!-- ``` -->
+
+
+<!-- ```{r packages-tab9,echo=FALSE, warning=FALSE, message=FALSE} -->
+<!-- library(dplyr) -->
+<!-- library(knitr) -->
+<!-- library(kableExtra) -->
+<!-- text_tbl = read.csv(file = "tables/T3_Settings_raster_stats.csv",header = T,sep = ";") -->
+<!--  knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Raster Statistics Test III") %>%  -->
+<!--     kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down")) %>% -->
+<!--    column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue" -->
+<!--    row_spec(0, bold = TRUE) %>% -->
+<!--    # row_spec(1, bold = TRUE) %>% -->
+<!--    # row_spec(12:13, bold = TRUE) %>% -->
+<!--    # row_spec(16, bold = TRUE) %>% -->
+<!--    # row_spec(27:28, bold = TRUE) %>% -->
+<!--    kableExtra::landscape() -->
+
+<!-- ``` -->
+
+
+
+
+<!-- ```{r packages-tab10,echo=FALSE, warning=FALSE, message=FALSE} -->
+<!-- library(dplyr) -->
+<!-- library(knitr) -->
+<!-- library(kableExtra) -->
+<!-- text_tbl = read.csv(file = "tables/XYZ_IMCORR_raster_stats.csv",header = T,sep = ";") -->
+<!--  knitr::kable(text_tbl, format = "latex", booktabs = TRUE, caption = "Raster Statistics Test IV") %>%  -->
+<!--     kableExtra::kable_styling(full_width = F, font_size = 10 , latex_options = c("striped","hold_position","scale_down")) %>% -->
+<!--    column_spec(1, bold = TRUE, width = "2cm") %>%  #color = "blue" -->
+<!--    row_spec(0, bold = TRUE) %>% -->
+<!--    # row_spec(1, bold = TRUE) %>% -->
+<!--    # row_spec(12:13, bold = TRUE) %>% -->
+<!--    # row_spec(16, bold = TRUE) %>% -->
+<!--    # row_spec(27:28, bold = TRUE) %>% -->
+<!--    kableExtra::landscape() -->
+
+<!-- ``` -->
+
+\newpage
 
 # References
 
