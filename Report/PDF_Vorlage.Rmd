@@ -365,19 +365,14 @@ Computational performance of BUnwarpJ is orders of magnitude faster than IMCORR,
 
 # Conclusion
 \vspace{-0.5cm}
-* Handling of Algorithms
-  + IMCORR
-    + High Processing Time with IMCORR, Interpolation (global, focal), no smooth Results (Bodin et al. Upsamling 2m)
-    + Good Results (values), Visual not nice looking
-  + BunwrapJ
-    + "Resampling" to 8-bit as input image for ImageJ -> loss of information
-    + ca. 20 min Transformation calculation (each test)
-    + Use of R Script -> Process of Transformation (5-10 min each)
-    + all in all high processing speed, good Results (Values as well as Image visuell)
-* Both Algorithms suitable
-* Future Research
-  + Test Derivates with IMCORR
-  + Test everything with COSI-Corr
+
+We consider IMCORR and, to a lesser extent, BUnwarpJ as suitable for detecting rock glacier displacement velocities for the study area at hand. While interpolation of IMCORR displacements with inverse distance weighting does not result in a smooth displacement field and exhibits erroneous areas, the overall displacement pattern is more in accordance with other studies compared with BUnwarpJ results.
+
+Computational expenses limited the application of IMCORR for comparisons of different input data sets. BUnwarpJ, in contrast, is fast to apply but requires more user input. Both algorithms are higly sensitive to parameter settings and prior assumptions.
+
+For future research in the comparison and performance assessment of image matching algorithms, we would suggest to
+1. test the influence of different input data sets on IMCORR results; and
+2. compare the results obtained to the performance of other established and new algorithms.
   
 \newpage
 
