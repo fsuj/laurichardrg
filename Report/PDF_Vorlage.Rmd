@@ -1,5 +1,5 @@
 ---
-title: Comparison of image matching algorithms for rock glacier displacement mapping. A case study for the Laurichard rock glacier, French alps. 
+title: Comparison of image matching algorithms for rock glacier displacement mapping. A case study for the Laurichard rock glacier, French Alps. 
 author: 
 - Florian Strohmaier, Stefan Werner
 - Dozentin Prof. Schmullius, Dr. Biskop
@@ -20,7 +20,7 @@ link-citations: yes
 bibliography: [bib20180620.bib,Rpackages.bib]
 subtitle: Geo 411 - Landschaftsmanagement und Fernerkundung
 #biblio-style: apalike
-fontsize: 11pt
+fontsize: 10.5pt
 geometry: "left=4cm, right=3cm, top=2.5cm, bottom=2.5cm" #, margin = 1.2in" 
 linestretch:  1.5
 
