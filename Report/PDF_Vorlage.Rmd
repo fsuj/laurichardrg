@@ -8,6 +8,7 @@ date: "July 11 2018"
 header-includes:
   - \usepackage[ngerman]{babel}
   - \usepackage[document]{ragged2e}
+  - \usepackage{caption}
 output:
   pdf_document: 
     #toc: TRUE
@@ -74,6 +75,8 @@ knitr::opts_chunk$set(echo = TRUE)
 \newpage
 \justify
 \pagenumbering{arabic} 
+\captionsetup[figure]{name=Figure}
+\captionsetup[table]{name=Table}
 
 
 # Introduction
