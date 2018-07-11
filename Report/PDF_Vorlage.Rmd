@@ -99,11 +99,11 @@ For both algorithms we calculated an annual displacement rate of the Laurichard 
 
 # Study Area
 \vspace{-0.5cm}
-The Laurichard rock glacier is situated in the French Alps, with an approximately 800m long and 100-200m wide tounge flowing from south to north-east. Due to its morphological features it can be considered an active rock glacier [@bodin_multi-annual_2018]. Especially, hillshades generated from available digital elevation models (DEMs) exhibit scarps, oriented perpendicular to the flow direction as well as a steep rising frontal lobe.
+The Laurichard rock glacier is situated in the French Alps, with an approximately 800m long and 100-200m wide tounge flowing from south to north-east. Due to its morphological features it can be considered an active rock glacier [@bodin_multi-annual_2018]. Especially, hillshades generated from available digital elevation models (DEMs) exhibit scarps, oriented perpendicular to the flow direction as well as a steep rising frontal lobe (figure \ref{fig:area}).
 
 <!-- Since the beginning of the 1980s, the Laurichard rock glacier has been subject to in-situ and remote sensing photogrammetry research. Refer to @bodin_multi-annual_2018 for the most current research work as well as for an overview over the history of site studies. -->
 
-```{r echo=FALSE, fig.pos="h",fig.align="center", out.width = "300px", fig.cap= "Study Site: Laurichard rock glacier is situated in the French Alps"}
+```{r area, echo=FALSE, fig.pos="h",fig.align="center", out.width = "300px", fig.cap= "Study Site: Laurichard rock glacier is situated in the French Alps"}
 knitr::include_graphics("images/Map_1.png")
 ```
 
@@ -137,21 +137,17 @@ Image correlation algorithms are well-established methods in image matching and 
 \vspace{-0.5cm}
 
 For BUwarpJ, we manually set 61 landmarks in the compared images in order to identify features of local deformations on the rock glacier surface as well as in stable areas. In order to analyse the sensitivity of the BUnwarpJ optimization algorithm, we varied
-1. the weights of global and local (landmarks) image characteristics, ranging in a scale from 4:0 to 0:4; 
-2. the landmark input set by excluding one one boulder with an extraordinarily high movement rate at the rock glacier front lobe (61 vs. 61 landmarks as input data) and landmarks indicating rock fall from a wall; and
-3. input images (DEM, HILL, ASPECT, SLOPE, PCA1).
+1. the landmark input set by excluding one one boulder with an extraordinarily high movement rate at the rock glacier front lobe (61 vs. 60 landmarks as input data) and landmarks indicating rock fall from a wall in order to analyze the influence of extreme deformation/velocity values, i.e. surface deformation caused by rockfall;
+2. input images (DEM, HILL, ASPECT, SLOPE, PCA1); and
+3. the weights of global and local (landmarks) image characteristics, ranging in a scale from 4:0 to 0:4.
 
-The areal transformation output resulting from varying input data and BUnwarpJ settings could be used for the calculation of 3-dimensional displacement, based on the 2012 DEM.
+We used only the better performing landmark for the comparison of different image data and a shift in weights from local to global optimization algorithm terms. The areal transformation output resulting from varying input data and BUnwarpJ settings could be used for the calculation of 3-dimensional displacement, based on the 2012 DEM.
 
-In IMCORR, we used an algorithm performing a matching on Fourier transformed input images on user-selected reference and search window sizes (16 to 128 and 16 to 256 pixels, respectively) [@nsidc_imcorr_2018]. From @bodin_multi-annual_2018 we assumed an average displacement of around 2m per year; by reasoning, we compared only search window sizes of 12.8m (reference chip size 6.4m) and 25.6m (reference chip size of 6.4m and 12.8m) for 3-dimensional displacements. Due to computational reasons, we omitted a comparison of different input data sets.
-
-We extracted the start points of the resulting displacement vector field and interpolated the point data to areal data (inverse distance weighting with a local search distance of 10m and Gaussian weighting with 10m bandwidth) according to @bodin_multi-annual_2018.
+In IMCORR, we used an algorithm performing a matching on Fourier transformed input images on user-selected reference and search window sizes (16 to 128 and 16 to 256 pixels, respectively) [@nsidc_imcorr_2018]. From @bodin_multi-annual_2018 we assumed an average displacement of around 2m per year; by reasoning, we compared only search window sizes of 12.8m (reference chip size 6.4m) and 25.6m (reference chip size of 6.4m and 12.8m) for 3-dimensional displacements to analyze the importance of search and reference chip sizes and therefore of assumptions prior to the algorithm application. Due to computational reasons, we omitted a comparison of different input data sets. We extracted the start points of the resulting displacement vector field and interpolated the point data to areal data (inverse distance weighting with a local search distance of 10m and Gaussian weighting with 10m bandwidth) according to @bodin_multi-annual_2018.
 
 We applied an aspect-correction (-60° to 60°) of the deformation values of both algorithms and masked the resulting interpolated deformation velocity fields as well as the two validation data sets, excluding stable areas, a steep rock wall and obviously striped data in the 2012 DEM from the validation procedure. We compared the resulting deformation fields to the deformations measured by @bodin_multi-annual_2018 on 18 marked blocks with GPS measurements and to the manually mapped deformations between identifiable features of the 2012 and 2017 hillshades. We used R² as measure of agreement and RMSE as error measure.
 
 <!-- ; both are dependent on the mean as 1st moment and therefore prone to outliers. Because the validation data sets comprised only limited numbers of points, we also analyzed performance metrics based on the median (quartile ranges). -->
-
-We analyzed the influence of extreme deformation/velocity values, i.e. surface deformation caused by rockfall, on BUnwarpJ by comparing two landmark sets (61 vs. 60, excluding one block at the front lobe) with the validation data sets. We used only the better performing landmark for the comparison of different image data and a shift in weights from local to global optimization algorithm terms. For IMCORR, we analyzed the importance of search and reference chip sizes and therefore of assumptions prior to the algorithm application.
 
 We chose only the best performing resulting deformation fields of each algorithm for a comparison of BUnwarpJ and IMCORR. We analyzed performance metrics as well as the visual accordance with the results of @bodin_multi-annual_2018.
 
@@ -163,22 +159,22 @@ We chose only the best performing resulting deformation fields of each algorithm
 <!--   + Test III: Testing different Setting, Name LMW/IMW (Landmarkweight/imageweight), decision final processing settings -->
 <!--   + Test IV: three different Settings for IMCORR, to much time, future research sample TestSetup like bunwrappJ (with out Landmarks) -->
 
-We used the versions Fiji ImageJ 1.52d and BUnwarpJ 2.6, the IMCORR -- Feature Tracking and Inverse Distance Weighted tools implemented in SAGA GIS version 2.3.1 [@conrad_system_2015] as well as R version 3.4.4 [@base] and R Studio Version 1.1.453 for our analysis.
+We used the versions Fiji ImageJ 1.52d and BUnwarpJ 2.6, the IMCORR -- Feature Tracking and Inverse Distance Weighted tools implemented in SAGA GIS version 2.3.1 [@conrad_system_2015] as well as R version 3.4.4 [@base] and R Studio Version 1.1.453 [@rstudio] for our analysis.
 
 # Results
 \vspace{-0.5cm}
 ## BUnwarpJ settings
 \vspace{-0.5cm}
 
-A visual comparison of different sets of landmarks clearly showed that single landmarks can highly influence the resulting deformation field (figure TODO). Test results are in accordance with this finding. Using 60 landmarks excluding one higly influential boulder, outperformed the 61-landmark data set in comparison with both validation data sets, resulting in an R² of 0.7115 and 0.7063 compared to an R² of 0.0499 and 0.5892, respectively. The RMSE was also lower for the 60 data set (RMSE 0.57/0.2414) than including a far travelling boulder (RMSE 0.847/0.291).
+Test I: A visual comparison of different sets of landmarks clearly showed that single landmarks can highly influence the resulting deformation field (figure \ref{fig:landmarks}). Test results are in accordance with this finding. Using 60 landmarks excluding one higly influential boulder, outperformed the 61-landmark data set in comparison with both validation data sets, resulting in an R² of 0.7115 and 0.7063 compared to an R² of 0.0499 and 0.5892, respectively. The RMSE was also lower for the 60 data set (RMSE 0.57/0.2414) than including a far travelling boulder (RMSE 0.847/0.291) (Table \ref{tab:bunwarp_landmarks} in Appendix).
 
-```{r echo=FALSE, fig.pos="h",fig.align="center", out.width = "500px", fig.cap= "Influence of extreme Landmarks"}
+```{r landmarks,echo=FALSE, fig.pos="h",fig.align="center", out.width = "500px", fig.cap= "Influence of extreme Landmarks"}
 knitr::include_graphics("images/Map_2.png")
 ```
 
 <!-- ## Test II  -->
 
-Testing different input data shows that Aspect (R² 0.4926, RMSE 0.6555) and Slope (R² 0.5379, RMSE 0.5881) are less suitable than the usage of an Hillshade (R² 0.6802, RMSE 0.5656) or a DEM (R² 0.7115, RMSE 0.57) when validating with GPS-measured boulders at the rock glacier surface. The results using a PCA result in an R² of 0.6322 but a lesser RMSE of 0.5211. Validation with expert-based, manually mapped deformations shows similar results: Aspect and Slope are less suitable, but DEM (R² 0.7063, RMSE 0.2414) and the PCA data set (R² 0.681, RMSE 0.2585) seem to be more accurate than a Hillshade input data set (R² 0.6099, RMSE 0.3056).
+Test II: Testing different input data shows that Aspect (R² 0.4926, RMSE 0.6555) and Slope (R² 0.5379, RMSE 0.5881) are less suitable than the usage of an Hillshade (R² 0.6802, RMSE 0.5656) or a DEM (R² 0.7115, RMSE 0.57) when validating with GPS-measured boulders at the rock glacier surface. The results using a PCA result in an R² of 0.6322 but a lesser RMSE of 0.5211. Validation with expert-based, manually mapped deformations shows similar results: Aspect and Slope are less suitable, but DEM (R² 0.7063, RMSE 0.2414) and the PCA data set (R² 0.681, RMSE 0.2585) seem to be more accurate than a Hillshade input data set (R² 0.6099, RMSE 0.3056) (Table \ref{tab:bunwarp_data} in Appendix).
 
 <!-- Testing different input Data for Transformation Creation with 60 Landmark, Result from Test 1, not sure if we really need the "Error" in all the tables -->
 
@@ -196,78 +192,88 @@ Testing different input data shows that Aspect (R² 0.4926, RMSE 0.6555) and Slo
 
 <!-- ## Test III -->
 
-The test of weighting combinations clearly shows that weights for local image characteristics ()
+Test III: The test of weighting combinations clearly shows that local image characteristics are of greater importance than global image characteristics. While a weighting of 1:1 gives best results for R² (0.7115 and 0.7063), weightings of 1:0 and 2:1 to 4:1 significantly outperform weightings of 1:2 to 1:4 in terms of R² and RMSE (Table \ref{tab:bunwarp_weights} in Appendix). In general, RMSE for the expert based validation is significantly lower than RMSE values for reference data of [@bodin_multi-annual_2018].
 
-Testing different Settings of ImageJ, the Seetings are part of the Name -> Bsp. T3_DEM_60_[4_1]xyzDispAnual, the 4 is the Landmarkweight and the 1 The image weight
+<!-- Testing different Settings of ImageJ, the Seetings are part of the Name -> Bsp. T3_DEM_60_[4_1]xyzDispAnual, the 4 is the Landmarkweight and the 1 The image weight -->
 
-* The Results show
-  + tested combinations, 4_1,2_1,1_1,1_0,0_0,0_1,0_2,0_4, in gernerall
-    + combination 0_0 = useless
-    + combination 0_1 = also useless (Standart Setting of Bunwarp)
-    + combination 1_[2:4] = more or less useless
-    + combinaiton [2:4]_1 = showing good results
-    + combination 1_1 = showing best results, nealy as good as [2:4]_1
-  + Trends:
-    + better results for 1_2 or 2_1 Settings in comparison to 1_4 and 4_1
-    + Landmarkweight (4_1,2_1) showing significant better results than Imageweight
-    + Trade of beetween LMW and IMW (1_1), is showing the best result
-  + conclusion:
-    + Use 1_1 (or high landmarkweight is also ok)
-  + RMSE of Expert based Validition is lower than Bodin ( Test 1,2 confirmed)
-  
-* I thing here we dont have to pay attention to the min max and so on, i think we shoot look on that at the final results
-* Explenation and drawing conclusion see diskussion
+<!-- * The Results show -->
+<!--   + tested combinations, 4_1,2_1,1_1,1_0,0_0,0_1,0_2,0_4, in gernerall -->
+<!--     + combination 0_0 = useless -->
+<!--     + combination 0_1 = also useless (Standart Setting of Bunwarp) -->
+<!--     + combination 1_[2:4] = more or less useless -->
+<!--     + combinaiton [2:4]_1 = showing good results -->
+<!--     + combination 1_1 = showing best results, about as good as [2:4]_1 -->
+<!--   + Trends: -->
+<!--     + better results for 1_2 or 2_1 Settings in comparison to 1_4 and 4_1 -->
+<!--     + Landmarkweight (4_1,2_1) showing significant better results than Imageweight -->
+<!--     + Trade of beetween LMW and IMW (1_1), is showing the best result -->
+<!--   + conclusion: -->
+<!--     + Use 1_1 (or high landmarkweight is also ok) -->
+<!--   + RMSE of Expert based Validition is lower than Bodin ( Test 1,2 confirmed) -->
+
+<!-- * I thing here we dont have to pay attention to the min max and so on, i think we shoot look on that at the final results -->
+<!-- * Explenation and drawing conclusion see diskussion -->
 
 ## IMCORR settings
 \vspace{-0.5cm}
-Testing different Windowsizes, 128_64, 256_128, 256_64
 
-* The Results show
-  + The lowest correlation and RMSE we are achieving with 128_64
-  + For 256_128 and 256_64 we are getting significant better R² and RMSE's
-  + Compariosn 256_128 vs. 256_64
-    + Bodin et al.
-      + 256_128 (R² = 0.6321, RMSE = 0.5097) and 256_64 (R² = 0.78, RMSE = 0.3479), in this Case 256_64 showing significant better Results
-    + Expert based
-      + 256_128 (R² = 0.8748, RMSE = 0.1722) ans 265_64 (R² = 0.865, RSME = 0.2053), in this Case 256_128 showing slitly better Results, but not significant
-    + Bodin vs. Expert based
-      + Expert based is showing significant better Results (R², RMSE)
-    + conclusion
-      + Using 256_64, best for Bodin and "best" for Expert based (no sigfnificant difference)
-* I thing here we dont have to pay attention to the min max and so on, i think we shoot look on that at the final results
-* Explenation and drawing conclusion see diskussion
+Test IV: Testing search/reference chip sizes of 128/64, 256/64 and 256/128 in IMCORR, parameter combinations with a search chip size of 256 pixels (25.6m) significantly outperform the 128/64 combination. While the validation with GPS-referenced blocks results in R² of 0.78 for 256/64 (RMSE 0.3479) compared to an R² of 0.6321 for 256/128 (RMSE 0.5097), both combinations perform similarly when validated with the expert-based data set (R² 0.8748, RMSE 0.1722 for 256/128 and R² 0.865, RSME 0.2053 for 256/64, respectively). Because of the small difference in the latter case, we chose the 256/64 for comparison with the BUnwarpJ algorithm (Table \ref{tab:imcorr} in Appendix).
+
+<!-- Testing different Windowsizes, 128_64, 256_128, 256_64 -->
+
+<!-- * The Results show -->
+<!--   + The lowest correlation and RMSE we are achieving with 128_64 -->
+<!--   + For 256_128 and 256_64 we are getting significant better R² and RMSE's -->
+<!--   + Compariosn 256_128 vs. 256_64 -->
+<!--     + Bodin et al. -->
+<!--       + 256_128 (R² = 0.6321, RMSE = 0.5097) and 256_64 (R² = 0.78, RMSE = 0.3479), in this Case 256_64 showing significant better Results -->
+<!--     + Expert based -->
+<!--       + 256_128 (R² = 0.8748, RMSE = 0.1722) ans 265_64 (R² = 0.865, RSME = 0.2053), in this Case 256_128 showing slitly better Results, but not significant -->
+<!--     + Bodin vs. Expert based -->
+<!--       + Expert based is showing significant better Results (R², RMSE) -->
+<!--     + conclusion -->
+<!--       + Using 256_64, best for Bodin and "best" for Expert based (no sigfnificant difference) -->
+<!-- * I thing here we dont have to pay attention to the min max and so on, i think we shoot look on that at the final results -->
+<!-- * Explenation and drawing conclusion see diskussion -->
 
 
 ## Algorithm comparison
 \vspace{-0.5cm}
-* BunwrappJ: DEM_60_1_1
-* IMCORR: DEM_256_64_01 (because differnece in expert the expert approach to 256_128_01 is maginal)
-* MAP of IMCORR / BUNWRAPP
-* Scatterplot
-* Raster Stats ( maybe in appendix, and delate other table there)
 
-* Map
-  + Not possible of importing Arrows for flow direction (missing aspect of IMCORR, and i was not able to get the Arrows in a good Size for display)
-  + BunwarpJ
-    + Two main Areas of displacement
-    + The Displacement Zone at the Top of the tounge is a bit Stronger than the other one
-  + IMCORR
-    + Displacement on the hole tonge
-    + At the front of the Tonge the highest Displacement
-    + Error Displacement in the right lower corner - > not masked out like in the BunwarpJ
-    + At leat we can identify also two displacement zones, at the top and complete in the Front
+From those results, we chose
+1. DEM as input data with 60 landmarks and a weighting of landmarks and global image characteristics of 1:1 for BUnwarpJ; and
+2. DEM as input data with a 256/64 search/reference chip size for IMCORR
+for a comparison of algorithm performance.
 
-```{r echo=FALSE, fig.pos="h",fig.align="center", out.width = "500px", fig.cap= "Comparison of BunwrapJ und IMCORR, final Results"}
+With the BUnwarpJ results, we could identify two relatively isolated main areas of displacement, located on the rock glacier tongue. BUnwarpJ identified hardly any displacement at the steep front lobe. IMCORR results in similar displacement velocities along the whole tongue with a peak of displacement at the front lobe. We consider the displacements at the tongue resulting from both algorithms to be in good accordance with results from previous work [@bodin_multi-annual_2018]. However, BUnwarpJ displacement areas are rather isolated while IMCORR exhibits large displacement at the rock glacier front and potential errors in areas of rockfall (figure \ref{fig:compare}).
+
+
+
+The IMCORR results with an R² of 0.78 (RMSE 0.3479) seem to be more in accordance with the reference data of @bodin_multi-annual_2018, compared to BUnwarpJ results with R² of 0.7115 (RMSE 0.57). A validation with manually mapped displacements results in an R² of 0.865 (RSME 0.2053) for IMCORR and an R² of 0.7063 (RMSE 0.2414) for BUnwarpJ. 
+
+<!-- * BunwrappJ: DEM_60_1_1 -->
+<!-- * IMCORR: DEM_256_64_01 (because differnece in expert the expert approach to 256_128_01 is maginal) -->
+<!-- * MAP of IMCORR / BUNWRAPP -->
+<!-- * Scatterplot -->
+<!-- * Raster Stats ( maybe in appendix, and delate other table there) -->
+
+<!-- * Map -->
+<!--   + Not possible of importing Arrows for flow direction (missing aspect of IMCORR, and i was not able to get the Arrows in a good Size for display) -->
+<!--   + BunwarpJ -->
+<!--     + Two main Areas of displacement -->
+<!--     + The Displacement Zone at the Top of the tounge is a bit Stronger than the other one -->
+<!--   + IMCORR -->
+<!--     + Displacement on the hole tonge -->
+<!--     + At the front of the Tonge the highest Displacement -->
+<!--     + Error Displacement in the right lower corner - > not masked out like in the BunwarpJ -->
+<!--     + At leat we can identify also two displacement zones, at the top and complete in the Front -->
+
+```{r compare, echo=FALSE, fig.pos="h",fig.align="center", out.width = "500px", fig.cap= "Comparison of BUnwarpJ und IMCORR, final Results"}
 knitr::include_graphics("images/Map_3.png")
 ```
 
-\newpage 
 
-* scatterplot
-  + Hmmm
-  + What can we write here?!
-
-```{r echo=FALSE, fig.pos="h",fig.align="center", out.width = "300px", fig.cap= "Comparison of BunwrapJ und IMCORR, final Results"}
+```{r compare_scatter, echo=FALSE, fig.pos="h",fig.align="center", out.width = "300px", fig.cap= "Comparison of BUnwarpJ und IMCORR, final Results"}
 knitr::include_graphics("images/Scatterplot.PNG")
 ```
 
@@ -381,7 +387,7 @@ text_tbl = read.csv(file = "tables/final_raster_stats.csv",header = T,sep = ";")
 # Appendix
 \vspace{-0.5cm}
 
-```{r packages-tab2,echo=FALSE, warning=FALSE, message=FALSE}
+```{r bunwarp_landmarks,echo=FALSE, warning=FALSE, message=FALSE}
 library(dplyr)
 library(knitr)
 library(kableExtra)
@@ -399,7 +405,7 @@ text_tbl = read.csv(file = "tables/T1_DEM_60_61_xyz_Bodin_manuell.csv",header = 
 
 ```
 
-```{r packages-tab3,echo=FALSE, warning=FALSE, message=FALSE}
+```{r bunwarp_data,echo=FALSE, warning=FALSE, message=FALSE}
 library(dplyr)
 library(knitr)
 library(kableExtra)
@@ -418,7 +424,7 @@ text_tbl = read.csv(file = "tables/T2_diff_input_60_XYZ_bodin_manuell.csv",heade
    
 ```
 
-```{r packages-tab4,echo=FALSE, warning=FALSE, message=FALSE}
+```{r bunwarp_weights,echo=FALSE, warning=FALSE, message=FALSE}
 library(dplyr)
 library(knitr)
 library(kableExtra)
@@ -438,7 +444,7 @@ text_tbl = read.csv(file = "tables/T3_Settings_XYZ_Bodin_manuell.csv",header = T
 ```
 
 
-```{r packages-tab5,echo=FALSE, warning=FALSE, message=FALSE}
+```{r imcorr,echo=FALSE, warning=FALSE, message=FALSE}
 library(dplyr)
 library(knitr)
 library(kableExtra)
