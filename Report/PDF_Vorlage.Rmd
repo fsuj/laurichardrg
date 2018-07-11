@@ -304,40 +304,67 @@ text_tbl = read.csv(file = "tables/final_raster_stats.csv",header = T,sep = ";")
    
 ```
 
-
 # Discussion
 \vspace{-0.5cm}
 
-* assumptions and prerequisites
+<!-- * Final Results -->
+<!--   + Discussion of Flow direction (?!) -->
+<!--   + Plausibility of Results -->
+<!--     + relativelly stable areas in BunwarpJ at the Front of the Tounge (real?!) -->
+<!--     + unstable areas in Imcorr at the same possition (more real?!) -->
+<!--     + Different Displacement zones (how does a rock glazier move-> wich one is more realistic?) -->
+<!--   + Scatterplot?! -->
+<!--     + What we can dicuss here?! -->
+<!--   + Image Statistics -->
+<!--     + Influenced image Statistic of IMCORR (lower right corner) -->
+<!--     + IMCORR interpolation of Lines to Points to Image -->
+<!--   + Visual comparison to Bodin et al. 2017 ?! -> recognize that bodin is 2m Resolution -->
+  
+Both algorithm results exhibit similar areas of maximum displacement at the rock glacier tongue when compared to previous work. However, BUnwarpJ results in relatively isolated areas of displacement, which we consider unrealistic. IMCORR, in comparison, results in smoother deformation velocities on the rock glacier tounge. However, the algorithm detects high displacement rates in areas of rockfall while BUnwarpJ automatically and correctly ignores those areas. The high displacement velocities at the steep front lobe of IMCORR seem to be more in accordance with real movements of falling boulders; BUnwarpJ detects hardly any displacement at the front lobe, instead.
 
-* discuss validation data and data sets
-* interpolated areal data vs. point datad (COSP!)
+With respect to the entire study area, we consider IMCORR results with a median displacement of 0.87m/a to be more in accordance with the validation data at hand as well with result maps in @bodin_multi-annual_2018, while BUnwarpJ slightly underestimates displacement velocities (median of 0.64m/a).
 
-* Test I
-  + In both cases 60 Landmarks are showing the better values - >
-  + Explenation for R² of 0.0499
-    + Valdidation points ( 3 to 4) of bodin are located in the Area of extreme Displacement (see fig. 1) -> our statistic colappses
-    + better R² for expert based Validaiton points, no point is located in the Area of extreme Displacement, but this is also showing a low R²
-  + Explenation for different RMSE
-    + Different number of samling Points
-    + Relativelly high RMSE for Bodin 60 Points ( in comparison to expert based)
-  + Conlusion
-    + 18 Sampling points are increasing the RMSE, Use at least a min. of 30 (or more?!)
-    + R² is not directly influenced by the numer of samling points
-    + Take care while collection Sampling Points ( valdidation)
-      + do not collect Sampling points on extremely moving (falling) rocks
-    + 61 Sampling points shows a high sensitivity to processes at the top (falling rocks)
-    
-    
-* Test II
-  + In both cases the DEM as Transformation input is the right choice, but at leat i thing it doesn't matter if we use DEM, Hill or PC1
-    + Aspect and Slope (can change easielly, at least there is not usefull information)
-    + DEM, Hillshade, PC1 within a 10% span, is it really significant?!
-  + Looking at the RMSE confirms the guess of Test I
-  + Conclusion
-    + Use the DEM as Input for the Transformation, with 60 LM (see test I)
-    + RMSE still higher for less Validation Points
-    + One Option could be to Calulate a PCA with the DEM and Hillshade ( both are showing strong correlation -> maybe we can get a higher R² and lower RMSE if we extract the Main Information from both Images)
+* validation data:
+
+Although 
+
+* assumptions and prerequisites of both algorithms
+* -> sensitivity of BUnwarpJ and to a lesser degree of IMCORR on algorithm parameters
+* BUnwarpJ not so dependent on input data sets (DEM, Hillshade or PCA) PCA from only Hillshade and DEM? Influence of image filtering?!
+* Test III
+
+* discuss validation data and data sets: small samples
+* interpolated areal data vs. point data (COSP!)
+
+* speed (BUnwarpJ) muchmuch faster
+* BUnwarpJ rescaling to 8 bit input data necessary: loss of information -> this could also explain results in weighting factors! and: not so intuitive.
+
+
+<!-- * Test I -->
+<!--   + In both cases 60 Landmarks are showing the better values - > -->
+<!--   + Explenation for R² of 0.0499 -->
+<!--     + Valdidation points ( 3 to 4) of bodin are located in the Area of extreme Displacement (see fig. 1) -> our statistic colappses -->
+<!--     + better R² for expert based Validaiton points, no point is located in the Area of extreme Displacement, but this is also showing a low R² -->
+<!--   + Explenation for different RMSE -->
+<!--     + Different number of samling Points -->
+<!--     + Relativelly high RMSE for Bodin 60 Points ( in comparison to expert based) -->
+<!--   + Conlusion -->
+<!--     + 18 Sampling points are increasing the RMSE, Use at least a min. of 30 (or more?!) -->
+<!--     + R² is not directly influenced by the numer of samling points -->
+<!--     + Take care while collection Sampling Points ( valdidation) -->
+<!--       + do not collect Sampling points on extremely moving (falling) rocks -->
+<!--     + 61 Sampling points shows a high sensitivity to processes at the top (falling rocks) -->
+
+
+<!-- * Test II -->
+<!--   + In both cases the DEM as Transformation input is the right choice, but at leat i thing it doesn't matter if we use DEM, Hill or PC1 -->
+<!--     + Aspect and Slope (can change easielly, at least there is not usefull information) -->
+<!--     + DEM, Hillshade, PC1 within a 10% span, is it really significant?! -->
+<!--   + Looking at the RMSE confirms the guess of Test I -->
+<!--   + Conclusion -->
+<!--     + Use the DEM as Input for the Transformation, with 60 LM (see test I) -->
+<!--     + RMSE still higher for less Validation Points -->
+<!--     + One Option could be to Calulate a PCA with the DEM and Hillshade ( both are showing strong correlation -> maybe we can get a higher R² and lower RMSE if we extract the Main Information from both Images) -->
     
 * Test III
   + The best result is achieved with 1_1
@@ -350,19 +377,9 @@ text_tbl = read.csv(file = "tables/final_raster_stats.csv",header = T,sep = ";")
 * Test IV
   + Best Result 256_64
     + Explenation ?! Smaller window size in Window?! Getting better the differeces?!
+    
 
-* Final Results
-  + Discussion of Flow direction (?!)
-  + Plausibility of Results
-    + relativelly stable areas in BunwarpJ at the Front of the Tounge (real?!)
-    + unstable areas in Imcorr at the same possition (more real?!)
-    + Different Displacement zones (how does a rock glazier move-> wich one is more realistic?)
-  + Scatterplot?!
-    + What we can dicuss here?!
-  + Image Statistics
-    + Influenced image Statistic of IMCORR (lower right corner)
-    + IMCORR interpolation of Lines to Points to Image
-  + Visual comparison to Bodin et al. 2017 ?! -> recognize that bodin is 2m Resolution
+
 
 # Conclusion
 \vspace{-0.5cm}
